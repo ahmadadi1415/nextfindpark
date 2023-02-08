@@ -1,11 +1,11 @@
 
 
 
-export default function Index(){
+export default function Index() {
 
   const name = "juan"
   return (
     <>
-    <div>{name}</div></>
+      <div>{name}</div></>
   )
 }

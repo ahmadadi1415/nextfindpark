@@ -1,6 +1,6 @@
-export default function User(){
+export default function User() {
     return (
         <>
-        <div>USER</div></>
+            <div>USER</div></>
     )
 }
