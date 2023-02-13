@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  name String @db.VarChar(255)
+  photo String?
+  email String @unique
+  password String @db.VarChar(255)
+  isAdmin Boolean @default(false)
+  rating Rating[]
+}
+
+// model Admin {
+//   id Int @id @default(autoincrement())
+//   name String @db.VarChar(255)
+//   photo String?
+//   email String @unique
+//   password String @db.VarChar(255)
+// }
+
+model ParkingLot {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name String @db.VarChar(255)
+  status Boolean @default(false)
+  description String @db.MediumText
+  location String @db.MediumText
+  rating Rating[]
+}
+
+model Rating {
+  id Int @id @default(autoincrement())
+  rate Int
+  review String?
+  pict_review String?
+  user User @relation(fields: [user_id], references: [id])
+  user_id Int
+  park ParkingLot @relation(fields: [park_id], references: [id])
+  park_id Int
+}
+
+
+
+
+
