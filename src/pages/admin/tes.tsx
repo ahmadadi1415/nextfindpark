@@ -1,6 +1,6 @@
 export default function Admin(){
     return (
         <>
-        <div>ADMIN</div></>
+        <div>USER</div></>
     )
 }
