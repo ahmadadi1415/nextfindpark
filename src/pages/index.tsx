@@ -16,19 +16,32 @@ export default function Home() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <header className={styles.center}>
+        <header className={styles.card}>
           <nav>
             <h1>FindPark</h1>
           </nav>
+          <div className={styles.rightend}>
+            <nav>
+              <a className={styles.rightspace} href="">
+                {' '}
+                About us
+              </a>
+              <a href=""> FAQ</a>
+            </nav>
+          </div>
         </header>
         <main className={styles.main}>
-          <div>
-            <button>
-              <a href="">Login</a>
-            </button>
-            <button>
-              <a href="">Daftar</a>
-            </button>
+          <div className={styles.grid}>
+            <div>
+              <button>
+                <a href="">Login</a>
+              </button>
+            </div>
+            <div>
+              <button>
+                <a href="">Daftar</a>
+              </button>
+            </div>
           </div>
         </main>
       </div>
