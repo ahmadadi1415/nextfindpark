@@ -38,12 +38,38 @@
   font-weight: 700;
   font-family: var(--font-mono);
 }
-
+.blogin{
+  background-color: #6A3AE7;
+  border: none;
+  color: white;
+  height: 50px;
+  width: 150px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  border-radius: 15px;
+  font-weight: bold;
+}
+.bregister{
+  background-color: #6A3AE7;
+  border: none;
+  color: white;
+  height: 50px;
+  width: 150px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  border-radius: 15px;
+  font-weight: bold;
+}
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(25%, auto));
   width: var(--max-width);
   max-width: 100%;
+  
 }
 
 .card {
