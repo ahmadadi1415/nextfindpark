@@ -17,14 +17,14 @@ export default function Home() {
         </Head>
 
         <header className={styles.card}>
-          <nav>
+          <nav className={styles.nav}>
             <h1>FindPark</h1>
           </nav>
           <div className={styles.rightend}>
             <nav>
               <a className={styles.rightspace} href="">
                 {' '}
-                About us
+                About Us
               </a>
               <a href=""> FAQ</a>
             </nav>
