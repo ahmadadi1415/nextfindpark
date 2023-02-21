@@ -31,14 +31,19 @@ export default function Home() {
           </div>
         </header>
         <main className={styles.main}>
+          <div>
+            <h1>
+              Temukan Lahan Parkir Terdekatmu
+            </h1>
+          </div>
           <div className={styles.grid}>
             <div>
-              <button>
+              <button className={styles.blogin}>
                 <a href="">Login</a>
               </button>
             </div>
             <div>
-              <button>
+              <button className={styles.bregister}>
                 <a href="">Daftar</a>
               </button>
             </div>
