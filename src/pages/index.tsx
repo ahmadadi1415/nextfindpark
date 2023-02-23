@@ -32,9 +32,7 @@ export default function Home() {
         </header>
         <main className={styles.main}>
           <div>
-            <h1>
-              Temukan Lahan Parkir Terdekatmu
-            </h1>
+            <h1>Temukan Lahan Parkir Terdekatmu</h1>
           </div>
           <div className={styles.grid}>
             <div>
