@@ -12,46 +12,71 @@ datasource db {
 
 model User {
   id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  name String @db.VarChar(255)
-  photo String?
   email String @unique
   password String @db.VarChar(255)
   isAdmin Boolean @default(false)
+  createdAt DateTime @default(now())
+  
+  profile Profile?
+  parking ParkingHistory[]
   rating Rating[]
 }
 
-// model Admin {
-//   id Int @id @default(autoincrement())
-//   name String @db.VarChar(255)
-//   photo String?
-//   email String @unique
-//   password String @db.VarChar(255)
-// }
+model Profile {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(255)
+  photo String?
+
+  user User @relation(fields: [user_id], references: [id])
+  user_id Int @unique
+}
 
 model ParkingLot {
   id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   name String @db.VarChar(255)
-  status Boolean @default(false)
   description String @db.MediumText
   location String @db.MediumText
+  latitude String?
+  longitude String?
+  status Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  parking ParkingHistory[]
   rating Rating[]
 }
 
-model Rating {
+model ParkingHistory {
   id Int @id @default(autoincrement())
-  rate Int
-  review String?
-  pict_review String?
+  parking_start DateTime 
+  parking_end DateTime 
+
   user User @relation(fields: [user_id], references: [id])
-  user_id Int
-  park ParkingLot @relation(fields: [park_id], references: [id])
-  park_id Int
+  user_id Int @unique
+  parking_lot ParkingLot @relation(fields: [parkinglot_id], references: [id])
+  parkinglot_id Int
 }
 
+// model ParkingHistory {
+//   id Int @id @default(autoincrement()) 
+//   user User @relation(fields: [user_id], references: [id])
+//   user_id Int
+//   parking_start DateTime
+//   parking_end DateTime
+//   parking_time Int @db.SmallInt
 
+//   parking_Lot ParkingLot @relation(fields: [parkinglot_id], references: [id])
+//   parkinglot_id Int
+// }
 
+model Rating {
+  id Int @id @default(autoincrement())
+  rate Int @db.TinyInt
+  review String? @db.LongText
+  pict_review String?
 
-
+  user User @relation(fields: [user_id], references: [id])
+  user_id Int
+  parking_lot ParkingLot @relation(fields: [parkinglot_id], references: [id])
+  parkinglot_id Int
+}
