@@ -26,7 +26,7 @@ export default function Home() {
                 {' '}
                 About Us
               </a>
-              <a href=""> FAQ</a>
+              <a href="">FAQ</a>
             </nav>
           </div>
         </header>
