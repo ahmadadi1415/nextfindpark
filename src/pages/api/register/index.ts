@@ -1,22 +1,74 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
+import bcrypt from "bcrypt"
 
-const prisma = new PrismaClient()
+interface ResponseData {
+    error?: string,
+    msg?: string
+}
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) 
-{
-    if (req.method === "POST")
-    {
-        const data = req.body
+const validateEmail = (email: string): boolean => {
+    const regEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    return regEx.test(email);
+}
 
-        await prisma.user.create(
-            {
-                data
+const validateForm = async (
+    email: string,
+    password: string
+) => {
+    if (!validateEmail(email)) {
+        return { error: "invalid email" }
+    }
+
+    const userEmail = await prisma?.user.findUnique({
+        where: {
+            email: email
+        }
+    })
+
+    if (userEmail) {
+        return {
+            error: "email already used"
+        }
+    }
+
+    if (password.length <= 8) {
+        return { error: "Password at least 8 characters" }
+    }
+
+    return null
+}
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
+
+    if (req.method !== "POST") {
+        return res.status(200).json({ error: "Only support POST method" })
+    }
+
+    const { email, password } = req.body;
+
+    const errorMessage = await validateForm(email, password)
+    if (errorMessage) {
+        return res.status(400).json(errorMessage as ResponseData)
+    }
+
+    // Hashing password
+    const hashedPassword = await bcrypt.hash(password, 12)
+
+    // Creating new user 
+    try {
+        await prisma.$connect()
+        const newUser = await prisma.user.create({
+            data: {
+                email: email,
+                password: hashedPassword
             }
-        )
-
-        res.status(200).json({
-            message: "OK"
         })
-    }    
+        res.status(201).json({ msg: "Successful create " + newUser })
+
+    } catch (error) {
+        res.status(400).json({ error: "API error" })
+    } finally {
+        await prisma.$disconnect()
+    }
 }

@@ -10,25 +10,54 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 model User {
-  id Int @id @default(autoincrement())
+  id String @id @default(cuid())
   email String @unique
   password String @db.VarChar(255)
   isAdmin Boolean @default(false)
-  createdAt DateTime @default(now())
+  createdAt String?
   
   profile Profile?
   parking ParkingHistory[]
   rating Rating[]
-}
 
+  account Account[]
+  session Session[]
+}
 model Profile {
   id Int @id @default(autoincrement())
   name String @db.VarChar(255)
   photo String?
 
   user User @relation(fields: [user_id], references: [id])
-  user_id Int @unique
+  user_id String @unique
 }
 
 model ParkingLot {
@@ -52,7 +81,7 @@ model ParkingHistory {
   parking_end DateTime 
 
   user User @relation(fields: [user_id], references: [id])
-  user_id Int @unique
+  user_id String @unique
   parking_lot ParkingLot @relation(fields: [parkinglot_id], references: [id])
   parkinglot_id Int
 }
@@ -76,7 +105,7 @@ model Rating {
   pict_review String?
 
   user User @relation(fields: [user_id], references: [id])
-  user_id Int
+  user_id String
   parking_lot ParkingLot @relation(fields: [parkinglot_id], references: [id])
   parkinglot_id Int
 }

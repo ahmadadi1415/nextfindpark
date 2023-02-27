@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { GetServerSideProps } from "next"
+import { signIn, signOut, useSession } from "next-auth/react";
 
 interface Data {
     data: {
@@ -16,15 +17,14 @@ export const getServerSideProps: GetServerSideProps = async () => {
     let allUsers = await prisma.user.findUnique(
         {
             where: {
-                id: 1
+                id: "1"
             }
         }
     )
 
     const data = {
         id: allUsers?.id,
-        name: allUsers?.name,
-        created_at: allUsers?.createdAt.toString(),
+        created_at: allUsers?.createdAt,
         email: allUsers?.email,
         password: allUsers?.password
     }
@@ -39,9 +39,19 @@ export const getServerSideProps: GetServerSideProps = async () => {
 export default function User({ data }: Data) {
     console.log(data)
 
+    const { data: session } = useSession()
+  if (session) {
     return (
-        <>
-            <div>{data.created_at}</div>
-        </>
+      <>
+        Signed in as {session?.user?.email} <br />
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
     )
+  }
+  return (
+    <>
+      Not signed in <br />
+      <button onClick={() => signIn()}>Sign in</button>
+    </>
+  )
 }
