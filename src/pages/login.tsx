@@ -2,6 +2,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { Inter } from '@next/font/google';
 import styles from '@/styles/Home.module.css';
+import { Navbar } from '@/components/navbar';
+import { Footer } from '@/components/footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,7 +17,8 @@ export default function login() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="bg-white container grid grid-cols-2">
+      <Navbar />
+      <div className="bg-white container grid grid-cols-2 py-36">
         <div>
           <div>
             <p className="text-xl text-amber-900 pb-5 font-bold">Halo!</p>
@@ -38,8 +41,8 @@ export default function login() {
             </p>
           </div>
           <div>
-            <div className="bg-purple-800 rounded-lg font-bold text-center w-44 h-10">
-              <button className="py-2">
+            <div className="bg-purple-800 rounded-lg font-bold text-center w-44 h-12">
+              <button className="py-3">
                 <a href="">Login</a>
               </button>
             </div>
@@ -49,6 +52,7 @@ export default function login() {
           <p className="text-black">Gambar.png</p>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
