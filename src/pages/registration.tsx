@@ -63,8 +63,8 @@ export default function Registration() {
             </div>
           </div>
           <div>
-            <div className="bg-purple-800 rounded-lg font-bold text-center w-44 h-10">
-              <button className="py-2">
+            <div className="bg-purple-800 rounded-lg font-bold text-center w-44 h-12">
+              <button className="py-3">
                 <a href="">Daftar</a>
               </button>
             </div>
