@@ -1,4 +1,4 @@
-import { prisma } from "lib/prisma";
+import prisma  from "lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt"
 
@@ -13,6 +13,7 @@ const validateEmail = (email: string): boolean => {
 }
 
 const validateForm = async (
+    username: string,
     email: string,
     password: string
 ) => {
@@ -45,9 +46,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         return res.status(200).json({ error: "Only support POST method" })
     }
 
-    const { email, password } = req.body;
+    const { username, email, password } = req.body;
 
-    const errorMessage = await validateForm(email, password)
+    const errorMessage = await validateForm(username, email, password)
     if (errorMessage) {
         return res.status(400).json(errorMessage as ResponseData)
     }
@@ -60,8 +61,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         await prisma.$connect()
         const newUser = await prisma.user.create({
             data: {
+                name: username, 
                 email: email,
-                password: hashedPassword
+                password: hashedPassword,
+                profile: {}
             }
         })
         res.status(201).json({ msg: "Successful create " + newUser })

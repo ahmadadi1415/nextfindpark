@@ -2,7 +2,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import NextAuth from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { prisma } from "lib/prisma"
+import prisma  from "lib/prisma"
 import { compare } from "bcrypt"
 
 export default NextAuth ({
@@ -17,6 +17,10 @@ export default NextAuth ({
       id: "credentials",
       name: "Credentials",
       credentials: {
+        name: {
+          label: "Username",
+          type: "text"
+        },
         email: {
           label: "Email",
           type: "text"
@@ -65,7 +69,7 @@ export default NextAuth ({
     strategy: "jwt"
   },
   jwt: {
-    secret: process.env.NEXTAUTH_JWT_SECRET
-  },
-  secret: process.env.NEXTAUTH_SECRET
+    secret: process.env.NEXTAUTH_SECRET
+  }
+  
 })
