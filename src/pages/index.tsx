@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,7 +15,7 @@ export default function Home() {
         <main className={styles.main}>
           <div className="flex w-3/4 container flex-col mr-auto py-28 relative">
             <h1 className=" text-5xl font-sans text-left">
-              Temukan Lahan Parkiran Terdekat Dengan Mu
+              Temukan Lahan Parkiran Terdekat Denganmu
             </h1>
             <div className="py-5">
               <h2 className="text-xl font-sans text-left">
@@ -43,6 +44,7 @@ export default function Home() {
           </div>
         </main>
       </div>
+      <Footer />
     </>
   );
 }
