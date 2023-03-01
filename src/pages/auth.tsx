@@ -51,12 +51,18 @@ const Auth: NextPage = ({ providers }: any) => {
                 },
             }
         ).then(async () => {
+            // Redirect to email verification
+            // Using EmailProvider
+            // not using the Credentials 
             await loginUser(values)
         }).catch(error => console.log(error))
         console.log(res)
     }
 
     const loginUser = async (values: FormikValues) => {
+        // If email is not verified, redirect to verification page
+        // Else login using Credentials 
+        // if (email is verified) login Credentials else show Verification Page for this email
         const res: any = await signIn("credentials", {
             email: values.email,
             password: values.password,
