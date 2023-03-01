@@ -1,4 +1,4 @@
-import prisma  from "lib/prisma";
+import prisma from "lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt"
 
@@ -33,7 +33,7 @@ const validateForm = async (
         }
     }
 
-    if (password.length <= 8) {
+    if (password.length < 8) {
         return { error: "Password at least 8 characters" }
     }
 
@@ -43,7 +43,7 @@ const validateForm = async (
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
 
     if (req.method !== "POST") {
-        return res.status(200).json({ error: "Only support POST method" })
+        return res.status(400).json({ error: "Only support POST method" })
     }
 
     const { username, email, password } = req.body;
@@ -57,21 +57,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const hashedPassword = await bcrypt.hash(password, 12)
 
     // Creating new user 
-    try {
-        await prisma.$connect()
-        const newUser = await prisma.user.create({
-            data: {
-                name: username, 
-                email: email,
-                password: hashedPassword,
-                profile: {}
-            }
-        })
-        res.status(201).json({ msg: "Successful create " + newUser })
-
-    } catch (error) {
-        res.status(400).json({ error: "API error" })
-    } finally {
-        await prisma.$disconnect()
-    }
+    await prisma.user.create({
+        data: {
+            name: username,
+            email: email,
+            password: hashedPassword,
+            profile: {}
+        }
+    }).then(() =>
+        res.status(201).json({ msg: "Successful create " })
+    ).catch((error: string) =>
+        res.status(400).json({ error: "API error" + error })
+    )
 }

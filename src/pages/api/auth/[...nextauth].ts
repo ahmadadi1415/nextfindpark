@@ -17,10 +17,6 @@ export default NextAuth ({
       id: "credentials",
       name: "Credentials",
       credentials: {
-        name: {
-          label: "Username",
-          type: "text"
-        },
         email: {
           label: "Email",
           type: "text"
@@ -35,7 +31,7 @@ export default NextAuth ({
         await prisma.$connect()
 
         // Finding user that correspond with the email
-        const user = await prisma.user.findUnique({
+        const user: any = await prisma.user.findUnique({
           where: {
             email: credentials?.email
           }
@@ -43,11 +39,12 @@ export default NextAuth ({
 
         // If email not found
         if (!user) {
+          console.log("No email")
           throw new Error("Email is unregistered")
         }
 
         // Check hashed password with the database hashed password
-        const isPasswordCorrect = compare(
+        const isPasswordCorrect = await compare(
           credentials!.password, user.password
         )
 
