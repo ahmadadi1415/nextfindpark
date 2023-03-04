@@ -1,4 +1,4 @@
-import { prisma } from "lib/prisma";
+import prisma from "lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt"
 
@@ -13,6 +13,7 @@ const validateEmail = (email: string): boolean => {
 }
 
 const validateForm = async (
+    username: string,
     email: string,
     password: string
 ) => {
@@ -32,7 +33,7 @@ const validateForm = async (
         }
     }
 
-    if (password.length <= 8) {
+    if (password.length < 8) {
         return { error: "Password at least 8 characters" }
     }
 
@@ -42,12 +43,12 @@ const validateForm = async (
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
 
     if (req.method !== "POST") {
-        return res.status(200).json({ error: "Only support POST method" })
+        return res.status(400).json({ error: "Only support POST method" })
     }
 
-    const { email, password } = req.body;
+    const { username, email, password } = req.body;
 
-    const errorMessage = await validateForm(email, password)
+    const errorMessage = await validateForm(username, email, password)
     if (errorMessage) {
         return res.status(400).json(errorMessage as ResponseData)
     }
@@ -56,19 +57,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const hashedPassword = await bcrypt.hash(password, 12)
 
     // Creating new user 
-    try {
-        await prisma.$connect()
-        const newUser = await prisma.user.create({
-            data: {
-                email: email,
-                password: hashedPassword
-            }
-        })
-        res.status(201).json({ msg: "Successful create " + newUser })
-
-    } catch (error) {
-        res.status(400).json({ error: "API error" })
-    } finally {
-        await prisma.$disconnect()
-    }
+    await prisma.user.create({
+        data: {
+            name: username,
+            email: email,
+            password: hashedPassword,
+            profile: {}
+        }
+    }).then(() =>
+        res.status(201).json({ msg: "Successful create " })
+    ).catch((error: string) =>
+        res.status(400).json({ error: "API error" + error })
+    )
 }

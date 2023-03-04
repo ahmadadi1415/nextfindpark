@@ -39,17 +39,29 @@ model Session {
 
 model User {
   id String @id @default(cuid())
+  name String?
   email String @unique
-  password String @db.VarChar(255)
-  isAdmin Boolean @default(false)
-  createdAt String?
-  
+  emailVerified DateTime?
+  image String?
+
+  accounts Account[]
+  sessions Session[]
+
   profile Profile?
   parking ParkingHistory[]
   rating Rating[]
 
-  account Account[]
-  session Session[]
+  password String? @db.VarChar(255)
+  isAdmin Boolean @default(false)
+  createdAt DateTime @default(now())
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 model Profile {
   id Int @id @default(autoincrement())
@@ -85,19 +97,6 @@ model ParkingHistory {
   parking_lot ParkingLot @relation(fields: [parkinglot_id], references: [id])
   parkinglot_id Int
 }
-
-// model ParkingHistory {
-//   id Int @id @default(autoincrement()) 
-//   user User @relation(fields: [user_id], references: [id])
-//   user_id Int
-//   parking_start DateTime
-//   parking_end DateTime
-//   parking_time Int @db.SmallInt
-
-//   parking_Lot ParkingLot @relation(fields: [parkinglot_id], references: [id])
-//   parkinglot_id Int
-// }
-
 model Rating {
   id Int @id @default(autoincrement())
   rate Int @db.TinyInt
