@@ -1,11 +1,11 @@
-import { useRouter } from "next/navigation";
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
-import { Navbar } from "components/navbar";
-import { Footer } from "@/components/footer";
-import { useState } from "react";
+import { useRouter } from 'next/navigation';
+import Head from 'next/head';
+import Image from 'next/image';
+import { Inter } from '@next/font/google';
+import styles from '@/styles/Home.module.css';
+import { Navbar } from '@/components/navbar';
+import { Footer } from '@/components/footer';
+import { useState } from 'react';
 
 export default function Registration() {
   // Front End Registration Form
@@ -23,9 +23,7 @@ export default function Registration() {
         <form>
           <div>
             <div>
-              <p className="text-xl text-amber-900 pb-5 font-bold">
-                Belum punya akun?
-              </p>
+              <p className="text-xl text-amber-900 pb-5 font-bold">Belum punya akun?</p>
               <p className="text-black pb-7">Isi form dibawah</p>
             </div>
             <div className="pb-5">
