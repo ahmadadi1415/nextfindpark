@@ -2,8 +2,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { Inter } from '@next/font/google';
 import styles from '@/styles/Home.module.css';
-import { Navbar } from 'components/navbar';
-import { Footer } from 'components/footer';
+import { Navbar } from '@/components/navbar';
+import { Footer } from '@/components/footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -43,12 +43,11 @@ export default function Login() {
             </div>
             <div>
               <div className="bg-purple-800 rounded-lg font-bold text-center w-44 h-12">
-                <button className="py-3" type='submit'>
+                <button className="py-3" type="submit">
                   <a href="">Login</a>
                 </button>
               </div>
             </div>
-
           </div>
         </form>
         <div>
