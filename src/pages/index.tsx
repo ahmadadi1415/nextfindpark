@@ -16,7 +16,8 @@ export default function Home() {
             <Image
               src="/cone.png"
               alt="Picture of the author"
-              layout="fill" // required
+              width="320"
+              height="120"
               objectFit="cover" // change to suit your needs
               className="ml-96" // just an example
             />
