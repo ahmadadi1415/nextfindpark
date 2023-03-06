@@ -18,41 +18,43 @@ export default function Login() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <div className="bg-white container grid grid-cols-2 py-36">
-        <form>
-          <div>
+      <div>
+        <main className="py-36 flex flex-col-2 p-24 min-h-screen bg-white ">
+          <form>
             <div>
-              <p className="text-xl text-amber-900 pb-5 font-bold">Halo!</p>
-              <p className="text-black pb-7">Kamu harus login dulu nih sebelum pakai app-nya</p>
-            </div>
-            <div className="pb-5">
-              <input type="email" className="rounded-lg w-96 text-black" />
-            </div>
-            <div className="pb-3">
-              <input type="password" className="rounded-lg w-96 text-black" />
-            </div>
-            <div className="grid grid-cols-3 pb-7">
               <div>
-                <p className="text-black font-bold">
-                  <input type="checkbox" /> Tampilkan kata sandi
+                <p className="text-xl text-amber-900 pb-5 font-bold">Halo!</p>
+                <p className="text-black pb-7">Kamu harus login dulu nih sebelum pakai app-nya</p>
+              </div>
+              <div className="pb-5">
+                <input type="email" className="rounded-lg w-96 text-black" />
+              </div>
+              <div className="pb-3">
+                <input type="password" className="rounded-lg w-96 text-black" />
+              </div>
+              <div className="grid grid-cols-3 pb-7">
+                <div>
+                  <p className="text-black font-bold">
+                    <input type="checkbox" /> Tampilkan kata sandi
+                  </p>
+                </div>
+                <p className="text-black text-right font-bold">
+                  <a href="">Lupa sandinya?</a>
                 </p>
               </div>
-              <p className="text-black text-right font-bold">
-                <a href="">Lupa sandinya?</a>
-              </p>
-            </div>
-            <div>
-              <div className="bg-purple-800 rounded-lg font-bold text-center w-44 h-12">
-                <button className="py-3" type="submit">
-                  <a href="">Login</a>
-                </button>
+              <div>
+                <div className="bg-purple-800 rounded-lg font-bold text-center w-44 h-12">
+                  <button className="py-3" type="submit">
+                    <a href="">Login</a>
+                  </button>
+                </div>
               </div>
             </div>
+          </form>
+          <div>
+            <p className="text-black">Gambar.png</p>
           </div>
-        </form>
-        <div>
-          <p className="text-black">Gambar.png</p>
-        </div>
+        </main>
       </div>
       <Footer />
     </>
