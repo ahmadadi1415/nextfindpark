@@ -32,15 +32,16 @@ export default function Login() {
               <div className="pb-3">
                 <input type="password" className="rounded-lg w-96 text-black" placeholder="Password" />
               </div>
-              <div className="grid grid-cols-3 pb-7">
-                <div>
-                  <p className="text-black font-bold">
-                    <input type="checkbox" /> Tampilkan kata sandi
+              <div className="grid grid-cols-2 pb-7 font-bold">
+                <div className="text-black">
+                  <p>
+                    <input type="checkbox" /> Tampilkan Kata Sandi
                   </p>
                 </div>
-                <p className="text-black text-right font-bold">
+                <div className="text-black text-right ">
                   <a href="">Lupa sandinya?</a>
-                </p>
+                </div>
+                <p className="text-black text-right font-bold"></p>
               </div>
               <div>
                 <div className="bg-purple-800 rounded-lg font-bold text-center w-44 h-12">
