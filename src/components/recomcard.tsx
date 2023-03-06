@@ -4,7 +4,7 @@ export function Recomcard() {
   return (
     <>
       <div className="flex justify-center">
-        <div className="block max-w-xl rounded-lg bg-white shadow-lg dark:bg-neutral-700">
+        <div className="block max-w-lg rounded-lg bg-white shadow-lg dark:bg-neutral-700">
           <div className="p-6">
             <div>
               <a href="#!">

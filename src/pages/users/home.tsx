@@ -13,7 +13,10 @@ export default function Home() {
     <>
       <Navbar />
       <div>
-        <main className="p-24 flex flex-col-2 items-center justify-between min-h-screen bg-white">
+        <main className="p-24 flex flex-col-3 items-center justify-between min-h-screen bg-white">
+          <div>
+            <Recomcard />
+          </div>
           <div>
             <Recomcard />
           </div>
