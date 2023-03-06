@@ -1,9 +1,10 @@
 import axios from "axios";
 import { Field, Form, Formik, FormikValues } from "formik";
 import { NextPage } from "next";
-import { getProviders, signIn, SignInResponse } from "next-auth/react";
-import Router, { useRouter } from "next/router";
+import { getProviders, signIn } from "next-auth/react";
+import Router from "next/router";
 import React, { useState } from "react";
+import prisma from "lib/prisma";
 
 const Auth: NextPage = ({ providers }: any) => {
 
@@ -19,7 +20,7 @@ const Auth: NextPage = ({ providers }: any) => {
         <div>
             {Object.values(providers).map(
                 (provider: any) =>
-                    provider.name !== "Credentials" && (
+                    provider.name !== "Credentials" && provider.name !== "Email" && (
                         <button
                             key={provider.name}
                             onClick={() => {
@@ -51,9 +52,7 @@ const Auth: NextPage = ({ providers }: any) => {
                 },
             }
         ).then(async () => {
-            // Redirect to email verification
-            // Using EmailProvider
-            // not using the Credentials 
+            // Login user after registering
             await loginUser(values)
         }).catch(error => console.log(error))
         console.log(res)
@@ -62,27 +61,52 @@ const Auth: NextPage = ({ providers }: any) => {
     const loginUser = async (values: FormikValues) => {
         // If email is not verified, redirect to verification page
         // Else login using Credentials 
-        // if (email is verified) login Credentials else show Verification Page for this email
-        const user = await prisma?.user.findUnique({
-            where: {
-                email: values.email
+
+        const loginInfo: any = await axios.post("api/login",
+            JSON.stringify(values),
+            {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
             }
-        })
+        )
 
-        const emailVerified = await user?.emailVerified
-        if (emailVerified === null) {
-            Router.push('')
+        console.log(loginInfo)
+        if (loginInfo.data.emailVerified === null) {
+
+            // If the email is not verified, sign in using email first then verify email after user click link
+            console.log("not verified")
+            
+            // Redirect to verification page
+
+            if (loginInfo.data.hasVerifToken === false ) {
+                const res: any = await signIn("email", {
+                    email: values.email,
+                    password: values.password,
+                    redirect: true,
+                 })
+                res.error ? console.log(res.error) : console.log("Email is not verified")
+            } 
+             else {
+                console.log("Please check your email")
+             }
+
         }
+        else {
 
-
-        const res: any = await signIn("credentials", {
-            email: values.email,
-            password: values.password,
-            redirect: false,
-            callbackUrl: `${window.location.origin}`
-        })
-
-        res.error ? console.log(res.error) : redirectToHome()
+            // If the email is verified, sign in using credentials
+            console.log("verified")
+            const res: any = await signIn("credentials", {
+                email: values.email,
+                password: values.password,
+                redirect: false,
+                callbackUrl: `${window.location.origin}`
+            })
+            console.log(res)
+            //res.error ? console.log(res.error) : redirectToHome()
+        }
+        
     }
 
     const submitForm = async (values: FormikValues, actions: any) => {
