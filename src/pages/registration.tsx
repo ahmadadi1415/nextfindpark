@@ -19,44 +19,53 @@ export default function Registration() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="bg-white container grid grid-cols-2 py-24">
-        <form>
-          <div>
+      <div>
+        <main className="p-24 flex items-center justify-between flex-col-2 min-h-screen bg-white">
+          <form>
             <div>
-              <p className="text-xl text-amber-900 pb-5 font-bold">Belum punya akun?</p>
-              <p className="text-black pb-7">Isi form dibawah</p>
-            </div>
-            <div className="pb-5">
-              <input type="text" className="rounded-lg w-96 text-black" />
-            </div>
-            <div className="pb-5">
-              <input type="email" className="rounded-lg w-96 text-black" />
-            </div>
-            <div className="pb-5">
-              <input type="password" className="rounded-lg w-96 text-black" />
-            </div>
-            <div className="pb-3">
-              <input type="password" className="rounded-lg w-96 text-black" />
-            </div>
-            <div className="grid grid-cols-3 pb-7">
               <div>
-                <p className="text-black font-bold">
-                  <input type="checkbox" /> Tampilkan kata sandi
-                </p>
+                <p className="text-xl text-amber-900 pb-5 font-bold">Belum punya akun?</p>
+                <p className="text-black pb-7">Isi form dibawah</p>
+              </div>
+              <div className="pb-5">
+                <input type="text" className="rounded-lg w-96 text-black" placeholder="Nama" />
+              </div>
+              <div className="pb-5">
+                <input type="email" className="rounded-lg w-96 text-black" placeholder="Email" />
+              </div>
+              <div className="pb-5">
+                <input type="password" className="rounded-lg w-96 text-black" placeholder="Sandi" />
+              </div>
+              <div className="pb-3">
+                <input type="password" className="rounded-lg w-96 text-black" placeholder="Konfirmasi Sandi" />
+              </div>
+              <div className="grid grid-cols-3 pb-7">
+                <div>
+                  <p className="text-black font-bold">
+                    <input type="checkbox" /> Tampilkan kata sandi
+                  </p>
+                </div>
+              </div>
+              <div>
+                <div className="bg-purple-800 rounded-lg font-bold text-center w-44 h-12">
+                  <button className="py-3" type="submit">
+                    Daftar
+                  </button>
+                </div>
               </div>
             </div>
-            <div>
-              <div className="bg-purple-800 rounded-lg font-bold text-center w-44 h-12">
-                <button className="py-3" type="submit">
-                  Daftar
-                </button>
-              </div>
-            </div>
+          </form>
+          <div>
+            <Image
+              src="/kunci.png"
+              alt="Picture of the author"
+              width="320"
+              height="120"
+              objectFit="cover" // change to suit your needs
+              className="ml-96" // just an example
+            />
           </div>
-        </form>
-        <div>
-          <p className="text-black">Gambar.png</p>
-        </div>
+        </main>
       </div>
       <Footer />
     </>

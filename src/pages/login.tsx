@@ -19,7 +19,7 @@ export default function Login() {
       </Head>
       <Navbar />
       <div>
-        <main className="py-36 flex flex-col-2 p-24 min-h-screen bg-white ">
+        <main className="p-24 flex items-center justify-between flex-col-2 min-h-screen bg-white ">
           <form>
             <div>
               <div>
@@ -27,10 +27,10 @@ export default function Login() {
                 <p className="text-black pb-7">Kamu harus login dulu nih sebelum pakai app-nya</p>
               </div>
               <div className="pb-5">
-                <input type="email" className="rounded-lg w-96 text-black" />
+                <input type="email" className="rounded-lg w-96 text-black" placeholder="Email" />
               </div>
               <div className="pb-3">
-                <input type="password" className="rounded-lg w-96 text-black" />
+                <input type="password" className="rounded-lg w-96 text-black" placeholder="Password" />
               </div>
               <div className="grid grid-cols-3 pb-7">
                 <div>
@@ -52,7 +52,14 @@ export default function Login() {
             </div>
           </form>
           <div>
-            <p className="text-black">Gambar.png</p>
+            <Image
+              src="/tameng.png"
+              alt="Picture of the author"
+              width="320"
+              height="120"
+              objectFit="cover" // change to suit your needs
+              className="ml-96" // just an example
+            />
           </div>
         </main>
       </div>
