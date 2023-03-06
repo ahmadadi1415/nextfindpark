@@ -63,6 +63,18 @@ const Auth: NextPage = ({ providers }: any) => {
         // If email is not verified, redirect to verification page
         // Else login using Credentials 
         // if (email is verified) login Credentials else show Verification Page for this email
+        const user = await prisma?.user.findUnique({
+            where: {
+                email: values.email
+            }
+        })
+
+        const emailVerified = await user?.emailVerified
+        if (emailVerified === null) {
+            Router.push('')
+        }
+
+
         const res: any = await signIn("credentials", {
             email: values.email,
             password: values.password,
