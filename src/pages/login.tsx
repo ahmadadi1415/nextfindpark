@@ -2,8 +2,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { Inter } from '@next/font/google';
 import styles from '@/styles/Home.module.css';
-import { Navbar } from 'components/navbar';
-import { Footer } from 'components/footer';
+import { Navbar } from '@/components/navbar';
+import { Footer } from '@/components/footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,42 +18,51 @@ export default function Login() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <div className="bg-white container grid grid-cols-2 py-36">
-        <form>
-          <div>
+      <div>
+        <main className="p-24 flex items-center justify-between flex-col-2 min-h-screen bg-white ">
+          <form>
             <div>
-              <p className="text-xl text-amber-900 pb-5 font-bold">Halo!</p>
-              <p className="text-black pb-7">Kamu harus login dulu nih sebelum pakai app-nya</p>
-            </div>
-            <div className="pb-5">
-              <input type="email" className="rounded-lg w-96 text-black" />
-            </div>
-            <div className="pb-3">
-              <input type="password" className="rounded-lg w-96 text-black" />
-            </div>
-            <div className="grid grid-cols-3 pb-7">
               <div>
-                <p className="text-black font-bold">
-                  <input type="checkbox" /> Tampilkan kata sandi
-                </p>
+                <p className="text-xl text-amber-900 pb-5 font-bold">Halo!</p>
+                <p className="text-black pb-7">Kamu harus login dulu nih sebelum pakai app-nya</p>
               </div>
-              <p className="text-black text-right font-bold">
-                <a href="">Lupa sandinya?</a>
-              </p>
-            </div>
-            <div>
-              <div className="bg-purple-800 rounded-lg font-bold text-center w-44 h-12">
-                <button className="py-3" type='submit'>
-                  <a href="">Login</a>
-                </button>
+              <div className="pb-5">
+                <input type="email" className="rounded-lg w-96 text-black" placeholder="Email" />
+              </div>
+              <div className="pb-3">
+                <input type="password" className="rounded-lg w-96 text-black" placeholder="Password" />
+              </div>
+              <div className="grid grid-cols-2 pb-7 font-bold">
+                <div className="text-black">
+                  <p>
+                    <input type="checkbox" /> Tampilkan Kata Sandi
+                  </p>
+                </div>
+                <div className="text-black text-right ">
+                  <a href="">Lupa sandinya?</a>
+                </div>
+                <p className="text-black text-right font-bold"></p>
+              </div>
+              <div>
+                <div className="bg-purple-800 rounded-lg font-bold text-center w-44 h-12">
+                  <button className="py-3" type="submit">
+                    <a href="">Login</a>
+                  </button>
+                </div>
               </div>
             </div>
-
+          </form>
+          <div>
+            <Image
+              src="/tameng.png"
+              alt="Picture of the author"
+              width="320"
+              height="120"
+              objectFit="cover" // change to suit your needs
+              className="ml-96" // just an example
+            />
           </div>
-        </form>
-        <div>
-          <p className="text-black">Gambar.png</p>
-        </div>
+        </main>
       </div>
       <Footer />
     </>

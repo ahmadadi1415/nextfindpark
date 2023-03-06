@@ -1,36 +1,35 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
-import { Navbar } from "components/navbar";
-import { Footer } from "components/footer";
+import Head from 'next/head';
+import Image from 'next/image';
+import { Inter } from '@next/font/google';
+import { Navbar } from '@/components/navbar';
+import { Footer } from '@/components/footer';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
   return (
     <>
       <Navbar />
       <div>
-        <main className={styles.main}>
+        <main className="flex flex-col justify-between items-center p-24 min-h-screen bg-zinc-400">
           <div className="flex w-3/4 container flex-col mr-auto py-28 relative">
-            <h1 className=" text-5xl font-sans text-left">
-              Temukan Lahan Parkiran Terdekat Denganmu
-            </h1>
+            <Image
+              src="/cone.png"
+              alt="Picture of the author"
+              width="320"
+              height="120"
+              objectFit="cover" // change to suit your needs
+              className="ml-96" // just an example
+            />
+            <h1 className="text-5xl font-sans text-left">Temukan Lahan Parkiran Terdekat Denganmu</h1>
             <div className="py-5">
-              <h2 className="text-xl font-sans text-left">
-                Mempermudah anda dalam menemukan lahan parkir.
-              </h2>
-              <p className="text-s font-sans text-left">
-                Segera daftarkan diri anda jika belum mempunyai akun
-              </p>
+              <h2 className="text-xl font-sans text-left">Mempermudah anda dalam menemukan lahan parkir.</h2>
+              <p className="text-s font-sans text-left">Segera daftarkan diri anda jika belum mempunyai akun</p>
             </div>
-          </div>
-          <div className="w-max grid-cols-4 mb-20 max-w-full">
-            <div className="">
+            <div className="py-12">
               <button
                 type="button"
-                className="h-12 w-32 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-m  mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                className="h-12 w-32 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-m mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
               >
                 <a href="">Login</a>
               </button>
