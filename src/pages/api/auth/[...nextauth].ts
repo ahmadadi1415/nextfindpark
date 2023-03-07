@@ -1,12 +1,11 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
-import NextAuth, { Account, Awaitable, Profile, Session, User } from "next-auth"
+
 import GithubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials"
 import EmailProvider from "next-auth/providers/email"
 import prisma from "lib/prisma"
 import { compare } from "bcrypt"
-import { JWT } from "next-auth/jwt"
-import { AdapterUser } from "next-auth/adapters"
+import NextAuth, { Session } from "next-auth"
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -84,7 +83,19 @@ export default NextAuth({
     secret: process.env.NEXTAUTH_SECRET,
   },
   callbacks: {
-    
-  }
+    async jwt ({ token, user }: any) {
+      if (user) {
+        token.role = user.role
+      }
+      return token
+    },
+    session({ session, token } : any) {
+      if (token && session.user) {
+        session.user.role = token.role
+      }
+      return session
+    }
 
+  }
+ 
 })
