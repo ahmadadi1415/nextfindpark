@@ -1,16 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import { GetServerSideProps } from "next"
-import { signIn, signOut, useSession } from "next-auth/react";
-
-interface Data {
-    data: {
-        id: String,
-        name: String,
-        created_at: String,
-        email: String,
-        password: String
-    }
-}
+import { signOut, useSession } from "next-auth/react";
+import Router from "next/router";
 
 export const getServerSideProps: GetServerSideProps = async () => {
     // const prisma = new PrismaClient()
@@ -38,8 +28,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 export default function User() {
 
-
-    const { data: session } = useSession()
+  const { data: session } = useSession()
+  console.log(session)
+  const sess = useSession()
+  console.log(sess)
   if (session) {
     return (
       <>
@@ -51,7 +43,7 @@ export default function User() {
   return (
     <>
       Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+      <button onClick={() => Router.push('/auth')}>Sign in</button>
     </>
   )
 }

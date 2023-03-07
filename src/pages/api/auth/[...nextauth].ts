@@ -1,18 +1,31 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
-import NextAuth from "next-auth"
+import NextAuth, { Account, Awaitable, Profile, Session, User } from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials"
 import EmailProvider from "next-auth/providers/email"
-import prisma  from "lib/prisma"
+import prisma from "lib/prisma"
 import { compare } from "bcrypt"
+import { JWT } from "next-auth/jwt"
+import { AdapterUser } from "next-auth/adapters"
 
-export default NextAuth ({
+export default NextAuth({
   // Configure one or more authentication providers
   providers: [
+    EmailProvider({
+      server: {
+        host: process.env.EMAIL_SERVER_HOST,
+        port: process.env.EMAIL_SERVER_PORT,
+        auth: {
+          user: process.env.EMAIL_SERVER_USER,
+          pass: process.env.EMAIL_SERVER_PASSWORD
+        },
+      },
+      from: process.env.EMAIL_FROM,
+    }),
     GithubProvider({
       clientId: process.env.GITHUB_ID ?? "",
       clientSecret: process.env.GITHUB_SECRET ?? "",
-    }), 
+    }),
     // ...add more providers here
     CredentialsProvider({
       id: "credentials",
@@ -64,10 +77,14 @@ export default NextAuth ({
   debug: process.env.NODE_ENV === "development",
   adapter: PrismaAdapter(prisma),
   session: {
-    strategy: "jwt"
+    strategy: "jwt",
+    maxAge: 60 * 60 * 24,
   },
   jwt: {
-    secret: process.env.NEXTAUTH_SECRET
+    secret: process.env.NEXTAUTH_SECRET,
+  },
+  callbacks: {
+    
   }
-  
+
 })
