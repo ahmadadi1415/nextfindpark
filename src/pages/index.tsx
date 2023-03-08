@@ -11,41 +11,45 @@ export default function Home() {
     <>
       <Navbar />
       <div>
-        <main className="flex flex-col justify-between items-center p-28 min-h-screen bg-zinc-400">
-          <div className="flex w-1/2 container flex-col mr-auto py-1 relative">
-            {/* <Image
+        <main className="p-32 flex items-center justify-between flex-col-2 min-h-screen bg-white">
+          <div className="">
+            <div className="mx-auto flex-col flex w-3/4  ">
+              <h1 className="antialiased text-6xl font-sans text-left text-black font-bold">
+                Temukan Lahan Parkiran Terdekat Denganmu
+              </h1>
+              <div className="py-5">
+                <h2 className="text-xl font-sans text-left text-black font-bold">
+                  Mempermudah anda dalam menemukan lahan parkir.
+                </h2>
+                <p className="text-s font-sans text-left text-black">
+                  Segera daftarkan diri anda jika belum mempunyai akun
+                </p>
+              </div>
+              <div className="py-6 ">
+                <button
+                  type="button"
+                  className="h-12 w-36 inline-block rounded bg-primary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-m mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                >
+                  <a href="">Login</a>
+                </button>
+                <button
+                  type="button"
+                  className="ml-16 h-12 w-36 inline-block rounded text-black bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-m  mr-2 mb-2  dark:hover:bg-grey-200 focus:outline-none dark:focus:ring-blue-800"
+                >
+                  <a href="">Daftar</a>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="">
+            <Image
               src="/cone.png"
-              alt="Picture of the author"
-              width="320"
-              height="120"
+              alt="cone"
+              width="935"
+              height="0"
               objectFit="cover" // change to suit your needs
-              className="ml-96" // just an example
-            /> */}
-            <h1 className="text-5xl font-sans text-left">
-              Temukan Lahan Parkiran Terdekat Denganmu
-            </h1>
-            <div className="py-5">
-              <h2 className="text-xl font-sans text-left">
-                Mempermudah anda dalam menemukan lahan parkir.
-              </h2>
-              <p className="text-s font-sans text-left">
-                Segera daftarkan diri anda jika belum mempunyai akun
-              </p>
-            </div>
-            <div className="py-12">
-              <button
-                type="button"
-                className="h-12 w-32 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-m mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-              >
-                <a href="">Login</a>
-              </button>
-              <button
-                type="button"
-                className="h-12 w-32 text-black bg-blue-200 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-m  mr-2 mb-2  dark:hover:bg-grey-200 focus:outline-none dark:focus:ring-blue-800"
-              >
-                <a href="">Daftar</a>
-              </button>
-            </div>
+              className="scale-100 ml-auto " // just an example
+            />
           </div>
         </main>
       </div>

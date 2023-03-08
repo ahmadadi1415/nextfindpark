@@ -1,11 +1,11 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import { Inter } from '@next/font/google';
-import styles from '@/styles/Home.module.css';
-import { Navbar } from '@/components/navbar';
-import { Footer } from '@/components/footer';
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import styles from "@/styles/Home.module.css";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Login() {
   // Front End Login Form
@@ -19,18 +19,28 @@ export default function Login() {
       </Head>
       <Navbar />
       <div>
-        <main className="p-24 flex items-center justify-between flex-col-2 min-h-screen bg-white ">
+        <main className="p-36 flex items-center justify-between flex-col-2 min-h-screen bg-white ">
           <form>
             <div>
               <div>
-                <p className="text-xl text-amber-900 pb-5 font-bold">Halo!</p>
-                <p className="text-black pb-7">Kamu harus login dulu nih sebelum pakai app-nya</p>
+                <p className="text-5xl text-amber-900  pb-5 font-bold">Halo!</p>
+                <p className="text-xl text-black pb-7">
+                  Kamu harus login dulu nih sebelum pakai app-nya
+                </p>
               </div>
               <div className="pb-5">
-                <input type="email" className="rounded-lg w-96 text-black" placeholder="Email" />
+                <input
+                  type="email"
+                  className="rounded-lg w-96 text-black"
+                  placeholder="Email"
+                />
               </div>
               <div className="pb-3">
-                <input type="password" className="rounded-lg w-96 text-black" placeholder="Password" />
+                <input
+                  type="password"
+                  className="rounded-lg w-96 text-black"
+                  placeholder="Password"
+                />
               </div>
               <div className="grid grid-cols-2 pb-7 font-bold">
                 <div className="text-black">
@@ -52,14 +62,13 @@ export default function Login() {
               </div>
             </div>
           </form>
-          <div>
+          <div className="">
             <Image
               src="/tameng.png"
+              width="540"
+              height="0"
               alt="Picture of the author"
-              width="320"
-              height="120"
-              objectFit="cover" // change to suit your needs
-              className="ml-96" // just an example
+              className="scale-100  mr-24" // just an example
             />
           </div>
         </main>

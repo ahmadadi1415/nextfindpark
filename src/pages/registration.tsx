@@ -1,11 +1,11 @@
-import { useRouter } from 'next/navigation';
-import Head from 'next/head';
-import Image from 'next/image';
-import { Inter } from '@next/font/google';
-import styles from '@/styles/Home.module.css';
-import { Navbar } from '@/components/navbar';
-import { Footer } from '@/components/footer';
-import { useState } from 'react';
+import { useRouter } from "next/navigation";
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import styles from "@/styles/Home.module.css";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+import { useState } from "react";
 
 export default function Registration() {
   // Front End Registration Form
@@ -20,24 +20,42 @@ export default function Registration() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <main className="p-24 flex items-center justify-between flex-col-2 min-h-screen bg-white">
+        <main className="p-36 flex items-center justify-between flex-col-2 min-h-screen bg-white">
           <form>
             <div>
               <div>
-                <p className="text-xl text-amber-900 pb-5 font-bold">Belum punya akun?</p>
-                <p className="text-black pb-7">Isi form dibawah</p>
+                <p className="text-5xl text-amber-900 pb-5 font-bold">
+                  Belum punya akun?
+                </p>
+                <p className="text-xl text-black pb-7">Isi form dibawah</p>
               </div>
               <div className="pb-5">
-                <input type="text" className="rounded-lg w-96 text-black" placeholder="Nama" />
+                <input
+                  type="text"
+                  className="rounded-lg w-96 text-black"
+                  placeholder="Nama"
+                />
               </div>
               <div className="pb-5">
-                <input type="email" className="rounded-lg w-96 text-black" placeholder="Email" />
+                <input
+                  type="email"
+                  className="rounded-lg w-96 text-black"
+                  placeholder="Email"
+                />
               </div>
               <div className="pb-5">
-                <input type="password" className="rounded-lg w-96 text-black" placeholder="Sandi" />
+                <input
+                  type="password"
+                  className="rounded-lg w-96 text-black"
+                  placeholder="Sandi"
+                />
               </div>
               <div className="pb-3">
-                <input type="password" className="rounded-lg w-96 text-black" placeholder="Konfirmasi Sandi" />
+                <input
+                  type="password"
+                  className="rounded-lg w-96 text-black"
+                  placeholder="Konfirmasi Sandi"
+                />
               </div>
               <div className="grid grid-cols-3 pb-7">
                 <div>
@@ -59,10 +77,10 @@ export default function Registration() {
             <Image
               src="/kunci.png"
               alt="Picture of the author"
-              width="320"
-              height="120"
+              width="540"
+              height="0"
               objectFit="cover" // change to suit your needs
-              className="ml-96" // just an example
+              className="scale-100  mr-24" // just an example
             />
           </div>
         </main>
