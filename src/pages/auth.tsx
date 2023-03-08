@@ -4,7 +4,6 @@ import { NextPage } from "next";
 import { getProviders, signIn } from "next-auth/react";
 import Router from "next/router";
 import React, { useState } from "react";
-import prisma from "lib/prisma";
 
 const Auth: NextPage = ({ providers }: any) => {
 
@@ -90,7 +89,8 @@ const Auth: NextPage = ({ providers }: any) => {
             } 
              else {
                 console.log("Please check your email")
-             }
+            }
+
 
         }
         else {
@@ -104,9 +104,12 @@ const Auth: NextPage = ({ providers }: any) => {
                 callbackUrl: `${window.location.origin}`
             })
             console.log(res)
-            //res.error ? console.log(res.error) : redirectToHome()
+            res.error ? console.log(res.error) : redirectToHome()
         }
         
+        const forgotPassword = async(values: FormikValues) => {
+            
+        }
     }
 
     const submitForm = async (values: FormikValues, actions: any) => {

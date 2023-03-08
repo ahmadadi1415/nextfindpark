@@ -10,6 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  admin
+  operator
+  user
+}
+
 model Account {
   id                 String  @id @default(cuid())
   userId             String
@@ -52,7 +58,7 @@ model User {
   rating Rating[]
 
   password String? @db.VarChar(255)
-  isAdmin Boolean @default(false)
+  role Role @default(user)
   createdAt DateTime @default(now())
 }
 
