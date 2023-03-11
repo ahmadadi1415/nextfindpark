@@ -85,13 +85,12 @@ const Auth: NextPage = ({ providers }: any) => {
                     password: values.password,
                     redirect: true,
                  })
-                res.error ? console.log(res.error) : console.log("Email is not verified")
+                res.error ? console.log(res.error) : Router.push("/verification")
             } 
              else {
                 console.log("Please check your email")
+                Router.push("/verification")
             }
-
-
         }
         else {
 
@@ -107,9 +106,6 @@ const Auth: NextPage = ({ providers }: any) => {
             res.error ? console.log(res.error) : redirectToHome()
         }
         
-        const forgotPassword = async(values: FormikValues) => {
-            
-        }
     }
 
     const submitForm = async (values: FormikValues, actions: any) => {
