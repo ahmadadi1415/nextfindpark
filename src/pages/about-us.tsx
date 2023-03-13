@@ -8,7 +8,7 @@ export default function Aboutus() {
   return (
     <>
       <Navbar />
-      <div class="bg-white flex flex-nowrap">
+      <div className="bg-white flex flex-nowrap">
         <div>01</div>
         <div>02</div>
         <div>03</div>
