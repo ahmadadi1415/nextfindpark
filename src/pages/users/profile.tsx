@@ -13,14 +13,50 @@ export default function Profile() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <div className="container">
-        <div>
-          <div className="text-center">
-            <button>UBAH</button>
+      <main className="">
+        <div className="">
+          <div className=" bg-blue-800">
+            <div className="flex text-5xl py-5 px-5">
+              <div className="text-center">
+                <button>
+                  <a href="">V</a>
+                </button>
+              </div>
+              <div className="px-10">
+                <h1>Profil</h1>
+              </div>
+            </div>
+            <div className="flex text-5xl px-24 pb-5 items-center">
+              <div>
+                <img src="/gambarprofile.png" alt="" width={100} />
+              </div>
+              <div className="px-5 font-bold">
+                <h3>@User123</h3>
+              </div>
+              <div>
+                <button>
+                  <img src="/kamera.png" alt="" width={50} />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="container bg-white min-h-screen pt-10 px-48 text-blue-800">
+            <div className="flex text-center justify-center text-5xl font-bold pb-10">
+              <img src="/gambarubah.png" alt="" width={50} />
+              <h3 className="pl-5">
+                <a href="">Ubah</a>
+              </h3>
+            </div>
+            <div className="flex justify-between rounded-lg bg-gray-200 font-bold items-center py-2 px-2 text-3xl">
+              <p>Password</p>
+              <p>*****</p>
+            </div>
+            <div className="flex justify-center py-20">
+              <button className="bg-blue-800 text-white text-3xl px-10 py-1 rounded-full">LOGOUT</button>
+            </div>
           </div>
         </div>
-      </div>
+      </main>
     </>
   );
 }
