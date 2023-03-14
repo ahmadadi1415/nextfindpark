@@ -17,12 +17,7 @@ export default function Profile() {
         <div className="">
           <div className=" bg-blue-800">
             <div className="flex text-5xl py-5 px-5">
-              <div className="text-center">
-                <button>
-                  <a href="">V</a>
-                </button>
-              </div>
-              <div className="px-10">
+              <div className="px-5">
                 <h1>Profil</h1>
               </div>
             </div>
