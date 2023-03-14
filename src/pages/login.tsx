@@ -6,16 +6,20 @@ import { Footer } from "@/components/footer";
 import { Field, Form, Formik, FormikValues } from "formik";
 import { NextPage } from "next";
 import axios from "axios";
-import { getProviders, signIn } from "next-auth/react";
-import Router from "next/router";
+import { getProviders, signIn, useSession } from "next-auth/react";
+import Router, { useRouter } from "next/router";
+import { use, useState } from "react";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const Login: NextPage = ({ providers }: any) => {
 
+	const [showPassword, setShowPassword] = useState(false)
+
 	// Create a Component ProvidersButtons
 	const ProviderButtons = ({ providers }: any) => (
-		<div>
+		<div className="mt-5">
 			{Object.values(providers).map(
 				(provider: any) =>
 					provider.name !== "Credentials" &&
@@ -85,7 +89,7 @@ const Login: NextPage = ({ providers }: any) => {
 											{() => (
 												<div className="pb-3">
 													<input
-														type="password"
+														type={ (showPassword) ? "text" : "password"}
 														name="password"
 														className="rounded-lg w-96 text-black"
 														value={props.values.password}
@@ -96,14 +100,14 @@ const Login: NextPage = ({ providers }: any) => {
 											)}
 										</Field>
 									</div>
-									<div className="grid grid-cols-2 pb-7 font-bold">
+									<div className="grid grid-cols-2 pb-7">
 										<div className="text-black">
 											<p>
-												<input type="checkbox" /> Tampilkan Kata Sandi
+												<input className="form-checkbox rounded-full mr-3" type="checkbox" onClick={(e) => setShowPassword(e.currentTarget.checked)} /> Tampilkan Kata Sandi
 											</p>
 										</div>
-										<div className="text-black text-right ">
-											<a href="">Lupa sandinya?</a>
+										<div className="text-gray-700 underline text-right ">
+											<Link href="/forgot-password">Lupa sandinya?</Link>
 										</div>
 										<p className="text-black text-right font-bold"></p>
 									</div>
@@ -125,8 +129,8 @@ const Login: NextPage = ({ providers }: any) => {
 					<div className="">
 						<Image
 							src="/tameng.png"
-							width="540"
-							height="0"
+							width={270}
+							height={0}
 							alt="Picture of the author"
 							className="scale-100  mr-24" // just an example
 						/>
@@ -141,6 +145,7 @@ const Login: NextPage = ({ providers }: any) => {
 export default Login;
 
 export async function getServerSideProps() {
+
 	return {
 		props: {
 			providers: await getProviders()

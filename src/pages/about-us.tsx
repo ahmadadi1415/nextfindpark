@@ -25,7 +25,7 @@ export default function Aboutus() {
             <div className="w-full lg:w-8/12">
               <img
                 className="w-full h-full"
-                src="/wp7709348.jpg"
+                src="/cone.png"
                 alt="A group of People"
               />
             </div>

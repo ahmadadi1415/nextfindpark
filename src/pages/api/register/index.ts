@@ -17,8 +17,11 @@ const validateForm = async (
     email: string,
     password: string
 ) => {
+    if (!username) {
+        return { error: "Required"}
+    }
     if (!validateEmail(email)) {
-        return { error: "invalid email" }
+        return { error: "Invalid email" }
     }
 
     const userEmail = await prisma?.user.findUnique({
@@ -46,7 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         return res.status(400).json({ error: "Only support POST method" })
     }
 
-    const { username, email, password } = req.body;
+    const { username, fullname, email, password } = req.body;
 
     const errorMessage = await validateForm(username, email, password)
     if (errorMessage) {
@@ -62,7 +65,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             name: username,
             email: email,
             password: hashedPassword,
-            profile: {}
+            profile: {
+                create: {
+                    name: fullname
+                }
+            }
         }
     }).then(() =>
         res.status(201).json({ msg: "Successful create " })

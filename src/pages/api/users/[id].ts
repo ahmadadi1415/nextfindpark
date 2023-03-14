@@ -4,6 +4,7 @@ import bcrypt from "bcrypt"
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const {id} = req.query
+    
     if (req.method === "PATCH") {
         const { password } = req.body
         const hashedPassword = await bcrypt.hash(password, 12)
