@@ -1,30 +1,24 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import Link from "next/link";
+import Head from 'next/head';
+import Image from 'next/image';
+import { Inter } from '@next/font/google';
+import { Navbar } from '@/components/navbar';
+import { Footer } from '@/components/footer';
+import Link from 'next/link';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
   return (
     <>
       <Navbar />
       <div>
-        <main className="p-32 flex items-center justify-between flex-col-2 min-h-screen bg-white">
+        <main className="p-32 flex items-center justify-between flex-col-2 min-h-screen bg-gradient-to-r from-white to-blue-700">
           <div className="">
             <div className="mx-auto flex-col flex w-3/4  ">
-              <h1 className="antialiased text-6xl font-sans text-left text-black font-bold">
-                Temukan Lahan Parkiran Terdekat Denganmu
-              </h1>
+              <h1 className="antialiased text-6xl font-sans text-left text-black font-bold">Temukan Lahan Parkiran Terdekat Denganmu</h1>
               <div className="py-5">
-                <h2 className="text-xl font-sans text-left text-black font-bold">
-                  Mempermudah anda dalam menemukan lahan parkir.
-                </h2>
-                <p className="text-s font-sans text-left text-black">
-                  Segera daftarkan diri anda jika belum mempunyai akun
-                </p>
+                <h2 className="text-xl font-sans text-left text-black font-bold">Mempermudah anda dalam menemukan lahan parkir.</h2>
+                <p className="text-s font-sans text-left text-black">Segera daftarkan diri anda jika belum mempunyai akun</p>
               </div>
               <div className="py-6 ">
                 <button
