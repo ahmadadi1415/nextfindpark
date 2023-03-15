@@ -5,11 +5,6 @@ export function Navbarparkir() {
     <nav className="bg-blue-800">
       <div className="">
         <div className="flex text-5xl pt-5 px-5">
-          <div className="text-center">
-            <button>
-              <a href="">V</a>
-            </button>
-          </div>
           <div className="px-10">
             <h1>@namaparkiran</h1>
           </div>

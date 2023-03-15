@@ -19,13 +19,11 @@ export function Recomcard() {
             </p>
           </div>
           <div className="flex mb-5 max-w-lg px-5 h-20 rounded-r-full justify-items-center items-center bg-blue-800 pr-3">
-            <div className="container">
-              <Image className="" src="/lokasi.png" alt="" width={30} height={30} />
-              <p className="">800 m</p>
+            <div className="container border w-48 h-15">
+              <p className="flex justify-center">800 m</p>
             </div>
-            <div className="container">
-              <Image className="" src="/motor1.png" alt="" width={40} height={40} />
-              <p className="px-4">20%</p>
+            <div className="container border w-48 h-15">
+              <p className="flex justify-center">20%</p>
             </div>
             <div className="container flex text-2xl">
               <Image className="" src="/star.png" alt="" width={35} height={35} />

@@ -29,8 +29,11 @@ export default function Home() {
             <div className="container pl-10">
               <div className=" bg-gray-300 rounded-xl">
                 <div className="flex justify-center py-5">
-                  <div>
-                    <input type="text" className="w-96 rounded-xl" />
+                  <div className="flex text-black">
+                    <input type="text" className="w-96 rounded-l-lg" />
+                    <button className="bg-blue-700 rounded-r-lg">
+                      <img src="/lokasi.png" alt="" />
+                    </button>
                   </div>
                 </div>
                 <div className="flex px-5 text-blue-800">
@@ -41,11 +44,11 @@ export default function Home() {
                     <p>Graha Cakrawala Universitas Negeri Malang Jl. Cakrawala, Sumbersari, Lowokwaru, Kota Malang</p>
                   </div>
                   <div className="flex items-center text-green-700 pl-20">
-                    <div className="text-3xl">
-                      <button className="border-8 border-green-700 w-56 h-14 rounded-full">TERDEKAT</button>
+                    <div className="text-xl">
+                      <button className="border-8 border-green-700 w-48 h-12 rounded-full">TERDEKAT</button>
                     </div>
-                    <div className="text-3xl pl-10">
-                      <button className="border-8 border-green-700 w-56 h-14 rounded-full">TIDAK RAMAI</button>
+                    <div className="text-xl pl-10">
+                      <button className="border-8 border-green-700 w-48 h-12 rounded-full">TIDAK RAMAI</button>
                     </div>
                   </div>
                 </div>
