@@ -58,7 +58,7 @@ export function Findcard() {
             <button className="w-28 bg-green-600 rounded-full">Jarak</button>
           </div>
         </div>
-        <div className="flex items-center px-2 bg-white rounded-r-lg">
+        <div className="flex lg:items-center justify-center py-2 px-2 bg-white rounded-r-lg">
           <div className="flex items-center justify-center border-8 border-red-700 border-lg text-red-700 w-24 h-24 rounded-full">
             <p>40%</p>
           </div>
