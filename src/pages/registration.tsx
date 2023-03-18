@@ -8,12 +8,13 @@ import axios from "axios";
 import { loginUser } from "./login";
 
 export default function Registration() {
-
-	const redirectToVerification = () => {
-		const router = Router
-		const { pathname } = router
-		if (pathname === "/registration") { router.push('/verification') }
-	}
+  const redirectToVerification = () => {
+    const router = Router;
+    const { pathname } = router;
+    if (pathname === '/registration') {
+      router.push('/verification');
+    }
+  };
 
 	const registerNewUser = async (values: FormikValues, actions: any) => {
 		const res = await axios.post("/api/auth/register",
@@ -32,7 +33,7 @@ export default function Registration() {
 		}).catch(error => console.log(error))
 	}
 
-	// Front End Registration Form
+  // Front End Registration Form
 
 	return (
 		<>
@@ -162,30 +163,29 @@ export default function Registration() {
 											</p>
 										</div>
 									</div> */}
-								</div>
-								<div className="bg-purple-800 rounded-lg font-bold text-center w-44 h-12">
-									<button className="py-3" type="submit">
-										Daftar
-									</button>
-								</div>
-							</Form>
-						)}
+                </div>
+                <div className="bg-purple-800 rounded-lg font-bold text-center w-44 h-12">
+                  <button className="py-3" type="submit">
+                    Daftar
+                  </button>
+                </div>
+              </Form>
+            )}
+          </Formik>
 
-					</Formik>
-
-					<div>
-						<Image
-							src="/kunci.png"
-							alt="Picture of the author"
-							width="270"
-							height="0"
-							objectFit="cover" // change to suit your needs
-							className="scale-100  mr-24" // just an example
-						/>
-					</div>
-				</main>
-			</div>
-			<Footer />
-		</>
-	);
+          <div>
+            <Image
+              src="/kunci.png"
+              alt="Picture of the author"
+              width="270"
+              height="0"
+              objectFit="cover" // change to suit your needs
+              className="scale-100  mr-24" // just an example
+            />
+          </div>
+        </main>
+      </div>
+      <Footer />
+    </>
+  );
 }

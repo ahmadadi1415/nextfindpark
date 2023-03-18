@@ -21,12 +21,12 @@ export default function Profile() {
                 <h1>Profil</h1>
               </div>
             </div>
-            <div className="flex text-5xl px-24 pb-5 items-center">
+            <div className="flex md:text-5xl text-3xl md:px-24 px-5 pb-5 items-center">
               <div>
                 <img src="/gambarprofile.png" alt="" width={100} />
               </div>
               <div className="px-5 font-bold">
-                <h3>@User123</h3>
+                <h3>@nama</h3>
               </div>
               <div>
                 <button>
@@ -35,7 +35,7 @@ export default function Profile() {
               </div>
             </div>
           </div>
-          <div className="container bg-white min-h-screen pt-10 px-48 text-blue-800">
+          <div className=" bg-white min-h-screen pt-10 lg:px-64 md:px-24 sm:px-1 text-blue-800">
             <div className="flex text-center justify-center text-5xl font-bold pb-10">
               <img src="/gambarubah.png" alt="" width={50} />
               <h3 className="pl-5">
