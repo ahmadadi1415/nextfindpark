@@ -167,7 +167,7 @@ export const loginUser = async (values: FormikValues, actions: any) => {
 	// Else login using Credentials
 
 	const loginInfo: any = await axios.post(
-		"/api/login",
+		"/api/auth/check-login",
 		JSON.stringify(values),
 		{
 			headers: {
@@ -183,14 +183,14 @@ export const loginUser = async (values: FormikValues, actions: any) => {
 		console.log("not verified");
 
 		// Redirect to verification page
-
 		if (loginInfo.data.hasVerifToken === false) {
 			const res: any = await signIn("email", {
 				email: values.email,
 				password: values.password,
-				redirect: true,
+				redirect: false,
+				callbackUrl: `${window.location.origin}`
 			});
-			res.error ? console.log(res.error) : Router.push("/verification");
+			res.error ? console.log(res) : Router.push("/verification");
 		} else {
 			console.log("Please check your email");
 			Router.push("/verification");

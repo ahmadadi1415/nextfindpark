@@ -5,6 +5,7 @@ import { Footer } from "@/components/footer";
 import Router from "next/router";
 import { Field, Form, Formik, FormikValues } from "formik";
 import axios from "axios";
+import { loginUser } from "./login";
 
 export default function Registration() {
 
@@ -15,7 +16,7 @@ export default function Registration() {
 	}
 
 	const registerNewUser = async (values: FormikValues, actions: any) => {
-		const res = await axios.post("/api/register",
+		const res = await axios.post("/api/auth/register",
 			JSON.stringify(values),
 			{
 				headers: {
@@ -25,7 +26,9 @@ export default function Registration() {
 			}
 		).then(async () => {
 			// Login user after registering
+			await loginUser(values, actions)
 			redirectToVerification()
+			
 		}).catch(error => console.log(error))
 	}
 
@@ -51,7 +54,7 @@ export default function Registration() {
 							const errors: any = {}
 							if (!values.email) {
 								errors.email = "Required"
-							}
+							} 
 							else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
 								errors.email = "Invalid Email Address"
 							}
@@ -61,7 +64,7 @@ export default function Registration() {
 							if (values.password.length < 8) {
 								errors.password = "Password at least has 8 characters"
 							}
-							else if (values.confirmation !== values.password) {
+							else if (values.confirmation !== values.password ) {
 								errors.confirmation == "Confirmation password is different with password"
 							}
 							return errors

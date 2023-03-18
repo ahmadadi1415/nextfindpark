@@ -13,9 +13,16 @@ export default function Home() {
     <>
       <Navbar />
       <div>
-        <main className="p-24 flex flex-col-3 items-center justify-between min-h-screen bg-white">
-          <div>
+        <main className="p-24 grid grid-cols-3 items-center justify-between min-h-screen bg-white gap-2">
+          <div className="">
             <Recomcard />
+          </div>
+          <div className='border container col-span-2'>
+            <div className=''>
+              <input className='form-input rounded-full w-4/6 mx-auto' type="search" name="" id="" />
+            <Recomcard />
+            </div>
+            
           </div>
           <div>
             <Recomcard />
