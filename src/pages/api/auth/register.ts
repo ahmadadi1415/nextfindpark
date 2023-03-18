@@ -1,6 +1,7 @@
 import prisma from "lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt"
+import { createUser } from "../users";
 
 interface ResponseData {
     error?: string,
@@ -12,12 +13,12 @@ const validateEmail = (email: string): boolean => {
     return regEx.test(email);
 }
 
-const validateForm = async (
-    username: string,
-    email: string,
-    password: string
-) => {
+const validateForm = async (username: string, fullname: string, email: string, password: string) => {
     if (!username) {
+        return { error: "Required" }
+    }
+
+    if (!fullname) {
         return { error: "Required"}
     }
     if (!validateEmail(email)) {
@@ -51,27 +52,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     const { username, fullname, email, password } = req.body;
 
-    const errorMessage = await validateForm(username, email, password)
+    const errorMessage = await validateForm(username, fullname, email, password)
     if (errorMessage) {
         return res.status(400).json(errorMessage as ResponseData)
     }
-
-    // Hashing password
-    const hashedPassword = await bcrypt.hash(password, 12)
-
+    
     // Creating new user 
-    await prisma.user.create({
-        data: {
-            name: username,
-            email: email,
-            password: hashedPassword,
-            profile: {
-                create: {
-                    name: fullname
-                }
-            }
-        }
-    }).then(() =>
+
+    await createUser(req.body).then(() =>
         res.status(201).json({ msg: "Successful create " })
     ).catch((error: string) =>
         res.status(400).json({ error: "API error" + error })

@@ -5,7 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import EmailProvider, { SendVerificationRequestParams } from "next-auth/providers/email"
 import prisma from "lib/prisma"
 import { compare } from "bcrypt"
-import NextAuth, { Session } from "next-auth"
+import NextAuth from "next-auth"
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -74,6 +74,7 @@ export default NextAuth({
   pages: {
     signIn: "/login",
     verifyRequest: "/verification",
+
   },
   debug: process.env.NODE_ENV === "development",
   adapter: PrismaAdapter(prisma),
@@ -96,8 +97,7 @@ export default NextAuth({
         session.user.role = token.role
       }
       return session
-    }
-
+    },
   }
 
 })

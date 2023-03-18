@@ -18,12 +18,13 @@ const ResetPassword: NextPage = ({ userExists, verified }: any) => {
         const password = values.password
         const data = {
             id: id,
-            password: password
+            password: password,
+            token: token
         }
 
         console.log(data)
 
-        const res = await axios.patch(`/api/users/${id}`,
+        const res = await axios.patch(`/api/users/${id}/reset-password`,
             JSON.stringify(data),
             {
                 headers: {

@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     })
 
     if (!user) {
-        return res.json({ status: "User doesn't exist"})
+        return res.status(404).json({ status: "User doesn't exist"})
     }
 
     const oldPassword = await user.password 

@@ -16,7 +16,9 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
         }
     })
     
+    // If user has verification token, return true
     const hasVerifToken = (token !== 0) ? true : false
+    // Get the email verified of user
     const emailVerified = await userData?.emailVerified
     
     res.json({emailVerified, hasVerifToken})

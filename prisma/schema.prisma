@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,107 +7,110 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  admin
-  operator
-  user
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade, map: "Account_userId_fkey")
+
+  @@unique([provider, providerAccountId], map: "Account_provider_providerAccountId_key")
+  @@index([userId], map: "Account_userId_fkey")
 }
 
-model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+model ParkingHistory {
+  id            Int        @id @default(autoincrement())
+  parking_start DateTime
+  parking_end   DateTime
+  user_id       String     @unique(map: "ParkingHistory_user_id_key")
+  parkinglot_id Int
+  parkinglot    ParkingLot @relation(fields: [parkinglot_id], references: [id], map: "ParkingHistory_parkinglot_id_fkey")
+  user          User       @relation(fields: [user_id], references: [id], map: "ParkingHistory_user_id_fkey")
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([parkinglot_id], map: "ParkingHistory_parkinglot_id_fkey")
+}
 
-  @@unique([provider, providerAccountId])
+model ParkingLot {
+  id             Int              @id @default(autoincrement())
+  name           String           @db.VarChar(255)
+  description    String           @db.MediumText
+  location       String           @db.MediumText
+  image          String?
+  latitude       String?
+  longitude      String?
+  status         Boolean          @default(false)
+  hourlyFee      String           @default("0")
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime
+  parkinghistory ParkingHistory[]
+  rating         Rating[]
+}
+
+model Profile {
+  id       Int     @id @default(autoincrement())
+  fullname String  @db.VarChar(255)
+  user_id  String  @unique(map: "Profile_user_id_key")
+  user     User    @relation(fields: [user_id], references: [id], map: "Profile_user_id_fkey")
+}
+
+model Rating {
+  id            Int        @id @default(autoincrement())
+  rate          Int        @db.TinyInt
+  review        String?    @db.LongText
+  pict_review   String?
+  user_id       String
+  parkinglot_id Int
+  parkinglot    ParkingLot @relation(fields: [parkinglot_id], references: [id], map: "Rating_parkinglot_id_fkey")
+  user          User       @relation(fields: [user_id], references: [id], map: "Rating_user_id_fkey")
+
+  @@index([parkinglot_id], map: "Rating_parkinglot_id_fkey")
+  @@index([user_id], map: "Rating_user_id_fkey")
 }
 
 model Session {
   id           String   @id @default(cuid())
-  sessionToken String   @unique
+  sessionToken String   @unique(map: "Session_sessionToken_key")
   userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade, map: "Session_userId_fkey")
+
+  @@index([userId], map: "Session_userId_fkey")
 }
 
 model User {
-  id String @id @default(cuid())
-  name String?
-  email String @unique
-  emailVerified DateTime?
-  image String?
-
-  accounts Account[]
-  sessions Session[]
-
-  profile Profile?
-  parking ParkingHistory[]
-  rating Rating[]
-
-  password String? @db.VarChar(255)
-  role Role @default(user)
-  createdAt DateTime @default(now())
+  id             String          @id @default(cuid())
+  name           String?
+  email          String          @unique(map: "User_email_key")
+  emailVerified  DateTime?
+  image          String?
+  password       String?         @db.VarChar(255)
+  role           UserRole       @default(user)
+  createdAt      DateTime        @default(now())
+  account        Account[]
+  parkinghistory ParkingHistory?
+  profile        Profile?
+  rating         Rating[]
+  session        Session[]
 }
 
 model VerificationToken {
   identifier String
-  token      String   @unique
+  token      String   @unique(map: "VerificationToken_token_key")
   expires    DateTime
 
-  @@unique([identifier, token])
-}
-model Profile {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(255)
-  photo String?
-
-  user User @relation(fields: [user_id], references: [id])
-  user_id String @unique
+  @@unique([identifier, token], map: "VerificationToken_identifier_token_key")
 }
 
-model ParkingLot {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(255)
-  description String @db.MediumText
-  location String @db.MediumText
-  latitude String?
-  longitude String?
-  status Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  parking ParkingHistory[]
-  rating Rating[]
-}
-
-model ParkingHistory {
-  id Int @id @default(autoincrement())
-  parking_start DateTime 
-  parking_end DateTime 
-
-  user User @relation(fields: [user_id], references: [id])
-  user_id String @unique
-  parking_lot ParkingLot @relation(fields: [parkinglot_id], references: [id])
-  parkinglot_id Int
-}
-model Rating {
-  id Int @id @default(autoincrement())
-  rate Int @db.TinyInt
-  review String? @db.LongText
-  pict_review String?
-
-  user User @relation(fields: [user_id], references: [id])
-  user_id String
-  parking_lot ParkingLot @relation(fields: [parkinglot_id], references: [id])
-  parkinglot_id Int
+enum UserRole {
+  admin
+  operator
+  user
 }
