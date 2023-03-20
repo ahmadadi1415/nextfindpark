@@ -2,6 +2,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { Inter } from '@next/font/google';
 import styles from '@/styles/Home.module.css';
+import { Navbar } from '@/components/navbar';
+import { Footer } from '@/components/footer';
 
 export default function Profile() {
   // Front End User Profile
@@ -13,45 +15,61 @@ export default function Profile() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Navbar />
       <main className="">
-        <div className="">
-          <div className=" bg-blue-800">
-            <div className="flex text-5xl py-5 px-5">
-              <div className="px-5">
-                <h1>Profil</h1>
-              </div>
-            </div>
-            <div className="flex md:text-5xl text-3xl md:px-24 px-5 pb-5 items-center">
-              <div>
-                <img src="/gambarprofile.png" alt="" width={100} />
-              </div>
-              <div className="px-5 font-bold">
-                <h3>@nama</h3>
-              </div>
-              <div>
-                <button>
-                  <img src="/kamera.png" alt="" width={50} />
-                </button>
-              </div>
+        <div className="flex bg-white min-h-screen bg-gradient-to-r px-10 py-10 from-white to-blue-700">
+          <div className="container">
+            <div className="flex justify-center">
+              <img src="/gambarprofile.svg" alt="" />
             </div>
           </div>
-          <div className=" bg-white min-h-screen pt-10 lg:px-64 md:px-24 sm:px-1 text-blue-800">
-            <div className="flex text-center justify-center text-5xl font-bold pb-10">
-              <img src="/gambarubah.png" alt="" width={50} />
-              <h3 className="pl-5">
-                <a href="">Ubah</a>
-              </h3>
+          <div className="container text-black">
+            <h3 className="text-4xl font-bold py-5">PROFIL</h3>
+            <div>
+              <input type="text" className="w-96 rounded-xl" placeholder="Nama" />
             </div>
-            <div className="flex justify-between rounded-lg bg-gray-200 font-bold items-center py-2 px-2 text-3xl">
-              <p>Password</p>
-              <p>*****</p>
+            <div className="py-5">
+              <input type="text" className="w-96 rounded-xl" placeholder="Program Studi" />
             </div>
-            <div className="flex justify-center py-20">
-              <button className="bg-blue-800 text-white text-3xl px-10 py-1 rounded-full">LOGOUT</button>
+            <div>
+              <input type="text" className="w-96 rounded-xl" placeholder="Angkatan" />
+            </div>
+            <div className="py-5">
+              <a href="" className="bg-blue-700 text-white px-10 py-2 font-bold rounded-xl">
+                PERBARUI
+              </a>
+            </div>
+          </div>
+          <div className="container bg-gray-300 rounded-xl text-black">
+            <div className="flex justify-center text-4xl font-bold py-5">
+              <h3>GANTI PASSWORD</h3>
+            </div>
+            <div className="flex justify-center">
+              <input type="password" className="w-96 rounded-xl" placeholder="Kata Sandi Lama" />
+            </div>
+            <div className="flex justify-center py-5">
+              <input type="password" className="w-96 rounded-xl" placeholder="Kata Sandi Baru" />
+            </div>
+            <div className="flex justify-center">
+              <input type="password" className="w-96 rounded-xl" placeholder="Konfirmasi Kata Sandi Baru" />
+            </div>
+            <div className="flex justify-center py-5 font-bold text-white">
+              <a href="" className="px-10 py-2 rounded-xl bg-blue-700">
+                GANTI
+              </a>
+            </div>
+            <div className="flex justify-center font-bold text-4xl">
+              <h3>HAPUS AKUN</h3>
+            </div>
+            <div className="flex justify-center py-5 font-bold text-white">
+              <a href="" className="px-10 py-2 rounded-xl bg-blue-700">
+                HAPUS
+              </a>
             </div>
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

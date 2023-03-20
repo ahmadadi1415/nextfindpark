@@ -2,8 +2,11 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { Inter } from '@next/font/google';
 import styles from '@/styles/Home.module.css';
-import { Navbarparkir } from '@/components/navbarparkir';
+import { Navbar } from '@/components/navbar';
+import { Maps } from '@/components/maps.';
+
 const inter = Inter({ subsets: ['latin'] });
+
 export default function ParkingRate() {
   return (
     <>
@@ -13,8 +16,38 @@ export default function ParkingRate() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbarparkir />
-      <main className="flex bg-white min-h-screen"></main>
+
+      <Navbar />
+      <main className=" bg-white">
+        <div className="flex px-10 py-10">
+          <Maps />
+          <div className="container pl-10">
+            <div className=" py-2 px-5 rounded-xl bg-gray-300">
+              <div className=" flex justify-center text-4xl font-bold text-black">
+                <h1>PARKIRAN KUNING</h1>
+              </div>
+              <div className="flex justify-center py-5">
+                <img src="/star.svg" alt="" />
+                <img src="/star.svg" alt="" />
+                <img src="/star.svg" alt="" />
+                <img src="/star.svg" alt="" />
+                <img src="/star.svg" alt="" />
+              </div>
+              <div className="flex justify-center text-black font-bold">
+                <p>BAGAIMANA MENURUTMU KAMU?</p>
+              </div>
+              <div className="flex justify-center text-black py-2">
+                <input type="text" className="w-96" placeholder="Tulis ulasanmu..." />
+              </div>
+              <div className="flex justify-center py-5">
+                <div className="flex items-center rounded-full text-xl bg-blue-700 py-2 px-5">
+                  <a href="">BERI PENILAIAN</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </>
   );
 }
