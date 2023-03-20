@@ -42,7 +42,7 @@ export default function Dashboard() {
                       TIDAK
                     </button>
                   </div>
-                  <div className="mt-80">
+                  <div className="mt-36">
                     <button className="bg-blue-900 rounded-xl font-bold text-center w-44 h-12">
                       SIMPAN
                     </button>
