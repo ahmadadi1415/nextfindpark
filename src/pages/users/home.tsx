@@ -1,12 +1,12 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import { Findcard, Recomcard } from "@/components/recomcard";
+import Head from 'next/head';
+import Image from 'next/image';
+import { Inter } from '@next/font/google';
+import styles from '@/styles/Home.module.css';
+import { Navbar } from '@/components/navbar';
+import { Footer } from '@/components/footer';
+import { Findcard, Recomcard } from '@/components/recomcard';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
   return (
@@ -16,9 +16,7 @@ export default function Home() {
         <main className="px-10 lg:flex min-h-screen bg-white">
           <div className="">
             <div className="mx-auto text-black">
-              <h1 className="text-center py-5 font-bold text-3xl">
-                REKOMENDASI
-              </h1>
+              <h1 className="text-center py-5 font-bold text-3xl">REKOMENDASI</h1>
               <div>
                 <div className="pb-5">
                   <Recomcard />
@@ -35,8 +33,8 @@ export default function Home() {
                 <div className="flex justify-center py-5">
                   <div className="flex text-black">
                     <input type="text" className="lg:w-96 rounded-l-lg" />
-                    <button className="bg-blue-700 rounded-r-lg">
-                      <img src="/lokasi.png" alt="" />
+                    <button className="bg-blue-700 py-1 px-1 rounded-r-lg">
+                      <img src="/search.png" alt="" />
                     </button>
                   </div>
                 </div>
@@ -46,22 +44,15 @@ export default function Home() {
                       <img src="/lokasi.png" alt="" />
                     </div>
                     <div className="pl-1">
-                      <p>
-                        Graha Cakrawala Universitas Negeri Malang Jl. Cakrawala,
-                        Sumbersari, Lowokwaru, Kota Malang
-                      </p>
+                      <p>Graha Cakrawala Universitas Negeri Malang Jl. Cakrawala, Sumbersari, Lowokwaru, Kota Malang</p>
                     </div>
                   </div>
                   <div className="flex justify-between text-green-700 lg:pl-20">
                     <div className="text-xl">
-                      <button className="lg:border-8  border-green-700 lg:w-48 lg:h-12 rounded-full">
-                        TERDEKAT
-                      </button>
+                      <button className="lg:border-8  border-green-700 lg:w-48 lg:h-12 rounded-full">TERDEKAT</button>
                     </div>
                     <div className="text-xl lg:pl-10">
-                      <button className="lg:border-8 border-green-700 lg:w-48 lg:h-12 rounded-full">
-                        TIDAK RAMAI
-                      </button>
+                      <button className="lg:border-8 border-green-700 lg:w-48 lg:h-12 rounded-full">TIDAK RAMAI</button>
                     </div>
                   </div>
                 </div>

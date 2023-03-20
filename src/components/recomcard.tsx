@@ -18,7 +18,7 @@ export function Recomcard() {
               voluptates atque delectus?
             </p>
           </div>
-          <div className="flex mb-5 max-w-lg px-5 h-20 rounded-r-full justify-items-center items-center bg-blue-800 pr-3">
+          <div className="flex mb-5 max-w-lg px-5 h-20 rounded-r-full justify-items-center items-center bg-blue-700 pr-3">
             <div className="container border w-48 h-15">
               <p className="flex justify-center">800 m</p>
             </div>
@@ -46,7 +46,7 @@ export function Recomcard() {
 export function Findcard() {
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col rounded-lg bg-blue-800 shadow-lg md:max-w-xl md:flex-row">
+      <div className="flex flex-col rounded-lg bg-blue-700 shadow-lg md:max-w-xl md:flex-row">
         <div className="flex flex-col justify-start p-6">
           <h5 className="mb-2 text-3xl font-bold text-neutral-800 dark:text-neutral-50">Nama Parkiran</h5>
           <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
