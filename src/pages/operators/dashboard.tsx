@@ -20,10 +20,10 @@ export default function Dashboard() {
             <div className="py-5 flex -mx-2 ">
               <div className="w-1/3 px-2 ">
                 <div className="flex flex-col items-center bg-gray-300 rounded-xl h-screen ">
-                  <h1 className="px-4 py-5 text-black text-2xl">
+                  <h1 className="text-center px-4 py-5 text-black text-4xl font-serif font-bold">
                     Parkiran Fakultas Ilmu Sosial
                   </h1>
-                  <div className="flex flex-col items-center box-content bg-purple-800 rounded-xl h-52 w-52 p-4 border-4">
+                  <div className="flex flex-col items-center box-content bg-blue-900 rounded-xl h-52 w-52 p-4 border-4">
                     <h1 className="font-bold text-2xl text-center py-2">
                       KENDARAAN TERPARKIR
                     </h1>
@@ -35,34 +35,34 @@ export default function Dashboard() {
                     </h1>
                   </div>
                   <div className="flex gap-4">
-                    <button className="bg-purple-800 rounded-xl font-bold text-center w-24 h-12">
+                    <button className="bg-blue-900 rounded-xl font-bold text-center w-24 h-12">
                       YA
                     </button>
                     <button className="bg-gray-200 text-purple-800 rounded-xl font-bold text-center w-24 h-12">
                       TIDAK
                     </button>
                   </div>
-                  <div className="py-12">
-                    <button className="bg-purple-800 rounded-xl font-bold text-center w-44 h-12">
+                  <div className="mt-80">
+                    <button className="bg-blue-900 rounded-xl font-bold text-center w-44 h-12">
                       SIMPAN
                     </button>
                   </div>
-                  <div>
-                    <button className="bg-purple-800 rounded-xl font-bold text-center w-44 h-12">
+                  {/* <div>
+                    <button className="bg-blue-900 rounded-xl font-bold text-center w-44 h-12">
                       LIHAT PARKIRAN
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
-              <div className="w-full px-2">
+              <div className="w-full px-2 ">
                 <div className="bg-gray-300 rounded-xl h-screen ">
                   <img
                     src="/contohpark.png"
                     alt="fispark"
-                    className="px-12 py-5 rounded-xl lg:block hidden w-full"
+                    className="mx-auto py-5 rounded-xl lg:block hidden w-9/12"
                   />
-                  <div className="py-12 flex flex-col items-center">
-                    <button className="bg-purple-800 rounded-xl font-bold text-center w-64 h-14">
+                  <div className="py-12 flex flex-col items-center ">
+                    <button className="bg-blue-900 rounded-xl font-bold text-center w-64 h-14">
                       GANTI
                     </button>
                   </div>
