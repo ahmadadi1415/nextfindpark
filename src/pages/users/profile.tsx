@@ -49,14 +49,17 @@ export default function Profile({ userProfile }: Props) {
 
     const uploadImage = async (e: any) => {
         e.preventDefault()
-        try {
-            const response = await axios.post("/api/cloudinary/profile-photo-upload", {
-                image
-            })
-            console.log(response)
-        } catch (error) {
-            console.log(error)
-        }
+        const response = await axios.patch(`/api/users/profile/${userProfile.user_id}`, {
+          photo: image
+        }).then((r) => console.log(r))
+        // try {
+        //     const response = await axios.post("/api/cloudinary/profile-photo-upload", {
+        //         image
+        //     })
+        //     console.log(response)
+        // } catch (error) {
+        //     console.log(error)
+        // }
     }
 
   async function updateProfile(values: FormikValues) {
@@ -259,7 +262,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   let photo_url = null
   try {
-    const cldImage: any = await cloudinary.api.resource('/profile-photos/p55i3njvvkw1udjcb82k', {
+    const cldImage: any = await cloudinary.api.resource(userProfile?.photo as string, {
       transformations: {
         crop: 'fill',
         width: '300',
