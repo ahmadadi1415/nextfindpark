@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const {id} = req.query
 
     // UPDATE PARKING LOT DATA
-    if (req.method === "PATCH") {
+    if (req.method === "PUT") {
         const {name, description, location, longitude, latitude, hourlyFee}: BodyPropsUpdate = req.body
 
         const response = await prisma.parkingLot.update({

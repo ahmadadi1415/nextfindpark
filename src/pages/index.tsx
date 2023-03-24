@@ -4,10 +4,13 @@ import { Inter } from '@next/font/google';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
+  const session = useSession()
+  console.log(session)
   return (
     <>
       <Navbar />

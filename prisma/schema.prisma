@@ -56,7 +56,8 @@ model ParkingLot {
 
 model Profile {
   id       Int     @id @default(autoincrement())
-  fullname String  @db.VarChar(255)
+  fullname String?  @db.VarChar(255)
+  photo String?
   user_id  String  @unique(map: "Profile_user_id_key")
   user     User    @relation(fields: [user_id], references: [id], map: "Profile_user_id_fkey")
 }
@@ -65,14 +66,23 @@ model Rating {
   id            Int        @id @default(autoincrement())
   rate          Int        @db.TinyInt
   review        String?    @db.LongText
-  pict_review   String?
+  
   user_id       String
   parkinglot_id Int
+
+  pict_review RatingPictures[]
   parkinglot    ParkingLot @relation(fields: [parkinglot_id], references: [id], map: "Rating_parkinglot_id_fkey")
   user          User       @relation(fields: [user_id], references: [id], map: "Rating_user_id_fkey")
 
   @@index([parkinglot_id], map: "Rating_parkinglot_id_fkey")
   @@index([user_id], map: "Rating_user_id_fkey")
+}
+
+model RatingPictures {
+  id Int @id @default(autoincrement())
+  image String
+  rating_id Int
+  rating Rating @relation(fields: [rating_id], references: [id])
 }
 
 model Session {

@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(404).json({ status: "User doesn't exist"})
     }
 
-    const oldPassword = await user.password 
+    const oldPassword = user.password 
     const secret = process.env.JWT_SECRET?? + !oldPassword
 
     const token = jwt.sign({ email: user.email, id: user.id }, secret as jwt.Secret, {

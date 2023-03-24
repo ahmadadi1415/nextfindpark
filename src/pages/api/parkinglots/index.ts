@@ -3,6 +3,16 @@ import prisma from "lib/prisma";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     
+    if (req.method === "GET") {
+        const {id} = req.body
+        const response = await prisma.parkingLot.findUnique({
+            where: {
+                id: id
+            }
+        })
+        res.status(200).json(response)
+    }
+
     // Create Parking Lot 
     if (req.method === "POST") {
         const {name, description, location, longitude, latitude, hourlyFee} = req.body

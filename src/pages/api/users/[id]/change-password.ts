@@ -4,11 +4,11 @@ import prisma from "lib/prisma";
 import bcrypt, { compare } from "bcrypt";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const session: any = getSession({req})
+    const session = await getSession({req})
     const {id} = req.query
 
     // If id in query is not the same as in session, then say errors 403 Forbidden
-    if (id !== session.data.user.id) {
+    if (id !== session?.user?.id) {
         return res.status(403).json({error: "You are forbidden to do this"})
     }
 

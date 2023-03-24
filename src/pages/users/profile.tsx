@@ -4,8 +4,84 @@ import { Inter } from '@next/font/google';
 import styles from '@/styles/Home.module.css';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
+import { Field, Form, Formik, FormikValues } from 'formik';
+import { GetServerSidePropsContext } from 'next';
+import prisma from 'lib/prisma';
+import { getSession } from 'next-auth/react';
+import axios from 'axios';
+import cloudinary from '@/utils/cloudinary';
+import Router from 'next/router';
+import Modal from 'react-modal'
+import { useEffect, useRef, useState } from 'react';
 
-export default function Profile() {
+interface Props {
+  userProfile: {
+    fullname: string,
+    photo: string,
+    photo_url: string,
+    user_id: string
+  }
+}
+
+export default function Profile({ userProfile }: Props) {
+  const [openNotifyModal, setOpenNotifyModal] = useState(false)
+  const [notification, setNotification] = useState("")
+
+  const [localImg, setLocalImg] = useState()
+  const [image, setImage] = useState([])
+  const hiddenImageInput: any = useRef(null)
+
+    useEffect(() => {
+      console.log(localImg)
+      console.log(image)
+    }, [image, localImg])
+    
+
+    const handleImage = (e: any) => {
+        const file = e.target.files[0]
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onloadend = () => {
+            setLocalImg(file)
+            setImage(reader.result as any)
+        }
+    }
+
+    const uploadImage = async (e: any) => {
+        e.preventDefault()
+        try {
+            const response = await axios.post("/api/cloudinary/profile-photo-upload", {
+                image
+            })
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+  async function updateProfile(values: FormikValues) {
+    const response = await axios.put(`/api/users/profile/${userProfile.user_id}`,
+      {
+        fullname: values.fullname
+      }
+    )
+    setNotification((response.status === 200) ? "Yes! Your profile now is updated!" : "Sorry, failed to update data")
+  }
+
+  async function updatePassword(values: FormikValues) {
+    const response = await axios.patch(`/api/users/${userProfile.user_id}/change-password`, {
+      id: userProfile.user_id,
+      oldPassword: values.oldPassword,
+      newPassword: values.newPassword
+    })
+
+    setNotification((response.status === 200) ? "Yes! Your password now is updated!" : `Sorry, failed to update your password ${response.data.message}`)
+  }
+
+  async function deleteAccount() {
+    const response = await axios.delete(`/api/users/${userProfile.user_id}`)
+  }
+
   // Front End User Profile
   return (
     <>
@@ -17,54 +93,151 @@ export default function Profile() {
       </Head>
       <Navbar />
       <main className="">
+
         <div className="flex bg-white min-h-screen bg-gradient-to-r px-10 py-10 from-white to-blue-700">
           <div className="container">
             <div className="flex justify-center">
-              <img src="/gambarprofile.svg" alt="" />
+              <div>
+                <div className='w-72 h-72 relative' >
+                  <Image className='rounded-full object-cover' fill priority={true} alt="User Profile Photo"
+                    src={(!localImg) ? (userProfile.photo_url) ? userProfile.photo_url : "/gambarprofile.svg" : URL.createObjectURL(localImg)} />
+                </div>
+                <input type="file" accept=".jpg, .jpeg, .png" onChange={handleImage} hidden={true} ref={hiddenImageInput}/>
+
+                {/* Button for Edit, Delete, and Save */}
+                <button className='text-center' onClick={() => {hiddenImageInput?.current?.click()}}>
+                  Edit
+                </button>
+                {
+                  (localImg && image) &&
+                  (<div>
+                    <button onClick={() => {setLocalImg(undefined); setImage([]); hiddenImageInput.current.value = null}}>
+                      Delete
+                    </button>
+                    <button onClick={ uploadImage }>
+                      Save
+                    </button>
+                  </div>)
+                }
+                
+              </div>
             </div>
           </div>
           <div className="container text-black">
-            <h3 className="text-4xl font-bold py-5">PROFIL</h3>
             <div>
-              <input type="text" className="w-96 rounded-xl" placeholder="Nama" />
-            </div>
-            <div className="py-5">
-              <input type="text" className="w-96 rounded-xl" placeholder="Program Studi" />
-            </div>
-            <div>
-              <input type="text" className="w-96 rounded-xl" placeholder="Angkatan" />
-            </div>
-            <div className="py-5">
-              <a href="" className="bg-blue-700 text-white px-10 py-2 font-bold rounded-xl">
-                PERBARUI
-              </a>
+              <Formik
+                initialValues={{ fullname: userProfile.fullname }}
+                validateOnChange={false}
+                validateOnBlur={false}
+                onSubmit={(values, actions) => {
+                  console.log("Update Profile")
+                  updateProfile(values)
+                  actions.setSubmitting(true)
+                }}
+              >
+                {(props) => (
+                  <Form>
+                    <h3 className="text-4xl font-bold py-5">PROFIL</h3>
+                    <Field name="fullname" >
+                      {() => (
+                        <div className='text-black'>
+                          <input type="text" name="fullname" className="w-96 rounded-xl" value={props.values.fullname} onChange={(e) => props.handleChange(e)} placeholder="Nama" />
+                        </div>
+                      )}
+                    </Field>
+                    <Field>
+                      {() => (
+                        <div className="py-5">
+                          <input type="text" className="w-96 rounded-xl" placeholder="Program Studi" />
+                        </div>
+                      )}
+                    </Field>
+                    <Field>
+                      {() => (
+                        <div>
+                          <input type="text" className="w-96 rounded-xl" placeholder="Angkatan" />
+                        </div>
+                      )}
+                    </Field>
+                    <div className="py-5">
+                      <button type='submit' className="bg-blue-700 text-white px-10 py-2 font-bold rounded-xl">
+                        PERBARUI
+                      </button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
             </div>
           </div>
           <div className="container bg-gray-300 rounded-xl text-black">
-            <div className="flex justify-center text-4xl font-bold py-5">
-              <h3>GANTI PASSWORD</h3>
-            </div>
-            <div className="flex justify-center">
-              <input type="password" className="w-96 rounded-xl" placeholder="Kata Sandi Lama" />
-            </div>
-            <div className="flex justify-center py-5">
-              <input type="password" className="w-96 rounded-xl" placeholder="Kata Sandi Baru" />
-            </div>
-            <div className="flex justify-center">
-              <input type="password" className="w-96 rounded-xl" placeholder="Konfirmasi Kata Sandi Baru" />
-            </div>
-            <div className="flex justify-center py-5 font-bold text-white">
-              <a href="" className="px-10 py-2 rounded-xl bg-blue-700">
-                GANTI
-              </a>
-            </div>
+            <Formik
+              initialValues={{ oldPassword: '', newPassword: '', confirmation: '' }}
+              validateOnBlur={false}
+              validateOnChange={true}
+              validate={
+                (values) => {
+                  const errors: any = {}
+                  if (values.newPassword && values.newPassword.length < 8) {
+                    errors.newPassword = 'Password is too short'
+                    console.log(errors)
+                  }
+
+                  if (values.confirmation && values.newPassword && values.newPassword !== values.confirmation) {
+                    errors.confirmation = 'Your confirmation password is not the same as before'
+                    console.log(errors)
+                  }
+                }
+              }
+              onSubmit={(values, actions) => {
+                console.log("Change Password")
+                updatePassword(values)
+              }}
+            >
+              {(props) => (
+                <Form>
+                  <div className="flex justify-center text-4xl font-bold py-5">
+                    <h3>GANTI PASSWORD</h3>
+                  </div>
+                  <Field name="oldPassword">
+                    {() => (
+                      <div className="flex justify-center">
+                        <input type="password" name='oldPassword' className="w-96 rounded-xl" value={props.values.oldPassword} onChange={props.handleChange} placeholder="Kata Sandi Lama" />
+                      </div>
+                    )}
+                  </Field>
+                  <Field name="newPassword">
+                    {() => (
+                      <div className="flex justify-center py-5">
+                        <input type="password" name='newPassword' className="w-96 rounded-xl" value={props.values.newPassword} onChange={props.handleChange} placeholder="Kata Sandi Baru" />
+                      </div>
+                    )}
+                  </Field>
+                  <Field name="confirmation">
+                    {() => (
+                      <div className="flex justify-center">
+                        <input type="password" name='confirmation' className="w-96 rounded-xl" value={props.values.confirmation} onChange={props.handleChange} placeholder="Konfirmasi Kata Sandi Baru" />
+                      </div>
+                    )}
+                  </Field>
+
+                  <div className="flex justify-center py-5 font-bold text-white">
+                    <button type='submit' className="px-10 py-2 rounded-xl bg-blue-700">
+                      GANTI
+                    </button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+
             <div className="flex justify-center font-bold text-4xl">
               <h3>HAPUS AKUN</h3>
             </div>
             <div className="flex justify-center py-5 font-bold text-white">
-              <a href="" className="px-10 py-2 rounded-xl bg-blue-700">
+              <button onClick={() => {
+
+              }} className="px-10 py-2 rounded-xl bg-blue-700">
                 HAPUS
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -72,4 +245,41 @@ export default function Profile() {
       <Footer />
     </>
   );
+
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const userId = (await getSession(context))?.user?.id
+
+  const userProfile = await prisma.profile.findUnique({
+    where: {
+      user_id: userId
+    }
+  })
+
+  let photo_url = null
+  try {
+    const cldImage: any = await cloudinary.api.resource('/profile-photos/p55i3njvvkw1udjcb82k', {
+      transformations: {
+        crop: 'fill',
+        width: '300',
+        height: '300'
+      }
+    })
+      .then((result) => {
+        console.log(result)
+        photo_url = (JSON.parse(JSON.stringify(result))).secure_url
+      })
+
+  } catch (error) {
+    console.log(error)
+  }
+
+  return {
+    props: {
+      userProfile: {
+        ...userProfile, photo_url
+      }
+    }
+  }
 }

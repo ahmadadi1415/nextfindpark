@@ -1,11 +1,14 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 
 import GithubProvider from "next-auth/providers/github"
+import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import EmailProvider, { SendVerificationRequestParams } from "next-auth/providers/email"
 import prisma from "lib/prisma"
 import { compare } from "bcrypt"
-import NextAuth from "next-auth"
+import NextAuth, { Account, Profile, User } from "next-auth"
+import { signIn } from "next-auth/react"
+import cloudinary from "@/utils/cloudinary"
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -25,6 +28,10 @@ export default NextAuth({
     GithubProvider({
       clientId: process.env.GITHUB_ID ?? "",
       clientSecret: process.env.GITHUB_SECRET ?? "",
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID ?? "",
+      clientSecret: process.env.GOOGLE_SECRET ?? "",
     }),
     // ...add more providers here
     CredentialsProvider({
@@ -86,18 +93,30 @@ export default NextAuth({
     secret: process.env.NEXTAUTH_SECRET,
   },
   callbacks: {
-    async jwt({ token, user }: any) {
+    async jwt({ token, user, isNewUser }) {
       if (user) {
         token.role = user.role
+        token.uid = user.id
       }
       return token
     },
-    session({ session, token }: any) {
+    async session({ session, token, user }) {
       if (token && session.user) {
         session.user.role = token.role
+        session.user.id = token.uid as string
+
+        const profile = await prisma.profile.findUnique({
+          where: {
+            user_id: token.uid as string
+          },
+          select: {
+            photo: true
+          }
+        })
       }
       return session
     },
+    
   }
 
 })

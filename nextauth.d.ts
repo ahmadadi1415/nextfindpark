@@ -7,7 +7,7 @@ export enum Role {
 }
 
 interface IUser extends DefaultUser {
-    role?: Role
+    role?: Role,
 }
 
 declare module "next-auth" {
