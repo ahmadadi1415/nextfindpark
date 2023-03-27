@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { Inter } from '@next/font/google';
 import styles from '@/styles/Home.module.css';
 import { Navbar } from '@/components/navbar';
+import { Footer } from '@/components/footer';
+import { Rating } from '@/components/userRatings';
 import dynamic from 'next/dynamic';
 const inter = Inter({ subsets: ['latin'] });
 const Maps = dynamic(() => import('@/components/map'), {
@@ -21,12 +23,12 @@ export default function ParkingDetails() {
       </Head>
       <Navbar />
       <main className="min-h-screen bg-white">
-        <div className="flex px-10 py-10">
-          <div className="container rounded-xl">
+        <div className="lg:flex px-10 py-10">
+          <div className="container rounded-xl pb-2">
             <Maps />
           </div>
-          <div className="container pl-10">
-            <div className=" py-2 px-5 rounded-xl bg-gray-300">
+          <div className="container lg:pl-10">
+            <div className=" py-2 px-2 lg:px-5 rounded-xl bg-gray-300">
               <div className=" flex justify-center text-4xl font-bold text-black">
                 <h1>PARKIRAN KUNING</h1>
               </div>
@@ -49,7 +51,7 @@ export default function ParkingDetails() {
                 <Komentar />
                 <Komentar />
               </div>
-              <div className="flex justify-between px-40">
+              <div className="flex justify-between ">
                 <div className="flex items-center rounded-full bg-blue-700 py-2 px-5">
                   <img src="/star.svg" alt="" />
                   <p className="text-xl">5</p>
@@ -62,6 +64,7 @@ export default function ParkingDetails() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }
@@ -78,11 +81,7 @@ export function Komentar() {
             <p>Nama Pengguna</p>
           </div>
           <div className="flex">
-            <img src="/star.svg" alt="" />
-            <img src="/star.svg" alt="" />
-            <img src="/star.svg" alt="" />
-            <img src="/star.svg" alt="" />
-            <img src="/star.svg" alt="" />
+            <Rating />
           </div>
         </div>
         <div className="text-black">

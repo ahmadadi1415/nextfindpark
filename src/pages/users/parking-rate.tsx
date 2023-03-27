@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { Inter } from '@next/font/google';
 import styles from '@/styles/Home.module.css';
 import { Navbar } from '@/components/navbar';
+import { Footer } from '@/components/footer';
+import { Rating } from '@/components/userRatings';
 import dynamic from 'next/dynamic';
 const Maps = dynamic(() => import('@/components/map'), {
   ssr: false,
@@ -21,30 +23,26 @@ export default function ParkingRate() {
       </Head>
 
       <Navbar />
-      <main className=" bg-white">
-        <div className="flex px-10 py-10">
-          <div className="container rounded-xl">
+      <main className="min-h-screen bg-white">
+        <div className="lg:flex px-10 py-10">
+          <div className="container rounded-xl pb-2">
             <Maps />
           </div>
-          <div className="container pl-10">
-            <div className=" py-2 px-5 rounded-xl bg-gray-300">
-              <div className=" flex justify-center text-4xl font-bold text-black">
+          <div className="container lg:pl-10">
+            <div className=" py-5 px-5 rounded-xl bg-gray-300">
+              <div className=" lg:flex justify-center text-4xl font-bold text-black">
                 <h1>PARKIRAN KUNING</h1>
               </div>
               <div className="flex justify-center py-5">
-                <img src="/star.svg" alt="" />
-                <img src="/star.svg" alt="" />
-                <img src="/star.svg" alt="" />
-                <img src="/star.svg" alt="" />
-                <img src="/star.svg" alt="" />
+                <Rating />
               </div>
               <div className="flex justify-center text-black font-bold">
                 <p>BAGAIMANA MENURUTMU KAMU?</p>
               </div>
               <div className="flex justify-center text-black py-2">
-                <input type="text" className="w-96" placeholder="Tulis ulasanmu..." />
+                <textarea name="" id="" className="w-96 h-36"></textarea>
               </div>
-              <div className="flex justify-center py-5">
+              <div className="flex justify-center pt-5">
                 <div className="flex items-center rounded-full text-xl bg-blue-700 py-2 px-5">
                   <a href="">BERI PENILAIAN</a>
                 </div>
@@ -53,6 +51,7 @@ export default function ParkingRate() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }
