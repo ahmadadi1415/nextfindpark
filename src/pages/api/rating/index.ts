@@ -9,7 +9,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const response = await prisma.rating.findMany({
             where: {
                 parkinglot_id: parkinglot_id,
-                
             }
         })
 
@@ -27,6 +26,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 parkinglot_id: parkinglot_id,
                 user_id: user_id, 
             }
+        })
+
+        const parkingRating = await prisma.rating.findMany({
+            where: {
+                parkinglot_id: parkinglot_id
+            },
+            select: {
+                _count: true,
+                rate: true,
+            }
+        }).then((ratings) => {
+            // Update Rate inside ParkingLot table
         })
 
         for (const image in images) {

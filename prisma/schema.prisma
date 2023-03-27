@@ -48,6 +48,7 @@ model ParkingLot {
   longitude      String?
   status         Boolean          @default(false)
   hourlyFee      String           @default("0")
+  rate           Float            @default(0)
   createdAt      DateTime         @default(now())
   updatedAt      DateTime
   parkinghistory ParkingHistory[]
