@@ -3,7 +3,10 @@ import Image from 'next/image';
 import { Inter } from '@next/font/google';
 import styles from '@/styles/Home.module.css';
 import { Navbar } from '@/components/navbar';
-import { Maps } from '@/components/maps.';
+import dynamic from 'next/dynamic';
+const Maps = dynamic(() => import('@/components/map'), {
+  ssr: false,
+});
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,7 +23,9 @@ export default function ParkingRate() {
       <Navbar />
       <main className=" bg-white">
         <div className="flex px-10 py-10">
-          <Maps />
+          <div className="container rounded-xl">
+            <Maps />
+          </div>
           <div className="container pl-10">
             <div className=" py-2 px-5 rounded-xl bg-gray-300">
               <div className=" flex justify-center text-4xl font-bold text-black">

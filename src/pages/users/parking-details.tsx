@@ -3,8 +3,11 @@ import Image from 'next/image';
 import { Inter } from '@next/font/google';
 import styles from '@/styles/Home.module.css';
 import { Navbar } from '@/components/navbar';
-import { Maps } from '@/components/maps.';
+import dynamic from 'next/dynamic';
 const inter = Inter({ subsets: ['latin'] });
+const Maps = dynamic(() => import('@/components/map'), {
+  ssr: false,
+});
 
 export default function ParkingDetails() {
   return (
@@ -17,9 +20,11 @@ export default function ParkingDetails() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <main className=" bg-white">
+      <main className="min-h-screen bg-white">
         <div className="flex px-10 py-10">
-          <Maps />
+          <div className="container rounded-xl">
+            <Maps />
+          </div>
           <div className="container pl-10">
             <div className=" py-2 px-5 rounded-xl bg-gray-300">
               <div className=" flex justify-center text-4xl font-bold text-black">
