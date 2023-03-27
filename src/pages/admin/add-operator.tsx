@@ -3,8 +3,26 @@ import Image from "next/image";
 import { Inter } from "@next/font/google";
 import { Footer } from "@/components/footer";
 import { Navbaradmin } from "@/components/navbaradmin";
+import { Field, Form, Formik, FormikValues } from "formik";
+import axios from "axios";
+import { UserRole } from "@prisma/client";
 
 export default function addOperator() {
+
+  const addOperator = async(values: FormikValues, actions: any) => {
+    console.log(values)
+    const response = await axios.post("/api/auth/register",
+      JSON.stringify(values),
+			{
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json"
+				},
+			}
+		)
+    console.log(response)
+  }
+
   return (
     <>
       <Head>
@@ -65,38 +83,146 @@ export default function addOperator() {
         <div className="h-screen p-4  dark:border-gray-700 mt-14">
           <div className="h-full rounded-xl flex items-start mb-4 rounded bg-gray-300 ">
             <div className="flex flex-wrap w-full">
+              <Formik
+                initialValues={{ fullname: '', email: '', password: '', confirmation: '', parkingLotId: '', role: UserRole.operator }}
+                validateOnChange={true}
+                validateOnBlur={false}
+                validate={
+                  (values) => {
+                    const errors: any = {}
+                    if (!(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i).test(values.email)) {
+                      errors.email = 'Invalid email'
+                    }
+                    if (values.password && values.password.length < 8) {
+                      errors.password = 'Password is too short'
+                      console.log(errors)
+                    }
+
+                    if (values.confirmation && values.password && values.password !== values.confirmation) {
+                      errors.confirmation = 'Your confirmation password is not the same as before'
+                      console.log(errors)
+                    }
+                  }
+                }
+                onSubmit={(values, actions) => {
+                  console.log("Add new operator")
+                  addOperator(values, actions)
+                }}
+              >
+                {(props) => (
+                  <Form className="w-full px-12">
+                    <Field name="fullname">
+                      {() => (
+                        <div>
+                          <div className="py-4 ">
+                            <label className=" w-36 inline-block text-black text-left">
+                              Nama Operator
+                            </label>
+                          </div>
+                          <div>
+                            <input
+                              className="rounded-xl text-black w-80"
+                              type="text"
+                              name="fullname"
+                              value={props.values.fullname}
+                              onChange={props.handleChange}
+                              placeholder="Nama Lengkap"
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </Field>
+                    <Field name="email">
+                      {() => (
+                        <div>
+                          <div className="py-4 ">
+                            <label className=" w-36 inline-block text-black text-left">
+                              Email
+                            </label>
+                          </div>
+                          <div>
+                            <input
+                              className="rounded-xl text-black w-80"
+                              type="text"
+                              name="email"
+                              value={props.values.email}
+                              onChange={props.handleChange}
+                              placeholder="Email"
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </Field>
+                    <Field name="password">
+                      {() => (
+                        <div>
+                          <div className="py-4 ">
+                            <label className=" w-36 inline-block text-black text-left">
+                              Sandi
+                            </label>
+                          </div>
+                          <div>
+                            <input
+                              className="rounded-xl text-black w-80"
+                              type="password"
+                              name="password"
+                              value={props.values.password}
+                              onChange={props.handleChange}
+                              placeholder="Sandi"
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </Field>
+                    <Field name="confirmation">
+                      {() => (
+                        <div>
+                          <div className="py-4 ">
+                            <label className=" w-36 inline-block text-black text-left">
+                              Konfirmasi Sandi
+                            </label>
+                          </div>
+                          <div>
+                            <input
+                              className="rounded-xl text-black w-80"
+                              type="password"
+                              name="confirmation"
+                              value={props.values.confirmation}
+                              onChange={props.handleChange}
+                              placeholder="Konfirmasi"
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </Field>
+                    <Field>
+                      {() => (
+                        <div>
+                          <div className="py-4 ">
+                            <label className=" w-36 inline-block text-black text-left">
+                              Parkiran
+                            </label>
+                          </div>
+                          <div>
+                            <select
+                              className="rounded-xl text-black w-80"
+                              placeholder="Nama Operator"
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </Field>
+                    <div className="block py-4 ">
+                      <button type="submit" className="bg-blue-900 rounded-xl font-bold text-center w-44 h-12">
+                        TAMBAH
+                      </button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
               <form className="w-full px-12 ">
-                <div className="py-4 ">
-                  <label className=" w-36 inline-block text-black text-left">
-                    Nama
-                  </label>
-                </div>
-                <div>
-                  <input
-                    className="rounded-xl text-black w-80"
-                    type="text"
-                    placeholder="Nama Operator"
-                  />
-                </div>
-                <div className="py-4 ">
-                  <label className=" w-36 inline-block text-black text-left">
-                    Parkiran
-                  </label>
-                </div>
-                <div>
-                  <select
-                    className="rounded-xl text-black w-80"
-                    placeholder="Nama Operator"
-                  />
-                </div>
-                <div className="block py-4 ">
-                  <button
-                    type="button"
-                    className="bg-blue-900 rounded-xl font-bold text-center w-44 h-12"
-                  >
-                    TAMBAH
-                  </button>
-                </div>
+
+
               </form>
             </div>
           </div>

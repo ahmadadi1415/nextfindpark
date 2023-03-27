@@ -55,7 +55,7 @@ export default function Registration() {
 							const errors: any = {}
 							if (!values.email) {
 								errors.email = "Required"
-							} 
+							}
 							else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
 								errors.email = "Invalid Email Address"
 							}
@@ -65,11 +65,11 @@ export default function Registration() {
 							if (values.password.length < 8) {
 								errors.password = "Password at least has 8 characters"
 							}
-							else if (values.confirmation !== values.password ) {
+							else if (values.confirmation !== values.password) {
 								errors.confirmation == "Confirmation password is different with password"
 							}
 							return errors
-						}
+							}
 						}
 						onSubmit={(values:any, actions: any) => {
 							console.log("onSubmit")

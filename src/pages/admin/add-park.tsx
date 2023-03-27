@@ -4,6 +4,7 @@ import { Inter } from "@next/font/google";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { Navbaradmin } from "@/components/navbaradmin";
+import { Formik } from "formik";
 
 export default function addPark() {
   return (
@@ -101,6 +102,17 @@ export default function addPark() {
         <div className="h-screen p-4  dark:border-gray-700 mt-14">
           <div className="h-full rounded-xl flex items-start mb-4 rounded bg-gray-300 ">
             <div className="flex flex-wrap w-full">
+              <Formik
+                initialValues={{ name:'', description: '', location: '', latitude: '', longitude: '', hourlyFee: 0, image: ''}}
+                validateOnChange={false}
+                validateOnBlur={false}
+                onSubmit={(values, actions) => {
+                  console.log("Add new parking lot")
+                }}
+              >
+
+
+              </Formik>
               <form className="w-full px-12 ">
                 <div className="block py-4 ">
                   <label className=" w-36 inline-block text-black text-left">

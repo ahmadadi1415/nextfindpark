@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (!profile) {
         // Create profile if user profile doesnt exist
-        const response = await prisma.profile.create({
+        await prisma.profile.create({
             data: {
                 user_id: id as string,
             }
@@ -29,14 +29,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (req.method === "PATCH") {
+
         // Upload user photo to cloudinary
         try {
             const result = await cloudinary.uploader.upload(photo, {
                 upload_preset: "profile_photo",
-                public_id: profile?.photo as string ?? "",
+                public_id: (profile!.photo) ? profile!.photo.replace('profile-photos/', '') as string : "",
                 overwrite: true
             })
-
+            console.log(result)
             const photoPublicId = result.public_id
             const response = await prisma.profile.update({
                 where: {

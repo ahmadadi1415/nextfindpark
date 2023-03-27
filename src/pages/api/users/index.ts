@@ -28,15 +28,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 }
 
 export async function createUser(body: any) {
-    const { username, fullname, email, password, role } = body
+    const { username, fullname, email, password, role, parkingLotId } = body
     const hashedPassword = await bcrypt.hash(password, 12)
 
     const response = await prisma.user.create({
         data: {
-            name: username,
+            name: (email as string).slice(0, (email as string).indexOf("@")),
             email: email,
             role: (!role) ? "user": role,
             password: hashedPassword,
+            parkingLotId: (role === "operator" && parkingLotId) ? parkingLotId : null,
             profile: {
                 create: {
                     fullname: fullname

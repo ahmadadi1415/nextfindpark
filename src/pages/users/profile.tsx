@@ -10,9 +10,8 @@ import prisma from 'lib/prisma';
 import { getSession } from 'next-auth/react';
 import axios from 'axios';
 import cloudinary from '@/utils/cloudinary';
-import Router from 'next/router';
-import Modal from 'react-modal'
 import { useEffect, useRef, useState } from 'react';
+import { resizeImage } from '@/utils/image-resizer';
 
 interface Props {
   userProfile: {
@@ -31,37 +30,34 @@ export default function Profile({ userProfile }: Props) {
   const [image, setImage] = useState([])
   const hiddenImageInput: any = useRef(null)
 
-    useEffect(() => {
-      console.log(localImg)
-      console.log(image)
-    }, [image, localImg])
-    
+  useEffect(() => {
+    console.log(localImg)
+    console.log(image)
+  }, [image, localImg])
 
-    const handleImage = (e: any) => {
-        const file = e.target.files[0]
-        const reader = new FileReader()
-        reader.readAsDataURL(file)
+
+  const handleImage = async (e: any) => {
+    const reader = new FileReader()
+    await resizeImage(e.target.files[0], 512, 512)
+      .then(blob => {
+        setLocalImg(blob as any)
+        reader.readAsDataURL(blob)
         reader.onloadend = () => {
-            setLocalImg(file)
-            setImage(reader.result as any)
+          setImage(reader.result as any)
         }
-    }
+      })
 
-    const uploadImage = async (e: any) => {
-        e.preventDefault()
-        const response = await axios.patch(`/api/users/profile/${userProfile.user_id}`, {
-          photo: image
-        }).then((r) => console.log(r))
-        // try {
-        //     const response = await axios.post("/api/cloudinary/profile-photo-upload", {
-        //         image
-        //     })
-        //     console.log(response)
-        // } catch (error) {
-        //     console.log(error)
-        // }
-    }
+  }
 
+  // Upload user photo profile
+  const uploadImage = async (e: any) => {
+    e.preventDefault()
+    const response = await axios.patch(`/api/users/profile/${userProfile.user_id}`, {
+      photo: image
+    }).then((r) => console.log(r))
+  }
+
+  // Update user profile data
   async function updateProfile(values: FormikValues) {
     const response = await axios.put(`/api/users/profile/${userProfile.user_id}`,
       {
@@ -71,6 +67,7 @@ export default function Profile({ userProfile }: Props) {
     setNotification((response.status === 200) ? "Yes! Your profile now is updated!" : "Sorry, failed to update data")
   }
 
+  // Update user password
   async function updatePassword(values: FormikValues) {
     const response = await axios.patch(`/api/users/${userProfile.user_id}/change-password`, {
       id: userProfile.user_id,
@@ -81,6 +78,7 @@ export default function Profile({ userProfile }: Props) {
     setNotification((response.status === 200) ? "Yes! Your password now is updated!" : `Sorry, failed to update your password ${response.data.message}`)
   }
 
+  // Delete user account
   async function deleteAccount() {
     const response = await axios.delete(`/api/users/${userProfile.user_id}`)
   }
@@ -105,24 +103,24 @@ export default function Profile({ userProfile }: Props) {
                   <Image className='rounded-full object-cover' fill priority={true} alt="User Profile Photo"
                     src={(!localImg) ? (userProfile.photo_url) ? userProfile.photo_url : "/gambarprofile.svg" : URL.createObjectURL(localImg)} />
                 </div>
-                <input type="file" accept=".jpg, .jpeg, .png" onChange={handleImage} hidden={true} ref={hiddenImageInput}/>
+                <input type="file" accept=".jpg, .jpeg, .png" onChange={handleImage} hidden={true} ref={hiddenImageInput} />
 
                 {/* Button for Edit, Delete, and Save */}
-                <button className='text-center' onClick={() => {hiddenImageInput?.current?.click()}}>
+                <button className='text-center' onClick={() => { hiddenImageInput?.current?.click() }}>
                   Edit
                 </button>
                 {
                   (localImg && image) &&
                   (<div>
-                    <button onClick={() => {setLocalImg(undefined); setImage([]); hiddenImageInput.current.value = null}}>
+                    <button onClick={() => { setLocalImg(undefined); setImage([]); hiddenImageInput.current.value = null }}>
                       Delete
                     </button>
-                    <button onClick={ uploadImage }>
+                    <button onClick={uploadImage}>
                       Save
                     </button>
                   </div>)
                 }
-                
+
               </div>
             </div>
           </div>

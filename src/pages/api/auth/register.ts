@@ -14,9 +14,9 @@ const validateEmail = (email: string): boolean => {
 }
 
 const validateForm = async (username: string, fullname: string, email: string, password: string) => {
-    if (!username) {
-        return { error: "Required" }
-    }
+    // if (!username) {
+    //     return { error: "Required" }
+    // }
 
     if (!fullname) {
         return { error: "Required"}

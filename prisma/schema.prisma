@@ -52,6 +52,7 @@ model ParkingLot {
   updatedAt      DateTime
   parkinghistory ParkingHistory[]
   rating         Rating[]
+  operator       User[]
 }
 
 model Profile {
@@ -66,7 +67,6 @@ model Rating {
   id            Int        @id @default(autoincrement())
   rate          Int        @db.TinyInt
   review        String?    @db.LongText
-  
   user_id       String
   parkinglot_id Int
 
@@ -109,6 +109,10 @@ model User {
   profile        Profile?
   rating         Rating[]
   session        Session[]
+
+  // For Operator
+  parkingLot     ParkingLot? @relation(fields: [parkingLotId], references: [id])
+  parkingLotId   Int?
 }
 
 model VerificationToken {
