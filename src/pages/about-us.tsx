@@ -1,9 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
-import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import Link from "next/link";
+import Navbar from "@/components/navbar";
+
 export default function Aboutus() {
   return (
     <>
