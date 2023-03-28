@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import { Navbar } from "@/components/navbar";
+import Navbar  from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import Router from "next/router";
 import { Field, Form, Formik, FormikValues } from "formik";

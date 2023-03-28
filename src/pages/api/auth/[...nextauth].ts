@@ -113,6 +113,18 @@ export default NextAuth({
             photo: true
           }
         })
+
+        let photoUrl = null
+        try {
+          await cloudinary.api.resource(profile?.photo as string)
+            .then((result) => {
+              photoUrl = (JSON.parse(JSON.stringify(result))).secure_url
+            })
+        } catch (error) {
+          console.log(error)
+        }
+
+        session.user.image = photoUrl
       }
       return session
     },

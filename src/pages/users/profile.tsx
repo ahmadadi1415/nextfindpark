@@ -2,12 +2,12 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { Inter } from '@next/font/google';
 import styles from '@/styles/Home.module.css';
-import { Navbar } from '@/components/navbar';
+import Navbar  from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { Field, Form, Formik, FormikValues } from 'formik';
 import { GetServerSidePropsContext } from 'next';
 import prisma from 'lib/prisma';
-import { getSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import axios from 'axios';
 import cloudinary from '@/utils/cloudinary';
 import { useEffect, useRef, useState } from 'react';
@@ -30,6 +30,8 @@ export default function Profile({ userProfile }: Props) {
   const [image, setImage] = useState([])
   const hiddenImageInput: any = useRef(null)
 
+  const session = useSession()
+  
   useEffect(() => {
     console.log(localImg)
     console.log(image)
@@ -46,7 +48,6 @@ export default function Profile({ userProfile }: Props) {
           setImage(reader.result as any)
         }
       })
-
   }
 
   // Upload user photo profile
@@ -74,7 +75,6 @@ export default function Profile({ userProfile }: Props) {
       oldPassword: values.oldPassword,
       newPassword: values.newPassword
     })
-
     setNotification((response.status === 200) ? "Yes! Your password now is updated!" : `Sorry, failed to update your password ${response.data.message}`)
   }
 
@@ -100,8 +100,8 @@ export default function Profile({ userProfile }: Props) {
             <div className="flex justify-center">
               <div>
                 <div className='w-72 h-72 relative' >
-                  <Image className='rounded-full object-cover' fill priority={true} alt="User Profile Photo"
-                    src={(!localImg) ? (userProfile.photo_url) ? userProfile.photo_url : "/gambarprofile.svg" : URL.createObjectURL(localImg)} />
+                  <Image className='rounded-full object-cover' fill sizes='50vw' priority={true} alt="User Profile Photo"
+                    src={(!localImg) ? (session.data?.user?.image) ? session.data.user.image : "/gambarprofile.svg" : URL.createObjectURL(localImg)} />
                 </div>
                 <input type="file" accept=".jpg, .jpeg, .png" onChange={handleImage} hidden={true} ref={hiddenImageInput} />
 
@@ -259,22 +259,16 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   })
 
   let photo_url = null
-  try {
-    const cldImage: any = await cloudinary.api.resource(userProfile?.photo as string, {
-      transformations: {
-        crop: 'fill',
-        width: '300',
-        height: '300'
-      }
-    })
-      .then((result) => {
-        console.log(result)
-        photo_url = (JSON.parse(JSON.stringify(result))).secure_url
-      })
+  // try {
+  //   const cldImage: any = await cloudinary.api.resource(userProfile?.photo as string)
+  //     .then((result) => {
+  //       console.log(result)
+  //       photo_url = (JSON.parse(JSON.stringify(result))).secure_url
+  //     })
 
-  } catch (error) {
-    console.log(error)
-  }
+  // } catch (error) {
+  //   console.log(error)
+  // }
 
   return {
     props: {
