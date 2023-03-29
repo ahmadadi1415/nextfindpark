@@ -28,6 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 }
 
 export async function createUser(body: any) {
+    await prisma.$connect()
     const { username, fullname, email, password, role, parkingLotId } = body
     const hashedPassword = await bcrypt.hash(password, 12)
 
