@@ -1,4 +1,4 @@
-import { Navbar } from "@/components/navbar";
+import Navbar from "@/components/navbar";
 import axios from "axios";
 import { Field, Form, Formik, FormikValues } from "formik";
 import { NextPage } from "next";
@@ -88,7 +88,6 @@ const ForgotPassword: NextPage = () => {
 						className="scale-100  mr-24" // just an example
 					/>
 				</div>
-
 			</main>
 		</>
 	);

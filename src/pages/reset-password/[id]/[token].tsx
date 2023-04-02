@@ -5,7 +5,7 @@ import prisma from "lib/prisma";
 import axios from "axios";
 import { Field, Form, Formik, FormikValues } from "formik";
 import Head from "next/head";
-import { Navbar } from "@/components/navbar";
+import Navbar from "@/components/navbar";
 import Image from "next/image";
 
 

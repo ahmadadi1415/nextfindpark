@@ -12,7 +12,7 @@ export default function Verification() {
     return (
         <>
             {
-                (session) ? (
+                (session.data?.user?.email) ? (
                     <div>
                         <Link href={"/login"}>Return to Homepage</Link>
                     </div>

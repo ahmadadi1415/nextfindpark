@@ -4,8 +4,29 @@ import { Inter } from "@next/font/google";
 import { Footer } from "@/components/footer";
 import { Navbaradmin } from "@/components/navbaradmin";
 import { Formik } from "formik";
+import { resizeImage } from "@/utils/image-resizer";
+import { useState } from "react";
 
 export default function addPark() {
+
+  const [localImg, setLocalImg] = useState()
+  const [image, setImage] = useState()
+
+  // Handle file image from admin
+  const handleImage = async (e: any) => {
+		const reader = new FileReader()
+    // Resize the image
+		await resizeImage(e.target.files[0], 1080, 1080)
+			.then(blob => {
+				setLocalImg(blob as any)
+				reader.readAsDataURL(blob)
+				reader.onloadend = () => {
+					setImage(reader.result as any)
+				}
+			})
+	}
+
+
   return (
     <>
       <Head>

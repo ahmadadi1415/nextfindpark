@@ -6,6 +6,9 @@ import Navbar  from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { Rating } from '@/components/userRatings';
 import dynamic from 'next/dynamic';
+import { GetServerSidePropsContext } from 'next';
+import { getSession } from 'next-auth/react';
+import Router from 'next/router';
 const Maps = dynamic(() => import('@/components/map'), {
   ssr: false,
 });
@@ -54,4 +57,11 @@ export default function ParkingRate() {
       <Footer />
     </>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = getSession(context)
+  if (!session) {
+    Router.push('/login')
+  }
 }
