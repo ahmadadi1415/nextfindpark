@@ -10,6 +10,8 @@ import { getProviders, signIn, useSession } from "next-auth/react";
 import Router, { useRouter } from "next/router";
 import { use, useState } from "react";
 import Link from "next/link";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ["latin"] });
 const Login: NextPage = ({ providers }: any) => {
@@ -195,11 +197,13 @@ export const loginUser = async (values: FormikValues, actions: any) => {
         redirect: false,
         callbackUrl: `${window.location.origin}`,
       });
+      toast.info("Please check your email");
+      <ToastContainer />;
       res.error ? console.log(res) : Router.push("/verification");
     } else {
+      toast.info("Please check your email");
+      <ToastContainer />;
       console.log("Please check your email");
-      // <ToastContainer />;
-      // toast.error("email belum verif");
     }
   } else {
     // If the email is verified, sign in using credentials
@@ -210,6 +214,8 @@ export const loginUser = async (values: FormikValues, actions: any) => {
       redirect: false,
       callbackUrl: `${window.location.origin}`,
     });
+    toast.info("Please check your email");
+    <ToastContainer />;
     console.log(res);
     res.error ? console.log(res.error) : redirectToHome();
   }
