@@ -6,6 +6,8 @@ import Router from "next/router";
 import { Field, Form, Formik, FormikValues } from "formik";
 import axios from "axios";
 import { loginUser } from "./login";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Registration() {
   const redirectToVerification = () => {
@@ -28,9 +30,11 @@ export default function Registration() {
 		).then(async () => {
 			// Login user after registering
 			await loginUser(values, actions)
-			redirectToVerification()
-			
-		}).catch(error => console.log(error))
+			toast.success("Pendaftaran berhasil! Cek email anda untuk verifikasi email!")
+		}).catch(error => {
+			console.log(error)
+			toast.error(error.response.data.error)
+		})
 	}
 
   // Front End Registration Form
@@ -44,7 +48,7 @@ export default function Registration() {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<div>
+			<ToastContainer/>
 				<main className="p-36 flex items-center justify-between flex-col-2 min-h-screen bg-white">
 					<Formik
 						initialValues={{ username: '', fullname: '', email: '', password: '', confirmation: '' }}
@@ -184,7 +188,6 @@ export default function Registration() {
             />
           </div>
         </main>
-      </div>
       <Footer />
     </>
   );

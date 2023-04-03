@@ -1,3 +1,4 @@
+import { Footer } from "@/components/footer";
 import Navbar from "@/components/navbar";
 import axios from "axios";
 import { Field, Form, Formik, FormikValues } from "formik";
@@ -6,6 +7,7 @@ import { Main } from "next/document";
 import Head from "next/head";
 import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const ForgotPassword: NextPage = () => {
 	const forgotPassword = async (values: FormikValues, actions: any) => {
@@ -18,15 +20,15 @@ const ForgotPassword: NextPage = () => {
 					"Content-Type": "application/json",
 				},
 			})
-			.catch((error) => {console.log(error)});
-		console.log(res);
-		if (!res) {
-			toast.error("Email tidak ditemukan!")
-		}
+			.catch((error) => {console.log(error.response); toast.error(error.response.data.status)})
+			.then((result: any) => {
+				if (result) { toast.success("Harap cek kotak masuk email Anda!") }
+			});
 	};
 
 	return (
 		<>
+		
 			<Navbar />
 			<Head>
 				<title>Change Password</title>
@@ -34,7 +36,9 @@ const ForgotPassword: NextPage = () => {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
+				<ToastContainer />
 			<main className="p-36 flex items-center justify-between flex-col-2 min-h-screen bg-white">
+				
 				<div className="">
 					<div>
 						<p className="text-5xl text-amber-900 pb-5 font-bold">
@@ -108,7 +112,7 @@ const ForgotPassword: NextPage = () => {
 					/>
 				</div>
 			</main>
-			<ToastContainer/>
+			<Footer/>
 		</>
 	);
 };
