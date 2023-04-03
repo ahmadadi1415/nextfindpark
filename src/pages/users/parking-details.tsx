@@ -6,6 +6,7 @@ import Navbar from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { Rating } from '@/components/userRatings';
 import dynamic from 'next/dynamic';
+import { Chart } from 'chart.js';
 const inter = Inter({ subsets: ['latin'] });
 const Maps = dynamic(() => import('@/components/map'), {
   ssr: false,
@@ -32,26 +33,12 @@ export default function ParkingDetails() {
               <div className=" flex justify-center text-4xl font-bold text-black">
                 <h1>PARKIRAN KUNING</h1>
               </div>
-              <div className="py-2">
-                <div className=" bg-blue-700">bar</div>
-              </div>
-              <div className="py-2">
-                <div className=" bg-blue-700">bar</div>
-              </div>
-              <div className="py-2">
-                <div className=" bg-blue-700">bar</div>
-              </div>
-              <div className="py-2">
-                <div className=" bg-blue-700">bar</div>
-              </div>
-              <div className="py-2">
-                <div className=" bg-blue-700">bar</div>
-              </div>
+              <div className="py-2"></div>
               <div>
                 <Komentar />
                 <Komentar />
               </div>
-              <div className="flex justify-between ">
+              <div className="flex justify-between">
                 <div className="flex items-center rounded-full bg-blue-700 py-2 px-5">
                   <img src="/star.svg" alt="" />
                   <p className="text-xl">5</p>
@@ -89,5 +76,13 @@ export function Komentar() {
         </div>
       </div>
     </>
+  );
+}
+
+export function Chartbar() {
+  return (
+    <div>
+      <p>tes bar</p>
+    </div>
   );
 }
