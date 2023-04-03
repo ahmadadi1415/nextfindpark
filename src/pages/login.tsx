@@ -10,12 +10,8 @@ import { getProviders, signIn, useSession } from "next-auth/react";
 import Router, { useRouter } from "next/router";
 import { use, useState } from "react";
 import Link from "next/link";
-import React from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
-
 const Login: NextPage = ({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -189,11 +185,8 @@ export const loginUser = async (values: FormikValues, actions: any) => {
 
   console.log(loginInfo);
   if (loginInfo.data.emailVerified === null) {
-    <ToastContainer />;
-    toast.error("Email nor verified");
     // If the email is not verified, sign in using email first then verify email after user click link
     console.log("not verified");
-
     // Redirect to verification page
     if (loginInfo.data.hasVerifToken === false) {
       const res: any = await signIn("email", {
@@ -205,7 +198,8 @@ export const loginUser = async (values: FormikValues, actions: any) => {
       res.error ? console.log(res) : Router.push("/verification");
     } else {
       console.log("Please check your email");
-      Router.push("/verification");
+      // <ToastContainer />;
+      // toast.error("email belum verif");
     }
   } else {
     // If the email is verified, sign in using credentials

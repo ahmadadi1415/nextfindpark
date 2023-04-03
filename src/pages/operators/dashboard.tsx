@@ -1,10 +1,11 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
-import Navbar  from "@/components/navbar";
+import Navbar from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { Rating } from "@/components/userRatings";
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   return (
     <>
       <Navbar />
@@ -15,10 +16,10 @@ export default function Dashboard() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <main className="px-10 min-h-screen bg-white">
+        <main className="px-10 min-h-screen bg-white ">
           <div className="px-4 ">
             <div className="py-5 flex -mx-2 ">
-              <div className="w-1/3 px-2 ">
+              <div className="container w-1/3 flex lg:pl-10">
                 <div className="flex flex-col items-center bg-gray-300 rounded-xl h-screen ">
                   <h1 className="text-center px-4 py-5 text-black text-4xl font-serif font-bold">
                     Parkiran Fakultas Ilmu Sosial
@@ -54,18 +55,38 @@ export default function Dashboard() {
                   </div> */}
                 </div>
               </div>
-              <div className="w-full px-2 ">
-                <div className="bg-gray-300 rounded-xl h-screen ">
+              <div className="container flex lg:pl-10">
+                <div className="bg-gray-300 rounded-xl h-screen  py-2 px-16">
                   <img
                     src="/contohpark.png"
                     alt="fispark"
                     className="mx-auto py-5 rounded-xl lg:block hidden w-9/12"
                   />
-                  <div className="py-12 flex flex-col items-center ">
+                  <div className=" flex justify-center text-4xl font-bold text-black">
+                    <h1>Parkiran Fakultas Ilmu Sosial</h1>
+                  </div>
+                  <div className="py-4 flex flex-col items-center ">
                     <button className="bg-blue-900 rounded-xl font-bold text-center w-64 h-14">
                       GANTI
                     </button>
                   </div>
+                  <div className="py-2">
+                    <div className=" bg-blue-700">bar</div>
+                  </div>
+                  <div className="py-2">
+                    <div className=" bg-blue-700">bar</div>
+                  </div>
+                  <div className="py-2">
+                    <div className=" bg-blue-700">bar</div>
+                  </div>
+                  <div className="py-2">
+                    <div className=" bg-blue-700">bar</div>
+                  </div>
+                  <div className="py-2">
+                    <div className=" bg-blue-700">bar</div>
+                  </div>
+
+                  <Komentar />
                 </div>
               </div>
             </div>
@@ -73,6 +94,31 @@ export default function Dashboard() {
         </main>
       </div>
       <Footer />
+    </>
+  );
+}
+
+export function Komentar() {
+  return (
+    <>
+      <div className="pb-2">
+        <div className="flex justify-between items-center text-black">
+          <div className="w-10">
+            <img src="/gambarprofile.svg" alt="" />
+          </div>
+          <div>
+            <p>Nama Anggota</p>
+          </div>
+        </div>
+        <div className="text-black">
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error
+            debitis corrupti laboriosam laborum sit magnam? Quis hic voluptatem,
+            impedit, neque fuga maiores quae placeat ducimus vitae, beatae
+            dolores aperiam quos.
+          </p>
+        </div>
+      </div>
     </>
   );
 }
