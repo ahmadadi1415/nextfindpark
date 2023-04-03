@@ -1,19 +1,22 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import { Inter } from '@next/font/google';
-import  Navbar  from '@/components/navbar';
-import { Footer } from '@/components/footer';
-import { Field, Form, Formik, FormikValues } from 'formik';
-import { NextPage } from 'next';
-import axios from 'axios';
-import { getProviders, signIn, useSession } from 'next-auth/react';
-import Router, { useRouter } from 'next/router';
-import { use, useState } from 'react';
-import Link from 'next/link';
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import Navbar from "@/components/navbar";
+import { Footer } from "@/components/footer";
+import { Field, Form, Formik, FormikValues } from "formik";
+import { NextPage, InferGetServerSidePropsType } from "next";
+import axios from "axios";
+import { getProviders, signIn, useSession } from "next-auth/react";
+import Router, { useRouter } from "next/router";
+import { use, useState } from "react";
+import Link from "next/link";
+import React from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
-const Login: NextPage = ({ providers }: any) => {
+const Login: NextPage = ({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [showPassword, setShowPassword] = useState(false);
 
   // Create a Component ProvidersButtons
@@ -21,13 +24,13 @@ const Login: NextPage = ({ providers }: any) => {
     <div className="mt-5">
       {Object.values(providers).map(
         (provider: any) =>
-          provider.name !== 'Credentials' &&
-          provider.name !== 'Email' && (
+          provider.name !== "Credentials" &&
+          provider.name !== "Email" && (
             <button
               key={provider.name}
               onClick={() => {
                 signIn(provider.id, {
-                  callbackUrl: 'http://localhost:3000',
+                  callbackUrl: "http://localhost:3000",
                 });
               }}
             >
@@ -52,11 +55,11 @@ const Login: NextPage = ({ providers }: any) => {
         <main className="lg:p-36 px-2 flex items-center justify-between min-h-screen bg-white ">
           <div>
             <Formik
-              initialValues={{ email: '', password: '' }}
+              initialValues={{ email: "", password: "" }}
               validateOnChange={false}
               validateOnBlur={false}
               onSubmit={(values, actions) => {
-                console.log('onSubmit');
+                console.log("onSubmit");
                 loginUser(values, actions);
               }}
             >
@@ -64,20 +67,38 @@ const Login: NextPage = ({ providers }: any) => {
                 <Form>
                   <div>
                     <div>
-                      <p className="text-5xl text-amber-900  pb-5 font-bold">Halo!</p>
-                      <p className="text-xl text-black pb-7">Kamu harus login dulu nih sebelum pakai app-nya</p>
+                      <p className="text-5xl text-amber-900  pb-5 font-bold">
+                        Halo!
+                      </p>
+                      <p className="text-xl text-black pb-7">
+                        Kamu harus login dulu nih sebelum pakai app-nya
+                      </p>
                     </div>
                     <Field name="email">
                       {() => (
                         <div className="pb-5">
-                          <input type="email" name="email" className="rounded-lg w-96 text-black" value={props.values.email} onChange={props.handleChange} placeholder="Email" />
+                          <input
+                            type="email"
+                            name="email"
+                            className="rounded-lg w-96 text-black"
+                            value={props.values.email}
+                            onChange={props.handleChange}
+                            placeholder="Email"
+                          />
                         </div>
                       )}
                     </Field>
                     <Field name="password">
                       {() => (
                         <div className="pb-3">
-                          <input type={showPassword ? 'text' : 'password'} name="password" className="rounded-lg w-96 text-black" value={props.values.password} onChange={props.handleChange} placeholder="Password" />
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            className="rounded-lg w-96 text-black"
+                            value={props.values.password}
+                            onChange={props.handleChange}
+                            placeholder="Password"
+                          />
                         </div>
                       )}
                     </Field>
@@ -85,7 +106,14 @@ const Login: NextPage = ({ providers }: any) => {
                   <div className="grid grid-cols-2 pb-7">
                     <div className="text-black">
                       <p>
-                        <input className="form-checkbox rounded-full mr-3" type="checkbox" onClick={(e) => setShowPassword(e.currentTarget.checked)} /> Tampilkan Kata Sandi
+                        <input
+                          className="form-checkbox rounded-full mr-3"
+                          type="checkbox"
+                          onClick={(e) =>
+                            setShowPassword(e.currentTarget.checked)
+                          }
+                        />{" "}
+                        Tampilkan Kata Sandi
                       </p>
                     </div>
                     <div className="text-gray-700 underline text-right ">
@@ -137,8 +165,8 @@ export async function getServerSideProps() {
 const redirectToHome = () => {
   const router = Router;
   const { pathname } = router;
-  if (pathname === '/login') {
-    router.push('/');
+  if (pathname === "/login") {
+    router.push("/");
   }
 };
 
@@ -148,46 +176,47 @@ export const loginUser = async (values: FormikValues, actions: any) => {
   // If email is not verified, redirect to verification page
   // Else login using Credentials
 
-	const loginInfo: any = await axios.post(
-		"/api/auth/check-login",
-		JSON.stringify(values),
-		{
-			headers: {
-				Accept: "application/json",
-				"Content-Type": "application/json",
-			},
-		}
-	);
+  const loginInfo: any = await axios.post(
+    "/api/auth/check-login",
+    JSON.stringify(values),
+    {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   console.log(loginInfo);
   if (loginInfo.data.emailVerified === null) {
+    <ToastContainer />;
+    toast.error("Email nor verified");
     // If the email is not verified, sign in using email first then verify email after user click link
-    console.log('not verified');
+    console.log("not verified");
 
-		// Redirect to verification page
-		if (loginInfo.data.hasVerifToken === false) {
-			const res: any = await signIn("email", {
-				email: values.email,
-				password: values.password,
-				redirect: false,
-				callbackUrl: `${window.location.origin}`
-			});
-			res.error ? console.log(res) : Router.push("/verification");
-		} else {
-			console.log("Please check your email");
-			Router.push("/verification");
-		}
-	} else {
-
-		// If the email is verified, sign in using credentials
-		console.log("verified");
-		const res: any = await signIn("credentials", {
-			email: values.email,
-			password: values.password,
-			redirect: false,
-			callbackUrl: `${window.location.origin}`,
-		});
-		console.log(res);
-		res.error ? console.log(res.error) : redirectToHome();
-	}
+    // Redirect to verification page
+    if (loginInfo.data.hasVerifToken === false) {
+      const res: any = await signIn("email", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+        callbackUrl: `${window.location.origin}`,
+      });
+      res.error ? console.log(res) : Router.push("/verification");
+    } else {
+      console.log("Please check your email");
+      Router.push("/verification");
+    }
+  } else {
+    // If the email is verified, sign in using credentials
+    console.log("verified");
+    const res: any = await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: false,
+      callbackUrl: `${window.location.origin}`,
+    });
+    console.log(res);
+    res.error ? console.log(res.error) : redirectToHome();
+  }
 };

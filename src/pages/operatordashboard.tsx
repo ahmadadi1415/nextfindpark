@@ -16,10 +16,10 @@ export default function Dashboard(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <main className="px-10 min-h-screen bg-white">
+        <main className="px-10 min-h-screen bg-white ">
           <div className="px-4 ">
             <div className="py-5 flex -mx-2 ">
-              <div className="w-1/3 px-2 ">
+              <div className="container w-1/3 flex lg:pl-10">
                 <div className="flex flex-col items-center bg-gray-300 rounded-xl h-screen ">
                   <h1 className="text-center px-4 py-5 text-black text-4xl font-serif font-bold">
                     Parkiran Fakultas Ilmu Sosial
@@ -85,6 +85,7 @@ export default function Dashboard(props) {
                   <div className="py-2">
                     <div className=" bg-blue-700">bar</div>
                   </div>
+
                   <Komentar />
                 </div>
               </div>
@@ -105,8 +106,8 @@ export function Komentar() {
           <div className="w-10">
             <img src="/gambarprofile.svg" alt="" />
           </div>
-          <div className="font-bold">
-            <p>Nama Pengguna</p>
+          <div>
+            <p>Nama Anggota</p>
           </div>
         </div>
         <div className="text-black">
