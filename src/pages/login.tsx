@@ -199,7 +199,7 @@ export const loginUser = async (values: FormikValues, actions: any) => {
       });
       toast.info("Please check your email");
       <ToastContainer />;
-      res.error ? console.log(res) : Router.push("/verification");
+      res.error ? console.log(res) : Router.push("/");
     } else {
       toast.info("Please check your email");
       <ToastContainer />;
