@@ -5,20 +5,24 @@ import { NextPage } from "next";
 import { Main } from "next/document";
 import Head from "next/head";
 import Image from "next/image";
+import { ToastContainer, toast } from "react-toastify";
 
 const ForgotPassword: NextPage = () => {
 	const forgotPassword = async (values: FormikValues, actions: any) => {
 		actions.setSubmitting(false);
 
-		const res = await axios
+		const res: any = await axios
 			.post("api/auth/forgot-password", JSON.stringify(values), {
 				headers: {
 					Accept: "application/json",
 					"Content-Type": "application/json",
 				},
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {console.log(error)});
 		console.log(res);
+		if (!res) {
+			toast.error("Email tidak ditemukan!")
+		}
 	};
 
 	return (
@@ -43,8 +47,20 @@ const ForgotPassword: NextPage = () => {
 					<div>
 						<Formik
 							initialValues={{ email: "" }}
-							validateOnChange={false}
+							validateOnChange={true}
 							validateOnBlur={false}
+							validate={
+								values => {
+									const errors: any = {}
+									if (!values.email) {
+										errors.email = "Required"
+									}
+									if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+									  errors.email = "Invalid email address"
+									}
+									return errors
+								}
+							}
 							onSubmit={(values, actions) => {
 								console.log("onSubmit");
 								forgotPassword(values, actions);
@@ -53,6 +69,9 @@ const ForgotPassword: NextPage = () => {
 							{(props) => (
 								<Form style={{ width: "100%" }}>
 									<div>
+										<div className="text-red-700">
+											{props.errors.email}
+										</div>
 										<Field name="email">
 											{() => (
 												<div className="pb-5">
@@ -89,6 +108,7 @@ const ForgotPassword: NextPage = () => {
 					/>
 				</div>
 			</main>
+			<ToastContainer/>
 		</>
 	);
 };

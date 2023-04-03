@@ -59,9 +59,9 @@ export default function Registration() {
 							else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
 								errors.email = "Invalid Email Address"
 							}
-							if (!values.username) {
-								errors.username = "Required"
-							}
+							// if (!values.username) {
+							// 	errors.username = "Required"
+							// }
 							if (values.password.length < 8) {
 								errors.password = "Password at least has 8 characters"
 							}
@@ -99,7 +99,7 @@ export default function Registration() {
 											)
 										}	
 									</Field>
-									<Field name="username">
+									{/* <Field name="username">
 										{() => (
 											<div className="pb-5">
 												<input
@@ -113,7 +113,7 @@ export default function Registration() {
 											</div>
 											)
 										}	
-									</Field>
+									</Field> */}
 									<Field name="email">
 										{() => (
 											<div className="pb-5">

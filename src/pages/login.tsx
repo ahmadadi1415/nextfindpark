@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Inter } from "@next/font/google";
 import Navbar from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { Field, Form, Formik, FormikValues } from "formik";
+import { ErrorMessage, Field, Form, Formik, FormikValues } from "formik";
 import { NextPage } from "next";
 import axios from "axios";
 import { getProviders, signIn, useSession } from "next-auth/react";
@@ -54,8 +54,23 @@ const Login: NextPage = ({ providers }: any) => {
           <div>
             <Formik
               initialValues={{ email: "", password: "" }}
-              validateOnChange={false}
+              validateOnChange={true}
               validateOnBlur={false}
+              validate={
+                values => {
+                  const errors: any = {}
+                  if (!values.email) {
+                    errors.email = "Required"
+                  }
+                  else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+                    errors.email = "Invalid Email Address"
+                  }
+                  if (!values.password) {
+                    errors.password = "Required"
+                  }
+                  return errors
+                  }
+              }
               onSubmit={(values, actions) => {
                 console.log("onSubmit");
                 loginUser(values, actions);
@@ -72,6 +87,9 @@ const Login: NextPage = ({ providers }: any) => {
                         Kamu harus login dulu nih sebelum pakai app-nya
                       </p>
                     </div>
+                    <div className="text-red-700 py-2 h-10">
+                      {props.errors.email}
+                    </div>
                     <Field name="email">
                       {() => (
                         <div className="pb-5">
@@ -86,6 +104,9 @@ const Login: NextPage = ({ providers }: any) => {
                         </div>
                       )}
                     </Field>
+                    <div className="text-red-700 h-10">
+                      {props.errors.password}
+                    </div>
                     <Field name="password">
                       {() => (
                         <div className="pb-3">
@@ -146,6 +167,7 @@ const Login: NextPage = ({ providers }: any) => {
         </main>
       </div>
       <Footer />
+      <ToastContainer />
     </>
   );
 };
@@ -187,8 +209,12 @@ export const loginUser = async (values: FormikValues, actions: any) => {
 
   console.log(loginInfo);
   if (loginInfo.data.emailVerified === null) {
-    // If the email is not verified, sign in using email first then verify email after user click link
+
+    // If the email is not verified, sign in using email first 
+    // then verify email after user click link
+
     console.log("not verified");
+    
     // Redirect to verification page
     if (loginInfo.data.hasVerifToken === false) {
       const res: any = await signIn("email", {
@@ -197,12 +223,10 @@ export const loginUser = async (values: FormikValues, actions: any) => {
         redirect: false,
         callbackUrl: `${window.location.origin}`,
       });
-      toast.info("Please check your email");
-      <ToastContainer />;
-      res.error ? console.log(res) : Router.push("/");
+      
+      res.error ? toast.error(res.error) : toast.info("Harap cek email verifikasi anda");
     } else {
-      toast.info("Please check your email");
-      <ToastContainer />;
+      toast.info("Harap cek email verifikasi anda");
       console.log("Please check your email");
     }
   } else {
@@ -214,9 +238,8 @@ export const loginUser = async (values: FormikValues, actions: any) => {
       redirect: false,
       callbackUrl: `${window.location.origin}`,
     });
-    toast.info("Please check your email");
-    <ToastContainer />;
-    console.log(res);
-    res.error ? console.log(res.error) : redirectToHome();
+    
+    console.log(res)
+    res.error ? toast.error(res.error) : redirectToHome();
   }
 };
