@@ -4,7 +4,7 @@ import { Inter } from "@next/font/google";
 import Navbar from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Field, Form, Formik, FormikValues } from "formik";
-import { NextPage, InferGetServerSidePropsType } from "next";
+import { NextPage } from "next";
 import axios from "axios";
 import { getProviders, signIn, useSession } from "next-auth/react";
 import Router, { useRouter } from "next/router";
@@ -12,7 +12,7 @@ import { use, useState } from "react";
 import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
-const Login: NextPage = ({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Login: NextPage = ({ providers }: any) => {
   const [showPassword, setShowPassword] = useState(false);
 
   // Create a Component ProvidersButtons
