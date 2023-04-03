@@ -1,15 +1,11 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import EmailProvider, {
-  SendVerificationRequestParams,
-} from "next-auth/providers/email";
+import EmailProvider from "next-auth/providers/email";
 import prisma from "lib/prisma";
 import { compare } from "bcrypt";
 import NextAuth, { Account, Profile, User } from "next-auth";
-import { signIn } from "next-auth/react";
 import cloudinary from "@/utils/cloudinary";
 
 export default NextAuth({
