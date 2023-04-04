@@ -36,7 +36,7 @@ const ForgotPassword: NextPage = () => {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-				<ToastContainer />
+			<ToastContainer />
 			<main className="p-36 flex items-center justify-between flex-col-2 min-h-screen bg-white">
 				
 				<div className="">

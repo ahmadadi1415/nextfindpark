@@ -1,7 +1,5 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import { Inter } from '@next/font/google';
-import styles from '@/styles/Home.module.css';
 import Navbar from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { Field, Form, Formik, FormikValues } from 'formik';
@@ -9,9 +7,10 @@ import { GetServerSidePropsContext } from 'next';
 import prisma from 'lib/prisma';
 import { getSession, useSession } from 'next-auth/react';
 import axios from 'axios';
-import cloudinary from '@/utils/cloudinary';
 import { useEffect, useRef, useState } from 'react';
 import { resizeImage } from '@/utils/image-resizer';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Props {
 	userProfile: {
@@ -23,8 +22,6 @@ interface Props {
 }
 
 export default function Profile({ userProfile }: Props) {
-	const [openNotifyModal, setOpenNotifyModal] = useState(false)
-	const [notification, setNotification] = useState("")
 
 	const [localImg, setLocalImg] = useState()
 	const [image, setImage] = useState([])
@@ -55,7 +52,12 @@ export default function Profile({ userProfile }: Props) {
 		e.preventDefault()
 		const response = await axios.patch(`/api/users/profile/${userProfile.user_id}`, {
 			photo: image
-		}).then((r) => console.log(r))
+		}).then((r) => {
+			console.log(r)
+			toast.success("Foto profil tersimpan!")
+		}).catch((error) => {
+			toast.error("Foto profil gagal tersimpan!")
+		})
 	}
 
 	// Update user profile data
@@ -64,8 +66,11 @@ export default function Profile({ userProfile }: Props) {
 			{
 				fullname: values.fullname
 			}
-		)
-		setNotification((response.status === 200) ? "Yes! Your profile now is updated!" : "Sorry, failed to update data")
+		).catch((error) => {
+			toast.error("Gagal melakukan pembaruan data!")
+		}).then((result) => {
+			toast.success("Profil berhasil diperbarui!")
+		})
 	}
 
 	// Update user password
@@ -74,8 +79,11 @@ export default function Profile({ userProfile }: Props) {
 			id: userProfile.user_id,
 			oldPassword: values.oldPassword,
 			newPassword: values.newPassword
+		}).catch((error) => [
+			toast.error(`Gagal memperbarui password`)
+		]).then((result) =>  {
+			toast.success("Berhasil memperbarui sandi!")
 		})
-		setNotification((response.status === 200) ? "Yes! Your password now is updated!" : `Sorry, failed to update your password ${response.data.message}`)
 	}
 
 	// Delete user account
@@ -93,8 +101,8 @@ export default function Profile({ userProfile }: Props) {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<Navbar />
+			<ToastContainer/>
 			<main className="">
-
 				<div className="flex bg-white min-h-screen bg-gradient-to-r px-10 py-10 from-white to-blue-700">
 					<div className="container">
 						<div className="flex justify-center">
