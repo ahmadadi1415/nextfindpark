@@ -6,7 +6,7 @@ import { Footer } from "@/components/footer";
 import { ErrorMessage, Field, Form, Formik, FormikValues } from "formik";
 import { NextPage } from "next";
 import axios from "axios";
-import { getProviders, signIn, useSession } from "next-auth/react";
+import { getProviders, signIn } from "next-auth/react";
 import Router, { useRouter } from "next/router";
 import { use, useState } from "react";
 import Link from "next/link";
@@ -28,7 +28,7 @@ const Login: NextPage = ({ providers }: any) => {
               key={provider.name}
               onClick={() => {
                 signIn(provider.id, {
-                  callbackUrl: "http://localhost:3000",
+                  callbackUrl: "/",
                 });
               }}
             >
