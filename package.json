@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.0.1",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@heroicons/react": "^2.0.16",
@@ -24,6 +25,7 @@
     "chart.js": "^4.2.1",
     "cloudinary": "^1.35.0",
     "formik": "^2.2.9",
+    "formik-yup": "^0.0.5",
     "jsonwebtoken": "^9.0.0",
     "leaflet": "^1.9.3",
     "leaflet-defaulticon-compatibility": "^0.1.1",
