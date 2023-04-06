@@ -34,6 +34,9 @@ export default function ParkingDetails() {
               <div className=" flex justify-center text-4xl font-bold text-black">
                 <h1>PARKIRAN KUNING</h1>
               </div>
+              <div className="flex justify-center pt-2">
+                <img src="/contohpark.png" alt="" />
+              </div>
               <div className="py-5">
                 <BarRating />
               </div>

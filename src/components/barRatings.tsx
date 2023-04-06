@@ -1,7 +1,7 @@
 export function BarRating() {
   return (
     <>
-      <div className="flex justify-between">
+      <div className="2xl:flex justify-between">
         <div>
           <div className="flex items-center">
             <span className=" font-bold text-black ">5 star</span>
@@ -39,7 +39,7 @@ export function BarRating() {
             <span className="font-bold text-black ">1%</span>
           </div>
         </div>
-        <div>
+        <div className="">
           <div className="flex items-center">
             <svg aria-hidden="true" className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <title>First star</title>
