@@ -1,21 +1,21 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import { Inter } from '@next/font/google';
-import styles from '@/styles/Home.module.css';
-import Navbar  from '@/components/navbar';
-import { Footer } from '@/components/footer';
-import { Rating } from '@/components/userRatings';
-import dynamic from 'next/dynamic';
-import { GetServerSidePropsContext } from 'next';
-import { getSession } from 'next-auth/react';
-import Router from 'next/router';
-const Maps = dynamic(() => import('@/components/map'), {
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import styles from "@/styles/Home.module.css";
+import Navbar from "@/components/navbar";
+import { Footer } from "@/components/footer";
+import { Rating } from "@/components/userRatings";
+import dynamic from "next/dynamic";
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
+import { getSession } from "next-auth/react";
+import Router from "next/router";
+const Maps = dynamic(() => import("@/components/MapComponent"), {
   ssr: false,
 });
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
-export default function ParkingRate() {
+export default function ParkingRate(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Head>
@@ -60,8 +60,8 @@ export default function ParkingRate() {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const session = getSession(context)
+  const session = getSession(context);
   if (!session) {
-    Router.push('/login')
+    Router.push("/login");
   }
 }

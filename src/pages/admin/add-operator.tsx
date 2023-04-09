@@ -7,21 +7,21 @@ import { Field, Form, Formik, FormikValues } from "formik";
 import axios from "axios";
 import { UserRole } from "@prisma/client";
 
-export default function addOperator() {
-
-  const addOperator = async(values: FormikValues, actions: any) => {
-    console.log(values)
-    const response = await axios.post("/api/auth/register",
+export default function addOperator(props) {
+  const addOperator = async (values: FormikValues, actions: any) => {
+    console.log(values);
+    const response = await axios.post(
+      "/api/auth/register",
       JSON.stringify(values),
-			{
-				headers: {
-					Accept: "application/json",
-					"Content-Type": "application/json"
-				},
-			}
-		)
-    console.log(response)
-  }
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response);
+  };
 
   return (
     <>
@@ -84,29 +84,40 @@ export default function addOperator() {
           <div className="h-full rounded-xl flex items-start mb-4 rounded bg-gray-300 ">
             <div className="flex flex-wrap w-full">
               <Formik
-                initialValues={{ fullname: '', email: '', password: '', confirmation: '', parkingLotId: '', role: UserRole.operator }}
+                initialValues={{
+                  fullname: "",
+                  email: "",
+                  password: "",
+                  confirmationPassword: "",
+                  parkingLotId: "",
+                  role: UserRole.operator,
+                }}
                 validateOnChange={true}
-                validateOnBlur={false}
-                validate={
-                  (values) => {
-                    const errors: any = {}
-                    if (!(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i).test(values.email)) {
-                      errors.email = 'Invalid email'
-                    }
-                    if (values.password && values.password.length < 8) {
-                      errors.password = 'Password is too short'
-                      console.log(errors)
-                    }
+                validateOnBlur={true}
+                validate={(values) => {
+                  const errors: any = {};
+                  if (!values.email) {
+                    errors.email = "Required";
+                  } else if (
+                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
+                      values.email
+                    )
+                  ) {
+                    errors.email = "Invalid Email Address";
+                  }
+                  if (values.password.length < 8) {
+                    errors.password = "Password at least has 8 characters";
+                  }
 
-                    if (values.confirmation && values.password && values.password !== values.confirmation) {
-                      errors.confirmation = 'Your confirmation password is not the same as before'
-                      console.log(errors)
+                  if (values.password && values.confirmationPassword) {
+                    if (values.password !== values.confirmationPassword) {
+                      errors.confirmationPassword = "Password not matched";
                     }
                   }
-                }
+                }}
                 onSubmit={(values, actions) => {
-                  console.log("Add new operator")
-                  addOperator(values, actions)
+                  console.log("Add new operator");
+                  addOperator(values, actions);
                 }}
               >
                 {(props) => (
@@ -126,8 +137,29 @@ export default function addOperator() {
                               name="fullname"
                               value={props.values.fullname}
                               onChange={props.handleChange}
+                              onBlur={props.handleBlur}
                               placeholder="Nama Lengkap"
                             />
+                            {props.touched.fullname &&
+                              props.errors.fullname && (
+                                <div className="mt-3 inline-flex w-1/2 items-center rounded-lg bg-red-100 py-1 px-2 text-base text-red-700">
+                                  <span className="mr-2">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      viewBox="0 0 24 24"
+                                      fill="currentColor"
+                                      className="h-6 w-6"
+                                    >
+                                      <path
+                                        fill-rule="evenodd"
+                                        d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                                        clip-rule="evenodd"
+                                      />
+                                    </svg>
+                                  </span>
+                                  {props.errors.fullname}
+                                </div>
+                              )}
                           </div>
                         </div>
                       )}
@@ -147,8 +179,28 @@ export default function addOperator() {
                               name="email"
                               value={props.values.email}
                               onChange={props.handleChange}
+                              onBlur={props.handleBlur}
                               placeholder="Email"
                             />
+                            {props.touched.email && props.errors.email && (
+                              <div className="mt-3 inline-flex w-1/2 items-center rounded-lg bg-red-100 py-1 px-2 text-base text-red-700">
+                                <span className="mr-2">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    className="h-6 w-6"
+                                  >
+                                    <path
+                                      fill-rule="evenodd"
+                                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                                      clip-rule="evenodd"
+                                    />
+                                  </svg>
+                                </span>
+                                {props.errors.email}
+                              </div>
+                            )}
                           </div>
                         </div>
                       )}
@@ -168,13 +220,34 @@ export default function addOperator() {
                               name="password"
                               value={props.values.password}
                               onChange={props.handleChange}
+                              onBlur={props.handleBlur}
                               placeholder="Sandi"
                             />
+                            {props.touched.password &&
+                              props.errors.password && (
+                                <div className="mt-3 inline-flex w-1/2 items-center rounded-lg bg-red-100 py-1 px-2 text-base text-red-700">
+                                  <span className="mr-2">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      viewBox="0 0 24 24"
+                                      fill="currentColor"
+                                      className="h-6 w-6"
+                                    >
+                                      <path
+                                        fill-rule="evenodd"
+                                        d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                                        clip-rule="evenodd"
+                                      />
+                                    </svg>
+                                  </span>
+                                  {props.errors.password}
+                                </div>
+                              )}
                           </div>
                         </div>
                       )}
                     </Field>
-                    <Field name="confirmation">
+                    <Field name="confirmationPassword">
                       {() => (
                         <div>
                           <div className="py-4 ">
@@ -186,11 +259,32 @@ export default function addOperator() {
                             <input
                               className="rounded-xl text-black w-80"
                               type="password"
-                              name="confirmation"
-                              value={props.values.confirmation}
+                              name="confirmationPassword"
+                              value={props.values.confirmationPassword}
                               onChange={props.handleChange}
+                              onBlur={props.handleBlur}
                               placeholder="Konfirmasi"
                             />
+                            {props.touched.confirmationPassword &&
+                              props.errors.confirmationPassword && (
+                                <div className="mt-3 inline-flex w-1/2 items-center rounded-lg bg-red-100 py-1 px-2 text-base text-red-700">
+                                  <span className="mr-2">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      viewBox="0 0 24 24"
+                                      fill="currentColor"
+                                      className="h-6 w-6"
+                                    >
+                                      <path
+                                        fill-rule="evenodd"
+                                        d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                                        clip-rule="evenodd"
+                                      />
+                                    </svg>
+                                  </span>
+                                  {props.errors.confirmationPassword}
+                                </div>
+                              )}
                           </div>
                         </div>
                       )}
@@ -213,17 +307,17 @@ export default function addOperator() {
                       )}
                     </Field>
                     <div className="block py-4 ">
-                      <button type="submit" className="bg-blue-900 rounded-xl font-bold text-center w-44 h-12">
+                      <button
+                        type="submit"
+                        className="bg-blue-900 rounded-xl font-bold text-center w-44 h-12"
+                      >
                         TAMBAH
                       </button>
                     </div>
                   </Form>
                 )}
               </Formik>
-              <form className="w-full px-12 ">
-
-
-              </form>
+              <form className="w-full px-12 "></form>
             </div>
           </div>
         </div>

@@ -6,26 +6,27 @@ import { Navbaradmin } from "@/components/navbaradmin";
 import { Formik } from "formik";
 import { resizeImage } from "@/utils/image-resizer";
 import { useState } from "react";
+import dynamic from "next/dynamic";
 
-export default function addPark() {
-
-  const [localImg, setLocalImg] = useState()
-  const [image, setImage] = useState()
+const MapsInput = dynamic(() => import("@/components/mapinput"), {
+  ssr: false,
+});
+export default function addPark(props) {
+  const [localImg, setLocalImg] = useState();
+  const [image, setImage] = useState();
 
   // Handle file image from admin
   const handleImage = async (e: any) => {
-		const reader = new FileReader()
+    const reader = new FileReader();
     // Resize the image
-		await resizeImage(e.target.files[0], 1080, 1080)
-			.then(blob => {
-				setLocalImg(blob as any)
-				reader.readAsDataURL(blob)
-				reader.onloadend = () => {
-					setImage(reader.result as any)
-				}
-			})
-	}
-
+    await resizeImage(e.target.files[0], 1080, 1080).then((blob) => {
+      setLocalImg(blob as any);
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => {
+        setImage(reader.result as any);
+      };
+    });
+  };
 
   return (
     <>
@@ -123,16 +124,21 @@ export default function addPark() {
           <div className="h-full rounded-xl flex items-start mb-4 rounded bg-gray-300 ">
             <div className="flex flex-wrap w-full">
               <Formik
-                initialValues={{ name:'', description: '', location: '', latitude: '', longitude: '', hourlyFee: 0, image: ''}}
+                initialValues={{
+                  name: "",
+                  description: "",
+                  location: "",
+                  latitude: "",
+                  longitude: "",
+                  hourlyFee: 0,
+                  image: "",
+                }}
                 validateOnChange={false}
                 validateOnBlur={false}
                 onSubmit={(values, actions) => {
-                  console.log("Add new parking lot")
+                  console.log("Add new parking lot");
                 }}
-              >
-
-
-              </Formik>
+              ></Formik>
               <form className="w-full px-12 ">
                 <div className="block py-4 ">
                   <label className=" w-36 inline-block text-black text-left">
@@ -157,6 +163,9 @@ export default function addPark() {
                   <label className=" w-36 inline-block text-black text-left">
                     Upload Lokasi
                   </label>
+                  <div className="container rounded-xl pb-2">
+                    <MapsInput />
+                  </div>
                   <input
                     className="rounded-xl text-black w-80"
                     type="text"
