@@ -8,7 +8,7 @@ import axios from "axios";
 import { loginUser } from "./login";
 import { use, useState } from "react";
 import React from "react";
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+// import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -97,7 +97,7 @@ export default function Registration() {
                   <p className="text-5xl text-amber-900 pb-5 font-bold">
                     Belum punya akun?
                   </p>
-                  <p className="text-xl text-black pb-7">Isi form dibawah</p>
+                  <p className="text-xl text-black pb-7">Isi form di bawah</p>
                 </div>
                 <Field name="fullname">
                   {() => (

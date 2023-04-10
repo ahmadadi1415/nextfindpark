@@ -6,8 +6,17 @@ import { Navbaradmin } from "@/components/navbaradmin";
 import { Field, Form, Formik, FormikValues } from "formik";
 import axios from "axios";
 import { UserRole } from "@prisma/client";
+import prisma from "lib/prisma";
 
-export default function addOperator(props) {
+interface ParkingLotData {
+  id: number,
+  name: string
+}
+
+interface Props {
+  parkingLotData: ParkingLotData[]
+}
+export default function addOperator({parkingLotData}: Props) {
   const addOperator = async (values: FormikValues, actions: any) => {
     console.log(values);
     const response = await axios.post(
@@ -21,6 +30,7 @@ export default function addOperator(props) {
       }
     );
     console.log(response);
+    actions.resetForm()
   };
 
   return (
@@ -89,7 +99,7 @@ export default function addOperator(props) {
                   email: "",
                   password: "",
                   confirmationPassword: "",
-                  parkingLotId: "",
+                  parkingLotId: parkingLotData[0].id,
                   role: UserRole.operator,
                 }}
                 validateOnChange={true}
@@ -108,7 +118,6 @@ export default function addOperator(props) {
                   if (values.password.length < 8) {
                     errors.password = "Password at least has 8 characters";
                   }
-
                   if (values.password && values.confirmationPassword) {
                     if (values.password !== values.confirmationPassword) {
                       errors.confirmationPassword = "Password not matched";
@@ -118,6 +127,7 @@ export default function addOperator(props) {
                 onSubmit={(values, actions) => {
                   console.log("Add new operator");
                   addOperator(values, actions);
+                  console.log(values)
                 }}
               >
                 {(props) => (
@@ -289,7 +299,7 @@ export default function addOperator(props) {
                         </div>
                       )}
                     </Field>
-                    <Field>
+                    <Field name="parkingLotId">
                       {() => (
                         <div>
                           <div className="py-4 ">
@@ -300,8 +310,21 @@ export default function addOperator(props) {
                           <div>
                             <select
                               className="rounded-xl text-black w-80"
-                              placeholder="Nama Operator"
-                            />
+                              name="parkingLotId"
+                              onChange={props.handleChange}
+                              onBlur={props.handleBlur}
+                              value={props.values.parkingLotId}
+                              placeholder="Nama Operator">
+                              {
+                                parkingLotData.map((parkingLot) => {
+                                  return (
+                                    <option value={parkingLot.id}>
+                                      {parkingLot.name}
+                                    </option>
+                                  )
+                                })
+                              }
+                              </select>
                           </div>
                         </div>
                       )}
@@ -324,4 +347,19 @@ export default function addOperator(props) {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const parkingLotData = await prisma.parkingLot.findMany({
+    select: {
+      name: true,
+      id: true,
+    }
+  })
+  
+  return {
+    props: {
+      parkingLotData
+    }
+  }
 }

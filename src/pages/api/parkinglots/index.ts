@@ -1,10 +1,19 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "lib/prisma";
+import cloudinary from "@/utils/cloudinary";
+
+export const config = {
+    api: {
+      bodyParser: {
+        sizeLimit: '4mb',
+      },
+    },
+  }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    
+
     if (req.method === "GET") {
-        const {id} = req.body
+        const { id } = req.body
         const response = await prisma.parkingLot.findUnique({
             where: {
                 id: id
@@ -15,20 +24,39 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Create Parking Lot 
     if (req.method === "POST") {
-        const {name, description, location, longitude, latitude, hourlyFee} = req.body
+        const { name, image, description, location, longitude, latitude, hourlyFee } = req.body
+
+        let photoPublicId = null
+        try {
+            const result = await cloudinary.uploader.upload(image, {
+                upload_preset: "parking_photo",
+                overwrite: true
+            })
+
+            console.log(result)
+            photoPublicId = result.public_id
+           
+            // return res.status(200).json(response)
+
+        } catch (error) {
+            return res.status(500).json(error)
+        }
 
         const response = await prisma.parkingLot.create({
             data: {
                 name: name,
                 description: description,
                 location: location,
-                longitude: longitude,
-                latitude: latitude,
-                hourlyFee: hourlyFee,
-                updatedAt: Date.now().toString()
+                image: photoPublicId,
+                latitude: latitude.toString(),
+                longitude: longitude.toString(),
+                hourlyFee: hourlyFee.toString(),
             }
+        }).then((r) => {
+            return res.status(200).json(r)
+        }).catch((error) => {
+            return res.status(500).json(error)
         })
-
-        res.status(200).json(response)
+        // console.log(response)
     }
 }
