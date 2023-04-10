@@ -31,8 +31,8 @@ const MapsInput = () => {
   return (
     <MapContainer
       center={[-7.963269837489233, 112.61951416893771]}
-      zoom={13}
-      scrollWheelZoom={false}
+      zoom={50}
+      scrollWheelZoom={true}
       style={{ height: "500px" }}
     >
       <TileLayer
@@ -46,7 +46,7 @@ const MapsInput = () => {
         animate={true}
         ref={markerRef}
       >
-        <Popup>Hey ! I live here</Popup>
+        <Popup>Lahan parkir yang dipilih</Popup>
       </Marker>
     </MapContainer>
   );

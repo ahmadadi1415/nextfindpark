@@ -166,11 +166,6 @@ export default function addPark(props) {
                   <div className="container rounded-xl pb-2">
                     <MapsInput />
                   </div>
-                  <input
-                    className="rounded-xl text-black w-80"
-                    type="text"
-                    placeholder="Koordinat tempat"
-                  />
                 </div>
                 <div className="block py-4">
                   <label className="w-36 inline-block text-black text-left">
