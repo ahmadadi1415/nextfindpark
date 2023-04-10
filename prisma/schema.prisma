@@ -85,6 +85,9 @@ model Rating {
   parkinglot    ParkingLot @relation(fields: [parkinglot_id], references: [id], map: "Rating_parkinglot_id_fkey")
   user          User       @relation(fields: [user_id], references: [id], map: "Rating_user_id_fkey")
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@index([parkinglot_id], map: "Rating_parkinglot_id_fkey")
   @@index([user_id], map: "Rating_user_id_fkey")
 }

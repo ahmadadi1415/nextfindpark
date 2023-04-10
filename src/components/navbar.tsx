@@ -211,7 +211,7 @@ export default function Navbar() {
 												variant="small"
 												className="font-normal text-black"
 											>
-												<a onClick={() => Router.push("/users/profile")}>Profile</a>
+												<a onClick={() => Router.push("/profile")}>Profile</a>
 											</Typography>
 										</MenuItem>
 										<MenuItem className="flex items-center gap-2">

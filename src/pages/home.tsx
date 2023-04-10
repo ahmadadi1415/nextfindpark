@@ -81,6 +81,7 @@ export default function Home({bestParkingLot}: Props) {
 			const {latitude, longitude} = coords
 			const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=geocodejson&lat=${latitude}&lon=${longitude}`)
 			const geocoding: GeoCoding = response.data.features[0].properties.geocoding
+			getDistances(bestParkingLot)
 			setLocation(geocoding.label)
 		}
 	}

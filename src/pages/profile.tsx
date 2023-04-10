@@ -386,7 +386,15 @@ export default function Profile({userProfile}: Props) {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const userId = (await getSession(context))?.user?.id;
-
+  if (!userId) {
+    return {
+      redirect : { 
+        destination: '/login',
+        permanent: false
+      }
+    }
+  }
+  
   const userProfile = await prisma.profile.findUnique({
     where: {
       user_id: userId,

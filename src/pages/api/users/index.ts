@@ -38,7 +38,7 @@ export async function createUser(body: any) {
             email: email,
             role: (!role) ? "user": role,
             password: hashedPassword,
-            parkingLotId: (role === "operator" && parkingLotId) ? parkingLotId : null,
+            parkingLotId: (role === "operator" && parkingLotId) ? parseInt(parkingLotId as string) : null,
             profile: {
                 create: {
                     fullname: fullname

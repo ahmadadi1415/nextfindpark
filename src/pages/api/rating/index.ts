@@ -21,23 +21,38 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         
         const rating = await prisma.rating.create({
             data: {
-                rate: rate,
+                rate: parseFloat(rate),
                 review: review,
                 parkinglot_id: parkinglot_id,
-                user_id: user_id, 
+                user_id: user_id,
             }
         })
 
-        const parkingRating = await prisma.rating.findMany({
-            where: {
-                parkinglot_id: parkinglot_id
-            },
-            select: {
-                _count: true,
-                rate: true,
+        const countRates = await prisma.rating.groupBy({
+            by: ['rate'],
+            _count: {
+              rate: true
             }
-        }).then((ratings) => {
-            // Update Rate inside ParkingLot table
+          })
+
+        console.log(countRates)
+
+        let newRate = 0
+        let counts = 0
+        countRates.map((parkingRate) => {
+            newRate += parkingRate.rate * parkingRate._count.rate
+            counts += parkingRate._count.rate
+        })
+        newRate /= counts
+        console.log(newRate)
+
+        const newParkingRate = await prisma.parkingLot.update({
+            where: {
+                id: parseInt(parkinglot_id as string)
+            },
+            data: {
+                rate: newRate
+            }
         })
 
         for (const image in images) {

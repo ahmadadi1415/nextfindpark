@@ -13,7 +13,7 @@ const Maps = dynamic(() => import("@/components/map"), {
   ssr: false,
 });
 
-export default function ParkingDetails(props) {
+export default function ParkingDetails(props: any) {
   return (
     // Front End Parking Rate and Review
     <>

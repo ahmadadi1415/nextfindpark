@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Router from 'next/router';
 import { ppid } from 'process';
 
 interface Props {
@@ -18,10 +19,6 @@ interface Props {
     distance: number
   },
   userDistance: number
-}
-
-interface ParkingLot {
-  
 }
 
 export function Recomcard(props: Props) {
@@ -95,12 +92,14 @@ export function Findcard(props: Props) {
     return `${parkingLot.distance} m`
   }
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center" onClick={
+      () => Router.push(`/parking-lot/${parkingLot.id}/details`)
+    } >
       <div className="flex flex-col rounded-lg bg-blue-700 shadow-lg md:max-w-xl md:flex-row">
         <div className="flex flex-col justify-start p-6">
           <h5 className="mb-2 text-3xl font-bold text-neutral-800 dark:text-neutral-50">{parkingLot.name}</h5>
-          <h6 className="mb-2 text-l font-sans text-neutral-800 dark:text-neutral-50">{parkingLot.location}</h6>
-          <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
+          <h6 className="mb-2 text-base font-sans text-neutral-800 dark:text-neutral-50">{parkingLot.location}</h6>
+          <p className="mb-4 text-sm text-neutral-600 dark:text-neutral-200">
             { parkingLot.description }
           </p>
           <div className="flex h-10 justify-between">

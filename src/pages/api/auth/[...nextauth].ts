@@ -7,6 +7,7 @@ import prisma from "lib/prisma";
 import { compare } from "bcrypt";
 import NextAuth, { Account, Profile, User } from "next-auth";
 import cloudinary from "@/utils/cloudinary";
+import { signIn } from "next-auth/react";
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -92,6 +93,15 @@ export default NextAuth({
   },
   callbacks: {
     async jwt({ token, user, isNewUser }) {
+      if (isNewUser) {
+        const p = await prisma.profile.create({
+          data: {
+            user_id: user?.id as string,
+            fullname: ""
+          }
+        })
+        console.log(p)
+      }
       if (user) {
         token.role = user.role;
         token.uid = user.id;
@@ -111,6 +121,19 @@ export default NextAuth({
             photo: true,
           },
         });
+
+        if (!profile?.photo) {
+          const image = await prisma.user.findUnique({
+            where: {
+              id: token.uid as string
+            },
+            select: {
+              image: true
+            }
+          })
+          session.user.image = image?.image
+          return session
+        }
 
         let photoUrl = null;
         try {
