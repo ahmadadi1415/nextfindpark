@@ -35,20 +35,6 @@ export default function Dashboard(props) {
                       PENUH ?
                     </h1>
                   </div>
-                  <div
-          className="md:w-14 md:h-7 w-12 h-6 flex items-center bg-gray-400 rounded-full p-1 cursor-pointer"
-          onClick={() => {
-            setToggle(!toggle);
-          }}
-        >
-          {/* Switch */}
-          <div
-            className={
-              "bg-black md:w-6 md:h-6 h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out" +
-              (toggle ? null : toggleClass)
-            }
-          ></div>
-        </div>
                   <div className="mt-36">
                     <button className="bg-blue-900 rounded-xl font-bold text-center w-44 h-12">
                       SIMPAN
