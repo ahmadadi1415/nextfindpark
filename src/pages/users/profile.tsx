@@ -21,9 +21,7 @@ interface Props {
   };
 }
 
-export default function Profile({
-                                      userProfile,
-                                    }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Profile({userProfile}: Props) {
   const [localImg, setLocalImg] = useState();
   const [image, setImage] = useState([]);
   const hiddenImageInput: any = useRef(null);
