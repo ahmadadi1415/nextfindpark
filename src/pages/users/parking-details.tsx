@@ -1,15 +1,15 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
-import Navbar from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import { Rating } from "@/components/userRatings";
-import dynamic from "next/dynamic";
-import { BarRating } from "@/components/barRatings";
+import Head from 'next/head';
+import Image from 'next/image';
+import { Inter } from '@next/font/google';
+import styles from '@/styles/Home.module.css';
+import Navbar from '@/components/navbar';
+import { Footer } from '@/components/footer';
+import { Rating } from '@/components/userRatings';
+import dynamic from 'next/dynamic';
+import { BarRating } from '@/components/barRatings';
 
-const inter = Inter({ subsets: ["latin"] });
-const Maps = dynamic(() => import("@/components/map"), {
+const inter = Inter({ subsets: ['latin'] });
+const Maps = dynamic(() => import('@/components/map'), {
   ssr: false,
 });
 
@@ -78,12 +78,10 @@ export function Komentar() {
           </div>
         </div>
         <div className="text-black">
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error
-            debitis corrupti laboriosam laborum sit magnam? Quis hic voluptatem,
-            impedit, neque fuga maiores quae placeat ducimus vitae, beatae
-            dolores aperiam quos.
-          </p>
+          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error debitis corrupti laboriosam laborum sit magnam? Quis hic voluptatem, impedit, neque fuga maiores quae placeat ducimus vitae, beatae dolores aperiam quos.</p>
+        </div>
+        <div className="flex justify-center">
+          <img src="/contohpark.png" alt="" />
         </div>
       </div>
     </>

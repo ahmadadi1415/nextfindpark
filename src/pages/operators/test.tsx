@@ -1,8 +1,8 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import Navbar from "@/components/navbar";
-import { Footer } from "@/components/footer";
+import Head from 'next/head';
+import Image from 'next/image';
+import { Inter } from '@next/font/google';
+import Navbar from '@/components/navbar';
+import { Footer } from '@/components/footer';
 
 export default function Dashboard() {
   return (
@@ -20,32 +20,20 @@ export default function Dashboard() {
             <div className="py-5 flex -mx-2 ">
               <div className="w-1/3 px-2 ">
                 <div className="flex flex-col items-center bg-gray-300 rounded-xl h-screen ">
-                  <h1 className="text-center px-4 py-5 text-black text-4xl font-serif font-bold">
-                    Parkiran Fakultas Ilmu Sosial
-                  </h1>
+                  <h1 className="text-center px-4 py-5 text-black text-4xl font-serif font-bold">Parkiran Fakultas Ilmu Sosial</h1>
                   <div className="flex flex-col items-center box-content bg-blue-900 rounded-xl h-52 w-52 p-4 border-4">
-                    <h1 className="font-bold text-2xl text-center py-2">
-                      KENDARAAN TERPARKIR
-                    </h1>
+                    <h1 className="font-bold text-2xl text-center py-2">KENDARAAN TERPARKIR</h1>
                     <h1 className="font-bold text-8xl py-4 text-center">150</h1>
                   </div>
                   <div>
-                    <h1 className="text-red-500 font-bold text-4xl py-10 text-center">
-                      PENUH ?
-                    </h1>
+                    <h1 className="text-red-500 font-bold text-4xl py-10 text-center">PENUH ?</h1>
                   </div>
                   <div className="flex gap-4">
-                    <button className="bg-blue-900 rounded-xl font-bold text-center w-24 h-12">
-                      YA
-                    </button>
-                    <button className="bg-gray-200 text-purple-800 rounded-xl font-bold text-center w-24 h-12">
-                      TIDAK
-                    </button>
+                    <button className="focus:bg-blue-900 focus:text-white bg-gray-200 text-purple-800 rounded-xl font-bold text-center w-24 h-12">YA</button>
+                    <button className="focus:bg-blue-900 focus:text-white bg-gray-200 text-purple-800 rounded-xl font-bold text-center w-24 h-12">TIDAK</button>
                   </div>
                   <div className="mt-36">
-                    <button className="bg-blue-900 rounded-xl font-bold text-center w-44 h-12">
-                      SIMPAN
-                    </button>
+                    <button className="bg-blue-900 rounded-xl font-bold text-center w-44 h-12">SIMPAN</button>
                   </div>
                   {/* <div>
                     <button className="bg-blue-900 rounded-xl font-bold text-center w-44 h-12">
@@ -56,15 +44,9 @@ export default function Dashboard() {
               </div>
               <div className="w-full px-2 ">
                 <div className="bg-gray-300 rounded-xl h-screen ">
-                  <img
-                    src="/contohpark.png"
-                    alt="fispark"
-                    className="mx-auto py-5 rounded-xl lg:block hidden w-9/12"
-                  />
+                  <img src="/contohpark.png" alt="fispark" className="mx-auto py-5 rounded-xl lg:block hidden w-9/12" />
                   <div className="py-12 flex flex-col items-center ">
-                    <button className="bg-blue-900 rounded-xl font-bold text-center w-64 h-14">
-                      GANTI
-                    </button>
+                    <button className="bg-blue-900 rounded-xl font-bold text-center w-64 h-14">GANTI</button>
                   </div>
                 </div>
               </div>

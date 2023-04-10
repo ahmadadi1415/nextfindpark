@@ -1,19 +1,19 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
-import Navbar from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import { Rating } from "@/components/userRatings";
-import dynamic from "next/dynamic";
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
-import { getSession } from "next-auth/react";
-import Router from "next/router";
-const Maps = dynamic(() => import("@/components/map"), {
+import Head from 'next/head';
+import Image from 'next/image';
+import { Inter } from '@next/font/google';
+import styles from '@/styles/Home.module.css';
+import Navbar from '@/components/navbar';
+import { Footer } from '@/components/footer';
+import { Rating } from '@/components/userRatings';
+import dynamic from 'next/dynamic';
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+import { getSession } from 'next-auth/react';
+import Router from 'next/router';
+const Maps = dynamic(() => import('@/components/map'), {
   ssr: false,
 });
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export default function ParkingRate(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
@@ -45,6 +45,11 @@ export default function ParkingRate(props: InferGetServerSidePropsType<typeof ge
               <div className="flex justify-center text-black py-2">
                 <textarea name="" id="" className="w-96 h-36"></textarea>
               </div>
+              <div className="flex justify-center">
+                <div className="flex items-center rounded-full text-xl font-bold text-blue-700 px-5">
+                  <a href="">UPLOAD FOTO</a>
+                </div>
+              </div>
               <div className="flex justify-center pt-5">
                 <div className="flex items-center rounded-full text-xl bg-blue-700 py-2 px-5">
                   <a href="">BERI PENILAIAN</a>
@@ -62,6 +67,6 @@ export default function ParkingRate(props: InferGetServerSidePropsType<typeof ge
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = getSession(context);
   if (!session) {
-    Router.push("/login");
+    Router.push('/login');
   }
 }
