@@ -5,7 +5,7 @@ import Navbar from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Rating } from "@/components/userRatings";
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   return (
     <>
       <Navbar />
@@ -34,14 +34,6 @@ export default function Dashboard() {
                     <h1 className="text-red-500 font-bold text-4xl py-10 text-center">
                       PENUH ?
                     </h1>
-                  </div>
-                  <div className="flex gap-4">
-                    <button className="bg-blue-900 rounded-xl font-bold text-center w-24 h-12">
-                      YA
-                    </button>
-                    <button className="bg-gray-200 text-purple-800 rounded-xl font-bold text-center w-24 h-12">
-                      TIDAK
-                    </button>
                   </div>
                   <div className="mt-36">
                     <button className="bg-blue-900 rounded-xl font-bold text-center w-44 h-12">
