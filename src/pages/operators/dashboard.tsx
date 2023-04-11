@@ -5,7 +5,7 @@ import Navbar from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Rating } from "@/components/userRatings";
 
-export default function Dashboard(props) {
+export default function Dashboard() {
   return (
     <>
       <Navbar />
