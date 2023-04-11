@@ -51,6 +51,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 latitude: latitude.toString(),
                 longitude: longitude.toString(),
                 hourlyFee: hourlyFee.toString(),
+                updatedAt: Date.now().toString()
             }
         }).then((r) => {
             return res.status(200).json(r)
