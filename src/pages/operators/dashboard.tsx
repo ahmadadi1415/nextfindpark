@@ -19,7 +19,7 @@ export default function Dashboard(props) {
         <main className="px-10 min-h-screen bg-white ">
           <div className="px-4 ">
             <div className="py-5 flex -mx-2 ">
-              <div className="container w-1/3 flex lg:pl-10">
+              <div className="container w-1/2 flex lg:pl-10">
                 <div className="flex flex-col items-center bg-gray-300 rounded-xl h-screen ">
                   <h1 className="text-center px-4 py-5 text-black text-4xl font-serif font-bold">
                     Parkiran Fakultas Ilmu Sosial
@@ -35,7 +35,65 @@ export default function Dashboard(props) {
                       PENUH ?
                     </h1>
                   </div>
-                  <div className="mt-36">
+                  <div className="flex gap-4">
+                    <button className="focus:bg-blue-900 focus:text-white bg-gray-200 text-purple-800 rounded-xl font-bold text-center w-24 h-12">
+                      YA
+                    </button>
+                    <button className="focus:bg-blue-900 focus:text-white bg-gray-200 text-purple-800 rounded-xl font-bold text-center w-24 h-12">
+                      TIDAK
+                    </button>
+                  </div>
+                  <div className="py-4">
+                    <div className="flex justify-between items-center py-2">
+                      <label className="mr-4 inline-block text-sm font-medium leading-6 text-gray-900">
+                        Nama Parkiran
+                      </label>
+                      <input
+                        type="text"
+                        name="namaparkir"
+                        id="namaparkir"
+                        className="px-3 py-2 rounded-lg border-1"
+                        placeholder="Nama Parkiran"
+                      ></input>
+                    </div>
+                    <div className="flex justify-between items-center py-2">
+                      <label className="mr-4 inline-block text-sm font-medium leading-6 text-gray-900">
+                        Lokasi
+                      </label>
+                      <input
+                        type="text"
+                        name="lokasiparkiran"
+                        id="lokasiparkiran"
+                        className="px-3 py-2 rounded-lg border-1"
+                        placeholder="Lokasi Parkiran"
+                      ></input>
+                    </div>
+                    <div className="flex justify-between items-center py-2">
+                      <label className="mr-4 inline-block text-sm font-medium leading-6 text-gray-900">
+                        Biaya
+                      </label>
+                      <input
+                        type="text"
+                        name="biaya"
+                        id="biaya"
+                        className="px-3 py-2 rounded-lg border-1"
+                        placeholder="Biaya"
+                      ></input>
+                    </div>
+                    <div className="flex justify-between items-center py-2">
+                      <label className="mr-4 inline-block text-sm font-medium leading-6 text-gray-900">
+                        Deskripsi
+                      </label>
+                      <input
+                        type="text"
+                        name="deskripsi"
+                        id="deskripsi"
+                        className="px-3 py-2 rounded-lg border-1"
+                        placeholder="Deskripsi"
+                      ></input>
+                    </div>
+                  </div>
+                  <div className="mt-16">
                     <button className="bg-blue-900 rounded-xl font-bold text-center w-44 h-12">
                       SIMPAN
                     </button>
