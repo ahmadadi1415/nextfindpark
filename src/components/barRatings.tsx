@@ -14,7 +14,7 @@ export function BarRating({countRates} : Props) {
   const rate = countRates.find(rate => 
     rate.rate === 5
   )
-  console.log(rate)
+  // console.log(rate)
 
   function getPercentage(numStars: number) {
     const rate = countRates.find(rate => rate.rate === numStars)

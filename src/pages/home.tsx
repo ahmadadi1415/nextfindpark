@@ -8,6 +8,7 @@ import { Findcard, Recomcard } from '@/components/recomcard';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import prisma from 'lib/prisma';
+import cloudinary from '@/utils/cloudinary';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -51,7 +52,7 @@ interface ParkingLot {
 
 export default function Home({bestParkingLot}: Props) {
 
-	//console.log(bestParkingLot)
+	// console.log(bestParkingLot)
 
 	const [location, setLocation] = useState("")
 	const [coords, setCoords] = useState<{latitude: number, longitude: number, accuracy: number}>()
@@ -222,7 +223,7 @@ export default function Home({bestParkingLot}: Props) {
 
 export async function getServerSideProps() {
 
-	const response = await prisma.parkingLot.findMany({
+	let bestParkingLot = await prisma.parkingLot.findMany({
 		where: {
 			status: false,
 			rate: {
@@ -230,11 +231,31 @@ export async function getServerSideProps() {
 			}
 		},
 		orderBy: {
-			rate: 'asc'
-		}
+			rate: 'desc'
+		},
+		take: 2
 	})
 
-	const bestParkingLot = JSON.parse(JSON.stringify(response))
+	
+	bestParkingLot = JSON.parse(JSON.stringify(bestParkingLot))
+
+	const promises = bestParkingLot.map(async (parkingLot) => {
+		const image = parkingLot.image
+		try {
+			const cldImage: any = await cloudinary.api.resource(image as string)
+				.then((result) => {
+					console.log(result)
+					const photo_url = (JSON.parse(JSON.stringify(result))).secure_url
+					parkingLot.image = photo_url
+					// console.log(photo_url)
+				})
+
+		} catch (error) {
+			console.log(error)
+		}
+	})
+	
+	const res = await Promise.all(promises)
 
 	return {
 		props: {

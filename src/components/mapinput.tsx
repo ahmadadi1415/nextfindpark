@@ -49,7 +49,6 @@ const MapsInput = ({onChange}: any) => {
         draggable={true}
         autoPan={true}
         
-        animate={true}
         ref={markerRef}
       >
         <Popup>Lahan parkir yang dipilih</Popup>

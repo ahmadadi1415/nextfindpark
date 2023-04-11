@@ -13,10 +13,13 @@ import cloudinary from "@/utils/cloudinary";
 import Router from "next/router";
 import ReactStars from "react-stars";
 import { select } from "@material-tailwind/react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const inter = Inter({ subsets: ["latin"] });
 const Maps = dynamic(() => import("@/components/map"), {
 	ssr: false,
+
 });
 
 interface Props {
@@ -38,15 +41,80 @@ interface ParkingLot {
 	hourlyFee: string,
 	rate: number,
 	createdAt: string,
-	updatedAt: string
+	updatedAt: string,
+
+	distance: number
 }
 
 interface CountRates {
 
 }
 
+
+
 export default function ParkingDetails({ parkingLotData, parkingLotRates, countRates, latestRates }: Props) {
-	console.log(latestRates)
+
+	const [coords, setCoords] = useState<{ latitude: number, longitude: number, accuracy: number }>()
+
+	async function getDistance() {
+		const latitude = coords?.latitude
+		const longitude = coords?.longitude
+
+		const response = await axios.get(`http://router.project-osrm.org/route/v1/driving/${longitude},${latitude};${parkingLotData.longitude},${parkingLotData.latitude}?overview=false`)
+		// console.log(response)
+		const distance = response.data.routes[0].distance
+
+		parkingLotData = {
+			...parkingLotData,
+			distance: distance
+		}
+	}
+
+	useEffect(() => {
+		if ('geolocation' in navigator) {
+			setInterval(async ()=> {
+
+				navigator.geolocation.getCurrentPosition(async (position) => {
+					const { latitude, longitude, accuracy } = position.coords
+					setCoords({ latitude, longitude, accuracy })
+					
+				},
+					(err) => {
+						console.error(err.message)
+					}, {
+					enableHighAccuracy: true,
+					timeout: 10000,
+					maximumAge: 0
+				})
+
+			}, 3000)
+		}
+		
+		if ('geolocation' in navigator) {
+			if (!parkingLotData.distance || parkingLotData.distance === 0) {
+				setInterval(async () => {
+					navigator.geolocation.getCurrentPosition(async (position) => {
+						const { latitude, longitude, accuracy } = position.coords
+						setCoords({ latitude, longitude, accuracy })
+						console.log(coords)
+						if (coords) {
+							await getDistance()
+						}
+					},
+						(err) => {
+							console.error(err.message)
+						}, {
+						enableHighAccuracy: true,
+						timeout: 10000,
+						maximumAge: 0
+					})
+				}, 3000)
+			}
+		}
+	}, [parkingLotData.distance])
+
+
+	// console.log(latestRates)
 	return (
 		// Front End Parking Rate and Review
 		<>
@@ -113,7 +181,7 @@ export function Komentar({ ratesData }: any) {
 			<div className="pb-2">
 				<div className="flex justify-between items-center text-black">
 					<div className="w-10">
-						<img src={(ratesData?.user.profile.photo) ? ratesData.user.profile.photo : "/gambarprofile.svg"} alt="" />
+						<Image className="rounded-full" src={(ratesData?.user.profile.photo) ? ratesData.user.profile.photo : "/gambarprofile.svg"} alt="" width={50} height={50} />
 					</div>
 					<div className="font-bold">
 						<p>{(ratesData?.user.profile.fullname) ? ratesData.user.profile.fullname : ratesData.user.name}</p>
@@ -168,6 +236,7 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
 				console.log(result)
 				const photo_url = (JSON.parse(JSON.stringify(result))).secure_url
 				parkingLotData!.image = photo_url
+				console.log(photo_url)
 			})
 
 	} catch (error) {
@@ -222,9 +291,26 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
 		take: 2
 	})
 
-	latestRates = JSON.parse(JSON.stringify(latestRates))
-	console.log(latestRates)
 
+	latestRates = JSON.parse(JSON.stringify(latestRates))
+	const promises = latestRates.map(async (rates) => {
+		const image = rates.user.profile?.photo
+		try {
+			const cldImage: any = await cloudinary.api.resource(image as string)
+				.then((result) => {
+					console.log(result)
+					const photo_url = (JSON.parse(JSON.stringify(result))).secure_url
+					rates.user.profile!.photo = photo_url
+					console.log(photo_url)
+				})
+
+		} catch (error) {
+			console.log(error)
+		}
+	})
+	const res = await Promise.all(promises)
+	console.log(latestRates)
+	console.log(res)
 	return {
 		props: {
 			parkingLotData, parkingLotRates, countRates, latestRates

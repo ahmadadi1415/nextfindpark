@@ -7,6 +7,7 @@ import { Footer } from '@/components/footer';
 import { Rating } from '@/components/userRatings';
 import dynamic from 'next/dynamic';
 import { BarRating } from '@/components/barRatings';
+import { useEffect, useState } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 const Maps = dynamic(() => import('@/components/map'), {
@@ -38,7 +39,7 @@ export default function ParkingDetails(props: any) {
                 <img src="/contohpark.png" alt="" />
               </div>
               <div className="py-5">
-                <BarRating />
+                <BarRating countRates={[]}/>
               </div>
               <div>
                 <Komentar />

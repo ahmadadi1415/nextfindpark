@@ -75,7 +75,7 @@ export default function ParkingRate({parkingLot}: Props) {
           <div className="container lg:pl-10">
             <div className=" py-5 px-5 rounded-xl bg-gray-300">
               <div className=" lg:flex justify-center text-4xl font-bold text-black">
-                <h1>PARKIRAN KUNING</h1>
+                <h1>{ parkingLot.name }</h1>
               </div>
               <div className="flex justify-center py-5">
                 <Rating onChange={setRating} />
