@@ -267,7 +267,7 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
 
 	let latestRates = await prisma.rating.findMany({
 		orderBy: {
-			createdAt: 'desc'
+			createdAt: "desc"
 		},
 		where: {
 			parkinglot_id: parseInt(id as string)
