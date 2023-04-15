@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const session = useSession();
-  console.log(session);
+  // console.log(session);
   return (
     <>
       <Navbar />
@@ -31,18 +31,20 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex lg:py-6 ">
-                  <button
-                    type="button"
-                    className="h-12 w-36 inline-block bg-primary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-m mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                  >
-                    <Link href="/login">Login</Link>
-                  </button>
-                  <button
-                    type="button"
-                    className="ml-16 h-12 w-36 inline-block text-black bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-m  mr-2 mb-2  dark:hover:bg-grey-200 focus:outline-none dark:focus:ring-blue-800"
-                  >
-                    <Link href="/registration">Daftar</Link>
-                  </button>
+                  <Link href="/login">
+                    <button
+                      type="button"
+                      className="h-12 w-36 inline-block bg-primary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-m mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                    >Login
+                    </button>
+                  </Link>
+                  <Link href="/registration">
+                    <button
+                      type="button"
+                      className="ml-16 h-12 w-36 inline-block text-black bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-xl text-m  mr-2 mb-2  dark:hover:bg-grey-200 focus:outline-none dark:focus:ring-blue-800"
+                    >Daftar
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -43,6 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             newRate += parkingRate.rate * parkingRate._count.rate
             counts += parkingRate._count.rate
         })
+        
         newRate /= counts
         console.log(newRate)
 

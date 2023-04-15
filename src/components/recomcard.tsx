@@ -95,6 +95,7 @@ export function Findcard(props: Props) {
     return `${parkingLot.distance} m`
   }
   return (
+    <Link href={`/parking-lot/${parkingLot.id}/details`}>
     <div className="flex justify-center" >
       <div className="flex flex-col rounded-lg bg-blue-700 shadow-lg md:max-w-xl md:flex-row">
         <div className="flex flex-col justify-start p-6">
@@ -115,5 +116,6 @@ export function Findcard(props: Props) {
         </div>
       </div>
     </div>
+    </Link>
   );
 }

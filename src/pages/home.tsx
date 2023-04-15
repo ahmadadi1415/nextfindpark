@@ -31,7 +31,7 @@ interface GeoCoding {
 }
 
 interface Props {
-	bestParkingLot: ParkingLot[]	
+	bestParkingLot: ParkingLot[]
 }
 interface ParkingLot {
 	id: number,
@@ -50,17 +50,17 @@ interface ParkingLot {
 	distance: number
 }
 
-export default function Home({bestParkingLot}: Props) {
+export default function Home({ bestParkingLot }: Props) {
 
 	// console.log(bestParkingLot)
 
 	const [location, setLocation] = useState("")
-	const [coords, setCoords] = useState<{latitude: number, longitude: number, accuracy: number}>()
+	const [coords, setCoords] = useState<{ latitude: number, longitude: number, accuracy: number }>()
 	const [searchQuery, setSearchQuery] = useState("")
 	const [searchRes, setSearchRes] = useState<ParkingLot[]>()
 
 	function getDistances(parkingLots: ParkingLot[]): Promise<any> {
-		
+
 		const latitude = coords?.latitude
 		const longitude = coords?.longitude
 
@@ -79,7 +79,7 @@ export default function Home({bestParkingLot}: Props) {
 
 	async function getRealLocation() {
 		if (!location && coords) {
-			const {latitude, longitude} = coords
+			const { latitude, longitude } = coords
 			const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=geocodejson&lat=${latitude}&lon=${longitude}`)
 			const geocoding: GeoCoding = response.data.features[0].properties.geocoding
 			getDistances(bestParkingLot)
@@ -92,35 +92,33 @@ export default function Home({bestParkingLot}: Props) {
 		const response = await axios.get(`/api/search/${searchQuery}`)
 		let parkingLots: ParkingLot[] = await response.data
 
-		const latitude = coords?.latitude
-		const longitude = coords?.longitude
+		if (coords) {
+			const { latitude, longitude } = coords
 
-		const promises = parkingLots.map(async (parkingLot, index) => {
-			const response = await axios.get(`http://router.project-osrm.org/route/v1/driving/${longitude},${latitude};${parkingLot.longitude},${parkingLot.latitude}?overview=false`)
-			// console.log(response)
-			const distance = await response.data.routes[0].distance
+			const promises = parkingLots.map(async (parkingLot, index) => {
+				const response = await axios.get(`http://router.project-osrm.org/route/v1/driving/${longitude},${latitude};${parkingLot.longitude},${parkingLot.latitude}?overview=false`)
+				// console.log(response)
+				const distance = await response.data.routes[0].distance
 
-			parkingLots[index] = {
-				...parkingLot,
-				distance: distance
-			}
-			
-		})
+				parkingLots[index] = {
+					...parkingLot,
+					distance: distance
+				}
+			})
 
-		await Promise.all(promises).then((r) => console.log(r)).then(()=> {
-			setSearchRes(parkingLots)
-		})
-		
+			await Promise.all(promises)
+				.then(() => {
+					setSearchRes(parkingLots)
+				})
+		}
 	}
 
 	useEffect(() => {
 		if ('geolocation' in navigator) {
-			setInterval(async ()=> {
-
-				navigator.geolocation.getCurrentPosition(async (position) => {
+			setInterval(() => {
+				navigator.geolocation.getCurrentPosition((position) => {
 					const { latitude, longitude, accuracy } = position.coords
 					setCoords({ latitude, longitude, accuracy })
-					
 				},
 					(err) => {
 						console.error(err.message)
@@ -129,10 +127,9 @@ export default function Home({bestParkingLot}: Props) {
 					timeout: 10000,
 					maximumAge: 0
 				})
-
 			}, 3000)
 		}
-		
+
 		getRealLocation()
 
 	}, [coords, location, searchRes, bestParkingLot])
@@ -166,13 +163,13 @@ export default function Home({bestParkingLot}: Props) {
 							<div className=" bg-gray-300 rounded-xl">
 								<div className="flex justify-center py-5">
 									<div className="flex text-black">
-										<input type="text"  
-											className="lg:w-96 rounded-l-lg" 
-											value={searchQuery} 
+										<input type="text"
+											className="lg:w-96 rounded-l-lg"
+											value={searchQuery}
 											onChange={(e) => {
-												e.preventDefault() 
+												e.preventDefault()
 												setSearchQuery(e.target.value)
-												}} />
+											}} />
 										<button className="bg-blue-700 py-1 px-1 rounded-r-lg" disabled={!coords} onClick={
 											() => {
 												if (coords) {
@@ -236,7 +233,7 @@ export async function getServerSideProps() {
 		take: 2
 	})
 
-	
+
 	bestParkingLot = JSON.parse(JSON.stringify(bestParkingLot))
 
 	const promises = bestParkingLot.map(async (parkingLot) => {
@@ -254,12 +251,12 @@ export async function getServerSideProps() {
 			console.log(error)
 		}
 	})
-	
+
 	const res = await Promise.all(promises)
 
 	return {
 		props: {
-			bestParkingLot 
+			bestParkingLot
 		}
 	}
 }

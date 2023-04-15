@@ -33,11 +33,22 @@ interface ParkingLot {
 	updatedAt: string
 }
 
-interface Props {
-  parkingLot: ParkingLot
+interface Rate {
+  id: number,
+  parkinglot_id: number,
+  user_id: string,
+  rate: number,
+  review: string,
+  createdAt: string,
+  updatedAt: string
 }
 
-export default function ParkingRate({parkingLot}: Props) {
+interface Props {
+  parkingLot: ParkingLot,
+  rate: Rate
+}
+
+export default function ParkingRate({parkingLot, rate}: Props) {
 
   const [rating, setRating] = useState("0")
   const [review, setReview] = useState("")
@@ -48,14 +59,34 @@ export default function ParkingRate({parkingLot}: Props) {
   async function submitReview() {
     console.log(rating, review)
     console.log(user_id)
-    const response  = await axios.post("/api/rating", {
+    
+    // const response  = await axios.post("/api/rating", {
+    //   parkinglot_id: parkingLot.id,
+    //   user_id: user_id,
+    //   review: review,
+    //   rate: rating
+    // })
+    
+    const response = (!rate) ?createRating(): updateRating
+    console.log(response)
+  }
+
+  async function updateRating() {
+    const response = await axios.put(`/api/rating/${rate.id}`)
+    return response
+  }
+
+  async function createRating() {
+    const response = await axios.post("/api/rating", {
       parkinglot_id: parkingLot.id,
       user_id: user_id,
       review: review,
       rate: rating
     })
-    console.log(response)
-  }
+
+    return response
+  } 
+
 
   return (
     <>
@@ -78,13 +109,13 @@ export default function ParkingRate({parkingLot}: Props) {
                 <h1>{ parkingLot.name }</h1>
               </div>
               <div className="flex justify-center py-5">
-                <Rating onChange={setRating} />
+                <Rating initialValue={(rate?.rate) ? rate.rate : 0} onChange={setRating} />
               </div>
               <div className="flex justify-center text-black font-bold">
                 <p>BAGAIMANA MENURUTMU KAMU?</p>
               </div>
               <div className="flex justify-center text-black py-2">
-                <textarea name="" id="" className="w-96 h-36" onChange={(e) => { e.preventDefault(); setReview(e.target.value) }}></textarea>
+                <textarea name="" id="" className="w-96 h-36" value={(rate?.review) ? rate.review : ""} onChange={(e) => { e.preventDefault(); setReview(e.target.value) }}></textarea>
               </div>
               <div className="flex justify-center pt-5">
                 <div className="flex items-center rounded-full text-xl bg-blue-700 py-2 px-5">
@@ -102,6 +133,7 @@ export default function ParkingRate({parkingLot}: Props) {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getSession(context);
+  
   console.log(session)
   if (!session) {
     return {
@@ -110,22 +142,31 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         permanent: false
       }
     }
-  }
   
-  const id = context.query.id as string
+  }
+  const user_id = session?.user?.id
+  const parkinglot_id = parseInt(context.query.id as string)
 
-  const response = await prisma.parkingLot.findUnique({
+  let parkingLot = await prisma.parkingLot.findUnique({
     where: {
-      id: parseInt(id)
+      id: parkinglot_id
     }
   })
 
-  const parkingLot = JSON.parse(JSON.stringify(response))
+  parkingLot = JSON.parse(JSON.stringify(parkingLot))
 
+  let rate = await prisma.rating.findFirst({
+    where: {
+      user_id: user_id,
+      parkinglot_id: parkinglot_id
+    }
+  })
+
+  rate = JSON.parse(JSON.stringify(rate))
 
   return {
     props: {
-      parkingLot
+      parkingLot, rate
     }
   }
 }

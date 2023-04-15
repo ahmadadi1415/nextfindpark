@@ -4,7 +4,6 @@ import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import Navbar from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { Rating } from "@/components/userRatings";
 import dynamic from "next/dynamic";
 import { BarRating } from "@/components/barRatings";
 import prisma from "lib/prisma";
@@ -12,9 +11,12 @@ import { GetServerSidePropsContext } from "next";
 import cloudinary from "@/utils/cloudinary";
 import Router from "next/router";
 import ReactStars from "react-stars";
-import { select } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
+
 
 const inter = Inter({ subsets: ["latin"] });
 const Maps = dynamic(() => import("@/components/map"), {
@@ -56,28 +58,13 @@ export default function ParkingDetails({ parkingLotData, parkingLotRates, countR
 
 	const [coords, setCoords] = useState<{ latitude: number, longitude: number, accuracy: number }>()
 
-	async function getDistance() {
-		const latitude = coords?.latitude
-		const longitude = coords?.longitude
-
-		const response = await axios.get(`http://router.project-osrm.org/route/v1/driving/${longitude},${latitude};${parkingLotData.longitude},${parkingLotData.latitude}?overview=false`)
-		// console.log(response)
-		const distance = response.data.routes[0].distance
-
-		parkingLotData = {
-			...parkingLotData,
-			distance: distance
-		}
-	}
-
 	useEffect(() => {
 		if ('geolocation' in navigator) {
-			setInterval(async ()=> {
-
+			if (!coords && parkingLotData.distance === undefined) {
 				navigator.geolocation.getCurrentPosition(async (position) => {
 					const { latitude, longitude, accuracy } = position.coords
 					setCoords({ latitude, longitude, accuracy })
-					
+					console.log(coords)
 				},
 					(err) => {
 						console.error(err.message)
@@ -86,32 +73,34 @@ export default function ParkingDetails({ parkingLotData, parkingLotRates, countR
 					timeout: 10000,
 					maximumAge: 0
 				})
-
-			}, 3000)
-		}
-		
-		if ('geolocation' in navigator) {
-			if (!parkingLotData.distance || parkingLotData.distance === 0) {
-				setInterval(async () => {
-					navigator.geolocation.getCurrentPosition(async (position) => {
-						const { latitude, longitude, accuracy } = position.coords
-						setCoords({ latitude, longitude, accuracy })
-						console.log(coords)
-						if (coords) {
-							await getDistance()
-						}
-					},
-						(err) => {
-							console.error(err.message)
-						}, {
-						enableHighAccuracy: true,
-						timeout: 10000,
-						maximumAge: 0
-					})
-				}, 3000)
 			}
 		}
-	}, [parkingLotData.distance])
+
+		async function getUserDistance() {
+			if (parkingLotData.distance === undefined && coords && coords.latitude && coords.longitude) {
+				const latitude = coords.latitude
+				const longitude = coords.longitude
+
+				const response = await axios.get(`http://router.project-osrm.org/route/v1/driving/${longitude},${latitude};${parkingLotData.longitude},${parkingLotData.latitude}?overview=false`)
+				// console.log(response)
+				const distance = response.data.routes[0].distance
+
+				parkingLotData = {
+					...parkingLotData,
+					distance: distance
+				}
+
+				if (distance >= 10000) {
+					toast.success(`${distance} m`)
+				}
+
+				console.log(parkingLotData)
+			}
+		}
+
+		getUserDistance()
+
+	}, [coords, parkingLotData.distance])
 
 
 	// console.log(latestRates)
@@ -125,6 +114,7 @@ export default function ParkingDetails({ parkingLotData, parkingLotRates, countR
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<Navbar />
+			<ToastContainer/>
 			<main className="min-h-screen bg-white">
 				<div className="lg:flex px-10 py-10">
 					<div className="container rounded-xl pb-2">
@@ -135,8 +125,12 @@ export default function ParkingDetails({ parkingLotData, parkingLotRates, countR
 							<div className=" flex justify-center text-4xl font-bold text-black">
 								<h1>{parkingLotData.name}</h1>
 							</div>
-							<div className="flex justify-center pt-2">
-								<img src={(parkingLotData.image) ? parkingLotData.image : "/contohpark.png"} alt="" />
+							<div className="flex justify-center pt-2 h-72 relative">
+								<Image className="object-cover"
+									fill
+									sizes="50vw"
+									priority={true}
+									src={(parkingLotData.image) ? parkingLotData.image : "/contohpark.png"} alt="" />
 							</div>
 							<div className="py-5">
 								<BarRating countRates={countRates} />
@@ -161,10 +155,11 @@ export default function ParkingDetails({ parkingLotData, parkingLotRates, countR
 									<img src="/star.svg" alt="" />
 									<p className="text-xl">{parkingLotRates}</p>
 								</div>
-								<div className="flex items-center rounded-full text-xl bg-blue-700 py-2 px-5"
-								>
-									<a onClick={() => { Router.push(`/parking-lot/${parkingLotData.id}/rate`) }}>BERI PENILAIAN</a>
+								<Link href={`/parking-lot/${parkingLotData.id}/rate`}>
+								<div className="flex items-center rounded-full text-xl bg-blue-700 py-2 px-5">
+									BERI PENILAIAN
 								</div>
+								</Link>
 							</div>
 						</div>
 					</div>
@@ -308,6 +303,7 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
 			console.log(error)
 		}
 	})
+
 	const res = await Promise.all(promises)
 	console.log(latestRates)
 	console.log(res)
