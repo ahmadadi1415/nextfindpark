@@ -7,7 +7,8 @@ const secret = process.env.NEXTAUTH_SECRET
 
 export default async function middleware(req: NextRequest) {
     const adminPath = ["/admin"]
-    const operatorPath = ["/operator"]
+    const operatorPath = ["/operators"]
+    const userPath = ["/home", "/parking-lot"]
     const autoRedirectLogin = ["/login", "/registration"]
     const { pathname } = req.nextUrl
 
@@ -40,6 +41,21 @@ export default async function middleware(req: NextRequest) {
         if (token.role !== "operator") {
             const url = new URL(`/`, req.url)
 
+            return NextResponse.redirect(url)
+        }
+    }
+
+    if (userPath.some((path) => pathname.startsWith(path))) {
+        const token = await getToken({ req })
+
+        if (!token) {
+            const url = new URL(`/login`, req.url)
+            url.searchParams.set("callbackUrl", encodeURI(req.url))
+            return NextResponse.redirect(url)
+        }
+
+        if (token.role !== "user") {
+            const url = new URL(`/`, req.url)
             return NextResponse.redirect(url)
         }
     }

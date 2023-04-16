@@ -67,8 +67,15 @@ export default function ParkingRate({parkingLot, rate}: Props) {
     //   rate: rating
     // })
     
-    const response = (!rate) ?createRating(): updateRating
+    const response = (!rate) ? createRating(): updateRating()
     console.log(response)
+    if ((await response).status === 200) {
+      useRouter().push(`/parking-lot/${parkingLot.id}/details`)
+    }
+
+    else {
+      console.log((await response).data.error)
+    }
   }
 
   async function updateRating() {
@@ -139,7 +146,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       redirect: {
         destination: '/login',
-        permanent: false
+        permanent: false,
       }
     }
   
