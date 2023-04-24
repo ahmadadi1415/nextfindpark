@@ -62,7 +62,7 @@ export default function addPark(props: any) {
 
       <main className="min-h-screen bg-white">
         <div className="sm:flex">
-          <div className="px-4 py-4 lg:w-96 bg-gray-800">
+          <div className="sm:min-h-screen px-4 py-4 lg:w-96 bg-gray-800">
             <ul className="space-y-2">
               <li>
                 <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -98,7 +98,7 @@ export default function addPark(props: any) {
           </div>
 
           <div className="md:px-4 md:py-4 container ">
-            <div className="flex px-2 md:px-12 sm:rounded-xl bg-gray-300">
+            <div className="flex justify-center md:justify-start px-2 md:px-12 sm:rounded-xl bg-gray-300">
               <Formik
                 initialValues={{
                   name: '',
@@ -190,6 +190,7 @@ export default function addPark(props: any) {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }
