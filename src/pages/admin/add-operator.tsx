@@ -7,6 +7,9 @@ import { Field, Form, Formik, FormikValues } from 'formik';
 import axios from 'axios';
 import { UserRole } from '@prisma/client';
 import prisma from 'lib/prisma';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { InferGetServerSidePropsType } from "next";
 
 interface ParkingLotData {
   id: number;
@@ -16,7 +19,7 @@ interface ParkingLotData {
 interface Props {
   parkingLotData: ParkingLotData[];
 }
-export default function addOperator({ parkingLotData }: Props) {
+export default function addOperator({ parkingLotData }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const addOperator = async (values: FormikValues, actions: any) => {
     console.log(values);
     const response = await axios.post('/api/auth/register', JSON.stringify(values), {
@@ -37,7 +40,7 @@ export default function addOperator({ parkingLotData }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <ToastContainer />;
       <Navbaradmin />
       <main className="min-h-screen bg-white">
         <div className="sm:flex">
@@ -108,6 +111,7 @@ export default function addOperator({ parkingLotData }: Props) {
                   }}
                   onSubmit={(values, actions) => {
                     console.log('Add new operator');
+                    toast.success('Operator berhasil ditambahkan');
                     addOperator(values, actions);
                     console.log(values);
                   }}
@@ -256,11 +260,12 @@ export default function addOperator({ parkingLotData }: Props) {
           </div>
         </div>
       </main>
+      <ToastContainer />;
       <Footer />
     </>
   );
 }
-
+<ToastContainer />;
 export async function getServerSideProps() {
   const parkingLotData = await prisma.parkingLot.findMany({
     select: {
@@ -274,4 +279,5 @@ export async function getServerSideProps() {
       parkingLotData,
     },
   };
+<ToastContainer />;
 }

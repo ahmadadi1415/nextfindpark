@@ -8,12 +8,14 @@ import { resizeImage } from '@/utils/image-resizer';
 import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MapsInput = dynamic(() => import('@/components/mapinput'), {
   ssr: false,
 });
 
-export default function addPark(props: any) {
+export default function addPark() {
   const [localImg, setLocalImg] = useState();
   const [image, setImage] = useState<any>();
   const [coords, setCoords] = useState({ lat: '', lng: '' });
@@ -113,6 +115,7 @@ export default function addPark(props: any) {
                 validateOnBlur={false}
                 onSubmit={(values, actions) => {
                   console.log('Add new parking lot');
+                  toast.success('Tempat Parkir berhasil ditambahkan');
 
                   const { lat, lng } = coords;
                   values.latitude = lat;
@@ -129,7 +132,7 @@ export default function addPark(props: any) {
                       {() => (
                         <div className="flex py-4 ">
                           <label className="w-36 flex items-center text-black">Nama Tempat</label>
-                          <input className="rounded-xl text-black w-80" type="text" placeholder="Nama Tempat Parkir" name="name" value={props.values.name} onChange={props.handleChange} />
+                          <input className="rounded-xl text-white w-80" type="text" placeholder="Nama Tempat Parkir" name="name" value={props.values.name} onChange={props.handleChange} />
                         </div>
                       )}
                     </Field>
