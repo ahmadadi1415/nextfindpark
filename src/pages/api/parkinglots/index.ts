@@ -39,7 +39,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             // return res.status(200).json(response)
 
         } catch (error) {
-            return res.status(500).json(error)
+            // return res.status(500).json(error)
+            console
         }
 
         const response = await prisma.parkingLot.create({
@@ -51,11 +52,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 latitude: latitude.toString(),
                 longitude: longitude.toString(),
                 hourlyFee: hourlyFee.toString(),
-                updatedAt: Date.now().toString()
             }
         }).then((r) => {
             return res.status(200).json(r)
         }).catch((error) => {
+            console.log(error)
             return res.status(500).json(error)
         })
         // console.log(response)
