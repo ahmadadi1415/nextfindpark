@@ -16,10 +16,10 @@ function MobileNav({ open, setOpen }: any) {
   const session = useSession();
   return (
     <div className={`absolute top-0 left-0 w-screen bg-ungugelap transform ${open ? '-translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out filter drop-shadow-md `}>
-      <div className="flex items-center justify-center filter drop-shadow-md bg-text-unguterang h-20">
+      <div className="flex items-center justify-center filter drop-shadow-md border-2  h-20">
         {' '}
         {/*logo container*/}
-        <a className="text-xl font-semibold text-unguterang" href="/">
+        <a className="text-xl font-semibold text-unguterang " href="/">
           FindPark
         </a>
       </div>
@@ -118,7 +118,7 @@ export default function Navbar() {
             className="h-6 mr-3 sm:h-9"
             alt="FindPark Logo"
           /> */}
-          <span className="self-center text-xl font-bold whitespace-nowrap text-unguterang">FindPark</span>
+          <span className="self-center text-xl font-bold whitespace-nowrap text-ungugelap">FindPark</span>
         </Link>
       </div>
       <div className="w-9/12 flex justify-end items-center">
