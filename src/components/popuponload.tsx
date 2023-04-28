@@ -7,12 +7,22 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-const SimpleDialog = () => {
+
+interface PopupProps {
+  onActionYes: any
+}
+
+const SimpleDialog = ({ onActionYes }: PopupProps) => {
   const [open, setOpen] = useState(true);
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleYes = () => {
+    handleClose()
+    onActionYes()
+  }
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   return (
@@ -42,7 +52,7 @@ const SimpleDialog = () => {
         <Button color="secondary" onClick={handleClose}>
           Tidak
         </Button>
-        <Button variant="outlined" color="primary" onClick={handleClose}>
+        <Button variant="outlined" color="primary" onClick={handleYes}>
           Ya
         </Button>
       </DialogActions>
