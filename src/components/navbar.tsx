@@ -16,14 +16,14 @@ function MobileNav({ open, setOpen }: any) {
   const session = useSession();
   return (
     <div className={`absolute top-0 left-0 w-screen bg-ungugelap transform ${open ? '-translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out filter drop-shadow-md `}>
-      <div className="flex items-center justify-center filter drop-shadow-md border-2  h-20">
+      <div className="flex items-center justify-center filter drop-shadow-md border-2 bg-blue-800  h-20">
         {' '}
         {/*logo container*/}
-        <a className="text-xl font-semibold text-unguterang " href="/">
+        <a className="text-xl font-semibold text-white " href="/">
           FindPark
         </a>
       </div>
-      <div className="flex flex-col ml-4 text-unguterang">
+      <div className="flex flex-col text-white bg-blue-800">
         <a
           className="text-xl font-medium my-4"
           href="/users/home"
@@ -36,7 +36,7 @@ function MobileNav({ open, setOpen }: any) {
           Home
         </a>
         <a
-          className="text-xl font-normal my-4 text-unguterang"
+          className="text-xl font-normal my-4 text-white"
           href="/about-us"
           onClick={() =>
             setTimeout(() => {
@@ -108,7 +108,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const session = useSession();
   return (
-    <nav className="bg-gradient-to-r from-abu to-birugelap border-gray-200  flex filter  px-4 py-4 h-20 items-center">
+    <nav className="bg-blue-800 border-gray-200  flex filter  px-4 py-4 h-20 items-center">
       {' '}
       <MobileNav open={open} setOpen={setOpen} />
       <div className="container flex flex-wrap items-center justify-between mx-auto">
@@ -129,25 +129,25 @@ export default function Navbar() {
           }}
         >
           {/* hamburger button */}
-          <span className={`h-1 w-full bg-unguterang rounded-lg transform transition duration-300 ease-in-out ${open ? 'rotate-45 translate-y-3.5' : ''}`} />
-          <span className={`h-1 w-full bg-unguterang rounded-lg transition-all duration-300 ease-in-out ${open ? 'w-0' : 'w-full'}`} />
-          <span className={`h-1 w-full bg-unguterang rounded-lg transform transition duration-300 ease-in-out ${open ? '-rotate-45 -translate-y-3.5' : ''}`} />
+          <span className={`h-1 w-full bg-white rounded-lg transform transition duration-300 ease-in-out ${open ? 'rotate-45 translate-y-3.5' : ''}`} />
+          <span className={`h-1 w-full bg-white rounded-lg transition-all duration-300 ease-in-out ${open ? 'w-0' : 'w-full'}`} />
+          <span className={`h-1 w-full bg-white rounded-lg transform transition duration-300 ease-in-out ${open ? '-rotate-45 -translate-y-3.5' : ''}`} />
         </div>
 
         <div className="hidden md:flex w-full md:w-auto align-middle" id="navbar-default">
           <ul className="flex flex-col p-4 mt-4 border border-abu rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 ">
             <li>
-              <Link href="/home" className="py-2 pl-3 pr-4 text-unguterang bg-transparent rounded md:text-green md:p-0" aria-current="page">
+              <Link href="/home" className="py-2 pl-3 pr-4 text-white bg-transparent rounded md:text-green md:p-0" aria-current="page">
                 Home
               </Link>
             </li>
             <li>
-              <Link href="/about-us" className=" py-2 pl-3 pr-4 text-unguterang bg-transparent hover:bg-abu md:hover:bg-transparent md:border-0 md:p-0">
+              <Link href="/about-us" className=" py-2 pl-3 pr-4 text-white bg-transparent hover:bg-abu md:hover:bg-transparent md:border-0 md:p-0">
                 About Us
               </Link>
             </li>
             <li>
-              <Link href="#" className=" py-2 pl-3 pr-4 text-unguterang bg-transparent rounded hover:bg-abu md:hover:bg-transparent md:border-0 md:p-0">
+              <Link href="#" className=" py-2 pl-3 pr-4 text-white bg-transparent rounded hover:bg-abu md:hover:bg-transparent md:border-0 md:p-0">
                 FAQ
               </Link>
             </li>
@@ -161,20 +161,20 @@ export default function Navbar() {
                   <MenuList>
                     <MenuItem className="flex items-center gap-2">
                       <UserCircleIcon strokeWidth={2} className="h-4 w-4" />
-                      <Typography variant="small" className="font-normal text-unguterang">
+                      <Typography variant="small" className="font-normal text-white">
                         <a onClick={() => Router.push('/profile')}>Profile</a>
                       </Typography>
                     </MenuItem>
                     <MenuItem className="flex items-center gap-2">
                       <Cog6ToothIcon strokeWidth={2} className="h-4 w-4" />
-                      <Typography variant="small" className="font-normal text-unguterang">
+                      <Typography variant="small" className="font-normal text-white">
                         History
                       </Typography>
                     </MenuItem>
                     <hr className="my-2 border-blue-gray-50" />
                     <MenuItem className="flex items-center gap-2 ">
                       <PowerIcon strokeWidth={2} className="h-4 w-4" />
-                      <Typography variant="small" className="font-normal text-unguterang">
+                      <Typography variant="small" className="font-normal text-white">
                         <a onClick={() => signOut()}>Sign Out</a>
                       </Typography>
                     </MenuItem>

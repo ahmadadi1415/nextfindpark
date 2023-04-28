@@ -32,7 +32,7 @@ const Login: NextPage = ({ providers }: any) => {
                 });
               }}
             >
-              <p className="text-ungugelap px-1">Sign In with {provider.name}</p>
+              <p className="text-black px-1">Sign In with {provider.name}</p>
             </button>
           )
       )}
@@ -50,7 +50,7 @@ const Login: NextPage = ({ providers }: any) => {
       </Head>
       <Navbar />
       <div>
-        <main className="lg:p-36 px-2 flex items-center justify-between min-h-screen bg-abu ">
+        <main className="lg:p-36 px-2 flex items-center justify-between min-h-screen bg-white ">
           <div>
             <Formik
               initialValues={{ email: '', password: '' }}
@@ -65,37 +65,37 @@ const Login: NextPage = ({ providers }: any) => {
                 <Form>
                   <div>
                     <div>
-                      <p className="text-5xl text-ungugelap  pb-5 font-bold">Halo!</p>
-                      <p className="text-xl text-ungugelap pb-7">Kamu harus login dulu nih sebelum pakai app-nya</p>
+                      <p className="text-5xl text-black  pb-5 font-bold">Halo!</p>
+                      <p className="text-xl text-black pb-7">Kamu harus login dulu nih sebelum pakai app-nya</p>
                     </div>
                     <Field name="email">
                       {() => (
                         <div className="pb-5">
-                          <input type="email" name="email" className="rounded-lg w-96 text-ungugelap" value={props.values.email} onChange={props.handleChange} placeholder="Email" />
+                          <input type="email" name="email" className="rounded-lg w-96 text-black" value={props.values.email} onChange={props.handleChange} placeholder="Email" />
                         </div>
                       )}
                     </Field>
                     <Field name="password">
                       {() => (
                         <div className="pb-3">
-                          <input type={showPassword ? 'text' : 'password'} name="password" className="rounded-lg w-96 text-ungugelap" value={props.values.password} onChange={props.handleChange} placeholder="Password" />
+                          <input type={showPassword ? 'text' : 'password'} name="password" className="rounded-lg w-96 text-black" value={props.values.password} onChange={props.handleChange} placeholder="Password" />
                         </div>
                       )}
                     </Field>
                   </div>
                   <div className="grid grid-cols-2 pb-7">
-                    <div className="text-ungugelap">
+                    <div className="text-black">
                       <p>
                         <input className="form-checkbox rounded-full mr-3" type="checkbox" onClick={(e) => setShowPassword(e.currentTarget.checked)} /> Tampilkan Kata Sandi
                       </p>
                     </div>
-                    <div className="text-ungugelap underline text-right ">
+                    <div className="text-black underline text-right ">
                       <Link href="/forgot-password">Lupa sandinya?</Link>
                     </div>
-                    <p className="text-ungugelap text-right font-bold"></p>
+                    <p className="text-black text-right font-bold"></p>
                   </div>
                   <div>
-                    <div className="bg-ungugelap text-unguterang rounded-lg font-bold text-center w-44 h-12">
+                    <div className="bg-yellow-500 text-white hover:bg-yellow-600 rounded-lg font-bold text-center w-44 h-12">
                       <button className="py-3" type="submit">
                         Login
                       </button>

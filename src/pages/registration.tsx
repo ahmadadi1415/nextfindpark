@@ -44,7 +44,7 @@ export default function Registration() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <main className="p-36 flex items-center justify-between flex-col-2 min-h-screen bg-abu">
+        <main className="p-36 flex items-center justify-between flex-col-2 min-h-screen bg-white">
           <Formik
             initialValues={{ username: '', fullname: '', email: '', password: '', confirmation: '' }}
             validateOnChange={false}
@@ -75,54 +75,54 @@ export default function Registration() {
               <Form>
                 <div>
                   <div>
-                    <p className="text-5xl text-ungugelap pb-5 font-bold">Belum punya akun?</p>
-                    <p className="text-xl text-ungugelap pb-7">Isi form dibawah</p>
+                    <p className="text-5xl text-black pb-5 font-bold">Belum punya akun?</p>
+                    <p className="text-xl text-black pb-7">Isi form dibawah</p>
                   </div>
                   <Field name="fullname">
                     {() => (
                       <div className="pb-5">
-                        <input type="text" name="fullname" className="rounded-lg w-96 text-ungugelap" value={props.values.fullname} onChange={(e) => props.handleChange(e)} placeholder="Nama Lengkap" />
+                        <input type="text" name="fullname" className="rounded-lg w-96 text-black" value={props.values.fullname} onChange={(e) => props.handleChange(e)} placeholder="Nama Lengkap" />
                       </div>
                     )}
                   </Field>
                   <Field name="username">
                     {() => (
                       <div className="pb-5">
-                        <input type="text" name="username" className="rounded-lg w-96 text-ungugelap" value={props.values.username} onChange={(e) => props.handleChange(e)} placeholder="Username" />
+                        <input type="text" name="username" className="rounded-lg w-96 text-black" value={props.values.username} onChange={(e) => props.handleChange(e)} placeholder="Username" />
                       </div>
                     )}
                   </Field>
                   <Field name="email">
                     {() => (
                       <div className="pb-5">
-                        <input type="email" name="email" className="rounded-lg w-96 text-ungugelap" value={props.values.email} onChange={(e) => props.handleChange(e)} placeholder="Email" />
+                        <input type="email" name="email" className="rounded-lg w-96 text-black" value={props.values.email} onChange={(e) => props.handleChange(e)} placeholder="Email" />
                       </div>
                     )}
                   </Field>
                   <Field name="password">
                     {() => (
                       <div className="pb-5">
-                        <input type="password" name="password" className="rounded-lg w-96 text-ungugelap" value={props.values.password} onChange={(e) => props.handleChange(e)} placeholder="Sandi" />
+                        <input type="password" name="password" className="rounded-lg w-96 text-black" value={props.values.password} onChange={(e) => props.handleChange(e)} placeholder="Sandi" />
                       </div>
                     )}
                   </Field>
                   <Field name="confirmation">
                     {() => (
                       <div className="pb-5">
-                        <input type="password" name="confirmation" className="rounded-lg w-96 text-ungugelap" value={props.values.confirmation} onChange={(e) => props.handleChange(e)} placeholder="Konfirmasi sandi" />
+                        <input type="password" name="confirmation" className="rounded-lg w-96 text-black" value={props.values.confirmation} onChange={(e) => props.handleChange(e)} placeholder="Konfirmasi sandi" />
                       </div>
                     )}
                   </Field>
                   {/* <div className="grid grid-cols-3 pb-7">
 										<div>
-											<p className="text-ungugelap font-bold">
+											<p className="text-black font-bold">
 												<input type="checkbox" /> Tampilkan kata sandi
 											</p>
 										</div>
 									</div> */}
                 </div>
-                <div className="bg-ungugelap rounded-lg font-bold text-center w-44 h-12">
-                  <button className="py-3 text-unguterang" type="submit">
+                <div className="bg-yellow-500 hover:bg-yellow-600 rounded-lg font-bold text-center w-44 h-12">
+                  <button className="py-3 text-white" type="submit">
                     Daftar
                   </button>
                 </div>
