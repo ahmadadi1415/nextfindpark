@@ -6,7 +6,7 @@ import Link from "next/link";
 import Navbar from "@/components/navbar";
 
 
-export default function Aboutus(props : any) {
+export default function Aboutus() {
   return (
     <>
      
