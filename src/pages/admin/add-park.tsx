@@ -15,7 +15,7 @@ const MapsInput = dynamic(() => import("@/components/mapinput"), {
   ssr: false,
 });
 
-export default function addPark() {
+export default function addPark(props: any) {
   const [localImg, setLocalImg] = useState();
   const [image, setImage] = useState<any>();
   const [coords, setCoords] = useState({ lat: "", lng: "" });
