@@ -39,7 +39,7 @@ export default function ParkingDetails(props: any) {
                 <img src="/contohpark.png" alt="" />
               </div>
               <div className="py-5">
-                <BarRating countRates={[]}/>
+                <BarRating countRates={[]} />
               </div>
               <div>
                 <Komentar />

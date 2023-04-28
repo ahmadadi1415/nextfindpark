@@ -32,26 +32,26 @@ export default function ParkingRate(props: InferGetServerSidePropsType<typeof ge
             <Maps />
           </div>
           <div className="container lg:pl-10">
-            <div className=" py-5 px-5 rounded-xl bg-gray-300">
-              <div className=" lg:flex justify-center text-4xl font-bold text-black">
+            <div className=" py-5 px-5 rounded-xl bg-blue-700">
+              <div className=" lg:flex justify-center text-4xl font-bold text-white">
                 <h1>PARKIRAN KUNING</h1>
               </div>
               <div className="flex justify-center py-5">
                 <Rating />
               </div>
-              <div className="flex justify-center text-black font-bold">
+              <div className="flex justify-center text-white font-bold">
                 <p>BAGAIMANA MENURUTMU KAMU?</p>
               </div>
-              <div className="flex justify-center text-black py-2">
+              <div className="flex justify-center text-white py-2">
                 <textarea name="" id="" className="w-96 h-36"></textarea>
               </div>
               <div className="flex justify-center">
-                <div className="flex items-center rounded-full text-xl font-bold text-blue-700 px-5">
+                <div className="flex items-center rounded-full text-xl font-bold text-yellow-500 px-5">
                   <a href="">UPLOAD FOTO</a>
                 </div>
               </div>
               <div className="flex justify-center pt-5">
-                <div className="flex items-center rounded-full text-xl bg-blue-700 py-2 px-5">
+                <div className="flex items-center text-white rounded-full text-xl bg-yellow-500 hover:bg-yellow-600 py-3 px-5">
                   <a href="">BERI PENILAIAN</a>
                 </div>
               </div>

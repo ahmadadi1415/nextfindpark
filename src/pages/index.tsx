@@ -15,7 +15,7 @@ export default function Home() {
     <>
       <Navbar />
       <div>
-        <main className="lg:p-32 flex items-center justify-between flex-col-2 min-h-screen bg-gradient-to-r from-white to-blue-800">
+        <main className="lg:p-32 flex items-center justify-between flex-col-2 min-h-screen bg-gradient-to-r from-white to-blue-700">
           <div className="lg:grid grid-cols-2 ">
             <div className="">
               <div className="mx-auto flex-col flex w-3/4 py-5 ">
@@ -26,12 +26,12 @@ export default function Home() {
                 </div>
                 <div className="flex lg:py-6 ">
                   <Link href="/login">
-                    <button type="button" className="h-12 w-36 inline-block text-white hover:bg-yellow-600 focus:ring-4 focus:ring-blue-800 font-medium rounded-xl text-m mr-2 mb-2 bg-yellow-500 focus:outline-none dark:focus:ring-blue-800">
+                    <button type="button" className="h-12 w-36 inline-block text-white hover:bg-yellow-600 focus:ring-4 focus:ring-blue-700 font-medium rounded-xl text-m mr-2 mb-2 bg-yellow-500 focus:outline-none ">
                       Login
                     </button>
                   </Link>
                   <Link href="/registration">
-                    <button type="button" className="ml-16 h-12 w-36 inline-block text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-blue-800 font-medium rounded-xl text-m  mr-2 mb-2 bg-ungugelap ">
+                    <button type="button" className="ml-16 h-12 w-36 inline-block text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-blue-700 font-medium rounded-xl text-m  mr-2 mb-2 ">
                       Daftar
                     </button>
                   </Link>

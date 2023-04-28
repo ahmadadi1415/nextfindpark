@@ -16,14 +16,14 @@ function MobileNav({ open, setOpen }: any) {
   const session = useSession();
   return (
     <div className={`absolute top-0 left-0 w-screen bg-ungugelap transform ${open ? '-translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out filter drop-shadow-md `}>
-      <div className="flex items-center justify-center filter drop-shadow-md border-2 bg-blue-800  h-20">
+      <div className="flex items-center justify-center filter drop-shadow-md border-2 bg-blue-700  h-20">
         {' '}
         {/*logo container*/}
         <a className="text-xl font-semibold text-white " href="/">
           FindPark
         </a>
       </div>
-      <div className="flex flex-col text-white bg-blue-800">
+      <div className="flex flex-col text-white bg-blue-700">
         <a
           className="text-xl font-medium my-4"
           href="/users/home"
@@ -108,7 +108,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const session = useSession();
   return (
-    <nav className="bg-blue-800 border-gray-200  flex filter  px-4 py-4 h-20 items-center">
+    <nav className="bg-blue-700 border-gray-200  flex filter  px-4 py-4 h-20 items-center">
       {' '}
       <MobileNav open={open} setOpen={setOpen} />
       <div className="container flex flex-wrap items-center justify-between mx-auto">

@@ -1,53 +1,50 @@
-import ReactStars from "react-stars"
+import ReactStars from 'react-stars';
 
 interface Props {
   countRates: {
-    rate: number,
+    rate: number;
     _count: {
-      rate: number
-    }
-  }[]
+      rate: number;
+    };
+  }[];
 }
 
-export function BarRating({countRates} : Props) {
-
-  const rate = countRates.find(rate => 
-    rate.rate === 5
-  )
+export function BarRating({ countRates }: Props) {
+  const rate = countRates.find((rate) => rate.rate === 5);
   // console.log(rate)
 
   function getPercentage(numStars: number) {
-    const rate = countRates.find(rate => rate.rate === numStars)
-    
-    let percentage = 0
+    const rate = countRates.find((rate) => rate.rate === numStars);
+
+    let percentage = 0;
     if (rate) {
-      percentage = rate._count.rate * numStars / getTotalData() / 5 * 100
+      percentage = ((rate._count.rate * numStars) / getTotalData() / 5) * 100;
     }
 
-    return percentage
+    return percentage;
   }
 
   function getTotalData() {
-    let totalData = 0
+    let totalData = 0;
     countRates.map((rate, index) => {
-      totalData += rate._count.rate
-    })
+      totalData += rate._count.rate;
+    });
 
-    return totalData
+    return totalData;
   }
 
   function getMeanRate() {
-    let mean = 0
+    let mean = 0;
 
     if (getTotalData() !== 0) {
       countRates.map((rate) => {
-        mean += rate._count.rate * rate.rate
-      })
+        mean += rate._count.rate * rate.rate;
+      });
 
-      mean /= getTotalData()
+      mean /= getTotalData();
     }
 
-    return mean
+    return mean;
   }
 
   return (
@@ -57,35 +54,35 @@ export function BarRating({countRates} : Props) {
           <div className="flex items-center">
             <span className=" font-bold text-black ">5 star</span>
             <div className="w-80 h-5 mx-4 bg-gray-400 rounded ">
-              <div className="h-5 bg-blue-700 rounded" style={{ width: `${getPercentage(5)}%` }}></div>
+              <div className="h-5 bg-yellow-500 rounded" style={{ width: `${getPercentage(5)}%` }}></div>
             </div>
             <span className=" font-bold text-black ">{getPercentage(5)}%</span>
           </div>
           <div className="flex items-center mt-4">
             <span className=" font-bold text-black ">4 star</span>
             <div className="w-80 h-5 mx-4 bg-gray-400 rounded ">
-              <div className="h-5 bg-blue-700 rounded" style={{ width: `${getPercentage(4)}%` }}></div>
+              <div className="h-5 bg-yellow-500 rounded" style={{ width: `${getPercentage(4)}%` }}></div>
             </div>
             <span className=" font-bold text-black ">{getPercentage(4)}%</span>
           </div>
           <div className="flex items-center mt-4">
             <span className=" font-bold text-black ">3 star</span>
             <div className="w-80 h-5 mx-4 bg-gray-400 rounded ">
-              <div className="h-5 bg-blue-700 rounded" style={{ width: `${getPercentage(3)}%` }}></div>
+              <div className="h-5 bg-yellow-500 rounded" style={{ width: `${getPercentage(3)}%` }}></div>
             </div>
             <span className=" font-bold text-black ">{getPercentage(3)}%</span>
           </div>
           <div className="flex items-center mt-4">
             <span className=" font-bold text-black ">2 star</span>
             <div className="w-80 h-5 mx-4 bg-gray-400 rounded ">
-              <div className="h-5 bg-blue-700 rounded" style={{ width: `${getPercentage(2)}%` }}></div>
+              <div className="h-5 bg-yellow-500 rounded" style={{ width: `${getPercentage(2)}%` }}></div>
             </div>
             <span className=" font-bold text-black ">{getPercentage(2)}%</span>
           </div>
           <div className="flex items-center mt-4">
             <span className=" font-bold text-black ">1 star</span>
             <div className="w-80 h-5 mx-4 bg-gray-400 rounded ">
-              <div className="h-5 bg-blue-700 rounded" style={{ width: `${getPercentage(1)}%` }}></div>
+              <div className="h-5 bg-yellow-500 rounded" style={{ width: `${getPercentage(1)}%` }}></div>
             </div>
             <span className="font-bold text-black ">{getPercentage(1)}%</span>
           </div>
