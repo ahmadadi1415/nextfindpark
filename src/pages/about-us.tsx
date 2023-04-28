@@ -5,9 +5,11 @@ import { Footer } from "@/components/footer";
 import Link from "next/link";
 import Navbar from "@/components/navbar";
 
-export default function Aboutus() {
+
+export default function Aboutus(props) {
   return (
     <>
+     
       <Navbar />
       <Head>
         <title>About Us</title>
