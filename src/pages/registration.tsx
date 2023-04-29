@@ -121,7 +121,7 @@ export default function Registration() {
 										</div>
 									</div> */}
                 </div>
-                <div className="bg-yellow-500 hover:bg-yellow-600 rounded-lg font-bold text-center w-44 h-12">
+                <div className="bg-yellow-500 drop-shadow-md hover:bg-yellow-600 rounded-full font-bold text-center w-44 h-12">
                   <button className="py-3 text-white" type="submit">
                     Daftar
                   </button>

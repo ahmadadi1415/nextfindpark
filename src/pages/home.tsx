@@ -190,10 +190,10 @@ export default function Home({ bestParkingLot }: Props) {
                   </div>
                   <div className="flex justify-between text-white lg:pl-20">
                     <div className="text-xl">
-                      <button className="lg:border-8  bg-yellow-500 lg:w-48 lg:h-12 rounded-full">TERDEKAT</button>
+                      <button className=" bg-yellow-500 lg:w-48 lg:h-12 rounded-full">TERDEKAT</button>
                     </div>
                     <div className="text-xl lg:pl-10">
-                      <button className="lg:border-8 bg-yellow-500 lg:w-48 lg:h-12 rounded-full">TIDAK RAMAI</button>
+                      <button className=" bg-yellow-500 lg:w-48 lg:h-12 rounded-full">TIDAK RAMAI</button>
                     </div>
                   </div>
                 </div>

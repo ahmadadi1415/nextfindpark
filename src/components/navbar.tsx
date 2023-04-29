@@ -24,78 +24,90 @@ function MobileNav({ open, setOpen }: any) {
         </a>
       </div>
       <div className="flex flex-col text-white bg-blue-700">
-        <a
-          className="text-xl font-medium"
-          href="/users/home"
-          onClick={() =>
-            setTimeout(() => {
-              setOpen(!open);
-            }, 100)
-          }
-        >
-          Home
-        </a>
-        <a
-          className="text-xl font-normal text-white"
-          href="/about-us"
-          onClick={() =>
-            setTimeout(() => {
-              setOpen(!open);
-            }, 100)
-          }
-        >
-          About
-        </a>
-        <a
-          className="text-xl font-medium"
-          href="/faq"
-          onClick={() =>
-            setTimeout(() => {
-              setOpen(!open);
-            }, 100)
-          }
-        >
-          FAQ
-        </a>
+        <div className="flex py-2">
+          <a
+            className="text-xl font-medium"
+            href="/users/home"
+            onClick={() =>
+              setTimeout(() => {
+                setOpen(!open);
+              }, 100)
+            }
+          >
+            Home
+          </a>
+        </div>
+        <div className="flex py-2">
+          <a
+            className="text-xl font-normal text-white"
+            href="/about-us"
+            onClick={() =>
+              setTimeout(() => {
+                setOpen(!open);
+              }, 100)
+            }
+          >
+            About
+          </a>
+        </div>
+        <div className="flex py-2">
+          <a
+            className="text-xl font-medium"
+            href="/faq"
+            onClick={() =>
+              setTimeout(() => {
+                setOpen(!open);
+              }, 100)
+            }
+          >
+            FAQ
+          </a>
+        </div>
         <hr className="border border-white" />
         <div className="flex">
           {session.data?.user?.name && (
             <div className="flex-col ">
-              <a
-                className="text-xl font-medium"
-                href="/edit-profile"
-                onClick={() =>
-                  setTimeout(() => {
-                    setOpen(!open);
-                  }, 100)
-                }
-              >
-                Profile
-              </a>
-              <br />
-              <a
-                className="text-xl font-medium"
-                href="/history"
-                onClick={() =>
-                  setTimeout(() => {
-                    setOpen(!open);
-                  }, 100)
-                }
-              >
-                History
-              </a>
-              <hr className="" />
-              <a
-                className="text-xl font-medium"
-                onClick={() =>
-                  setTimeout(() => {
-                    setOpen(!open);
-                    signOut();
-                  }, 100)
-                }
-              >
-                Sign Out
-              </a>
+              <div className="flex py-2">
+                <a
+                  className="text-xl font-medium"
+                  href="/edit-profile"
+                  onClick={() =>
+                    setTimeout(() => {
+                      setOpen(!open);
+                    }, 100)
+                  }
+                >
+                  Profile
+                </a>
+              </div>
+
+              <div className="flex py-2">
+                <a
+                  className="text-xl font-medium"
+                  href="/history"
+                  onClick={() =>
+                    setTimeout(() => {
+                      setOpen(!open);
+                    }, 100)
+                  }
+                >
+                  History
+                </a>
+              </div>
+
+              <div className="flex py-2">
+                <a
+                  className="text-xl font-medium"
+                  onClick={() =>
+                    setTimeout(() => {
+                      setOpen(!open);
+                      signOut();
+                    }, 100)
+                  }
+                >
+                  Sign Out
+                </a>
+              </div>
             </div>
           )}
         </div>
