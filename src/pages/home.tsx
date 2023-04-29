@@ -167,7 +167,7 @@ export default function Home({ bestParkingLot }: Props) {
                       }}
                     />
                     <button
-                      className="bg-yellow-500 py-1 px-1 rounded-r-lg"
+                      className="bg-yellow-500 hover:bg-yellow-600 py-2 px-2 rounded-r-lg text-white"
                       disabled={!coords}
                       onClick={() => {
                         if (coords) {
@@ -175,29 +175,34 @@ export default function Home({ bestParkingLot }: Props) {
                         }
                       }}
                     >
-                      <img src="/search.png" alt="" />
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-10 h-10">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                      </svg>
                     </button>
                   </div>
                 </div>
                 <div className="lg:flex mx-auto px-5 text-white">
                   <div className="flex">
                     <div className="w-20">
-                      <img src="/lokasi.png" alt="" />
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-14 h-14">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                      </svg>
                     </div>
                     <div className="pl-1">
                       <p>{location}</p>
                     </div>
                   </div>
-                  <div className="flex justify-between text-white lg:pl-20">
+                  <div className="flex justify-between text-white py-5 lg:pl-20">
                     <div className="text-xl">
-                      <button className=" bg-yellow-500 lg:w-48 lg:h-12 rounded-full">TERDEKAT</button>
+                      <button className="flex items-center justify-center bg-yellow-500 lg:w-48  w-36 py-3 rounded-full">TERDEKAT</button>
                     </div>
                     <div className="text-xl lg:pl-10">
-                      <button className=" bg-yellow-500 lg:w-48 lg:h-12 rounded-full">TIDAK RAMAI</button>
+                      <button className="flex items-center justify-center bg-yellow-500 lg:w-48 w-36 lg-28 py-3 rounded-full">TIDAK RAMAI</button>
                     </div>
                   </div>
                 </div>
-                <div className="lg:grid lg:grid-cols-2 pl-5 lg:pt-5 pt-1">
+                <div className="lg:grid lg:grid-cols-2 lg:pt-5 pt-1">
                   {searchRes?.map((parkingLot: ParkingLot) => [
                     <div className="pr-5 pb-5">
                       <Findcard key={parkingLot.id} userDistance={parkingLot.distance} parkingLot={parkingLot}></Findcard>

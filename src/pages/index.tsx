@@ -15,7 +15,7 @@ export default function Home() {
     <>
       <Navbar />
       <div>
-        <main className="lg:p-32 flex items-center justify-between flex-col-2 min-h-screen bg-gradient-to-r from-white to-blue-700">
+        <main className="lg:p-32 flex items-center justify-between flex-col-2 min-h-screen bg-gradient-to-r from-blue-200 to-blue-700">
           <div className="lg:grid grid-cols-2 ">
             <div className="">
               <div className="mx-auto flex-col flex w-3/4 py-5 ">

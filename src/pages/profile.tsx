@@ -209,7 +209,7 @@ export default function Profile({ userProfile }: Props) {
               </Formik>
             </div>
           </div>
-          <div className="container bg-gray-300 rounded-full text-black">
+          <div className="container bg-blue-700 rounded-lg text-white">
             <Formik
               initialValues={{
                 oldPassword: '',
