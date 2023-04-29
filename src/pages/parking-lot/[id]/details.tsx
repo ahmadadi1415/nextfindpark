@@ -137,8 +137,8 @@ export default function ParkingDetails({ parkingLotData, parkingLotRates, countR
             <Maps latitude={parkingLotData.latitude} longitude={parkingLotData.longitude} />
           </div>
           <div className="container lg:pl-10">
-            <div className=" py-2 px-2 lg:px-5 rounded-xl bg-blue-700 drop-shadow-xl">
-              <div className=" flex justify-center text-4xl font-bold text-white">
+            <div className=" py-2 px-2 lg:px-5 rounded-xl bg-white drop-shadow-2xl">
+              <div className=" flex pb-2 justify-center text-4xl font-bold text-black">
                 <h1>{parkingLotData.name}</h1>
               </div>
               <div className="flex justify-center pt-2 h-72 relative">
@@ -153,12 +153,12 @@ export default function ParkingDetails({ parkingLotData, parkingLotRates, countR
                 <Komentar /> */}
               </div>
               <div className="flex justify-between">
-                <div className="flex items-center rounded-full bg-yellow-500 hover:bg-yellow-600 py-3 px-5">
+                <div className="flex items-center rounded-full bg-yellow-500 hover:bg-yellow-600 py-3 px-5 drop-shadow-md">
                   <img src="/star.svg" alt="" />
                   <p className="text-xl">{parkingLotRates}</p>
                 </div>
                 <Link href={`/parking-lot/${parkingLotData.id}/rate`}>
-                  <div className="flex items-center rounded-full text-xl bg-yellow-500 hover:bg-yellow-600 py-3 px-5">BERI PENILAIAN</div>
+                  <div className="flex items-center rounded-full text-xl bg-yellow-500 hover:bg-yellow-600 py-3 px-5 drop-shadow-md">BERI PENILAIAN</div>
                 </Link>
               </div>
             </div>

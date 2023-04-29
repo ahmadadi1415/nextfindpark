@@ -26,12 +26,12 @@ export default function Home() {
                 </div>
                 <div className="flex lg:py-6 ">
                   <Link href="/login">
-                    <button type="button" className="h-12 w-36 inline-block text-white hover:bg-yellow-600 focus:ring-4 focus:ring-blue-700 font-medium rounded-xl text-m mr-2 mb-2 bg-yellow-500 focus:outline-none ">
+                    <button type="button" className="h-12 w-36 inline-block text-white hover:bg-yellow-600 focus:ring-4 focus:ring-blue-700 font-medium rounded-full text-m mr-2 mb-2 bg-yellow-500 focus:outline-none drop-shadow-md">
                       Login
                     </button>
                   </Link>
                   <Link href="/registration">
-                    <button type="button" className="ml-16 h-12 w-36 inline-block text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-blue-700 font-medium rounded-xl text-m  mr-2 mb-2 ">
+                    <button type="button" className="ml-16 h-12 w-36 inline-block text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-blue-700 font-medium rounded-full text-m  mr-2 mb-2 drop-shadow-md">
                       Daftar
                     </button>
                   </Link>

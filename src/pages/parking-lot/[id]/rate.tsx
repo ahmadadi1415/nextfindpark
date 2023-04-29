@@ -107,17 +107,17 @@ export default function ParkingRate({ parkingLot, rate }: Props) {
             <Maps latitude={parkingLot.latitude} longitude={parkingLot.longitude} />
           </div>
           <div className="container lg:pl-10">
-            <div className=" py-5 px-5 rounded-xl bg-blue-700 drop-shadow-xl">
-              <div className=" lg:flex justify-center text-4xl font-bold text-white">
+            <div className=" py-5 px-5 rounded-xl bg-white drop-shadow-2xl">
+              <div className=" lg:flex justify-center text-4xl font-bold text-black">
                 <h1>{parkingLot.name}</h1>
               </div>
               <div className="flex justify-center py-5">
                 <Rating initialValue={rate?.rate ? rate.rate : 0} onChange={setRating} />
               </div>
-              <div className="flex justify-center text-white font-bold">
+              <div className="flex justify-center text-black font-bold">
                 <p>BAGAIMANA MENURUTMU KAMU?</p>
               </div>
-              <div className="flex justify-center text-white py-2">
+              <div className="flex justify-center text-black py-2">
                 <textarea
                   name=""
                   id=""
@@ -130,7 +130,7 @@ export default function ParkingRate({ parkingLot, rate }: Props) {
                 ></textarea>
               </div>
               <div className="flex justify-center pt-5">
-                <div className="flex items-center rounded-full text-xl bg-yellow-500 py-2 px-5">
+                <div className="flex items-center rounded-full text-xl bg-yellow-500 py-3 px-5 drop-shadow-md text-white">
                   <button onClick={() => submitReview()}>BERI PENILAIAN</button>
                 </div>
               </div>

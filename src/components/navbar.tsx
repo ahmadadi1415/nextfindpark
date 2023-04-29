@@ -25,7 +25,7 @@ function MobileNav({ open, setOpen }: any) {
       </div>
       <div className="flex flex-col text-white bg-blue-700">
         <a
-          className="text-xl font-medium my-4"
+          className="text-xl font-medium"
           href="/users/home"
           onClick={() =>
             setTimeout(() => {
@@ -36,7 +36,7 @@ function MobileNav({ open, setOpen }: any) {
           Home
         </a>
         <a
-          className="text-xl font-normal my-4 text-white"
+          className="text-xl font-normal text-white"
           href="/about-us"
           onClick={() =>
             setTimeout(() => {
@@ -47,7 +47,7 @@ function MobileNav({ open, setOpen }: any) {
           About
         </a>
         <a
-          className="text-xl font-medium my-4"
+          className="text-xl font-medium"
           href="/faq"
           onClick={() =>
             setTimeout(() => {
@@ -57,12 +57,12 @@ function MobileNav({ open, setOpen }: any) {
         >
           FAQ
         </a>
-        <hr className="my-2 border-blue-gray-50" />
+        <hr className="border border-white" />
         <div className="flex">
           {session.data?.user?.name && (
             <div className="flex-col ">
               <a
-                className="text-xl font-medium my-4"
+                className="text-xl font-medium"
                 href="/edit-profile"
                 onClick={() =>
                   setTimeout(() => {
@@ -74,7 +74,7 @@ function MobileNav({ open, setOpen }: any) {
               </a>
               <br />
               <a
-                className="text-xl font-medium my-4"
+                className="text-xl font-medium"
                 href="/history"
                 onClick={() =>
                   setTimeout(() => {
@@ -84,9 +84,9 @@ function MobileNav({ open, setOpen }: any) {
               >
                 History
               </a>
-              <hr className="my-2 border-blue-gray-50" />
+              <hr className="" />
               <a
-                className="text-xl font-medium my-4"
+                className="text-xl font-medium"
                 onClick={() =>
                   setTimeout(() => {
                     setOpen(!open);
@@ -156,25 +156,25 @@ export default function Navbar() {
               <li>
                 <Menu>
                   <MenuHandler>
-                    <Avatar variant="circular" alt="person" className="cursor-pointer rounded-full w-7 h-7" src={(session.data.user.image as string) ? (session.data.user.image as string) : '/gambarprofile.svg'} />
+                    <Avatar variant="circular" alt="person" className="cursor-pointer rounded-full w-8 h-8" src={(session.data.user.image as string) ? (session.data.user.image as string) : '/gambarprofile.svg'} />
                   </MenuHandler>
-                  <MenuList>
-                    <MenuItem className="flex items-center gap-2">
+                  <MenuList className="bg-yellow-500 w-28 rounded-xl">
+                    <MenuItem className="flex items-center hover:bg-yellow-600">
                       <UserCircleIcon strokeWidth={2} className="h-4 w-4" />
-                      <Typography variant="small" className="font-normal text-white">
+                      <Typography variant="small" className="font-normal px-1 text-white">
                         <a onClick={() => Router.push('/profile')}>Profile</a>
                       </Typography>
                     </MenuItem>
-                    <MenuItem className="flex items-center gap-2">
+                    <MenuItem className="flex items-center hover:bg-yellow-600">
                       <Cog6ToothIcon strokeWidth={2} className="h-4 w-4" />
-                      <Typography variant="small" className="font-normal text-white">
+                      <Typography variant="small" className="font-normal px-1 text-white">
                         History
                       </Typography>
                     </MenuItem>
-                    <hr className="my-2 border-blue-gray-50" />
-                    <MenuItem className="flex items-center gap-2 ">
+
+                    <MenuItem className="flex items-center hover:bg-yellow-600">
                       <PowerIcon strokeWidth={2} className="h-4 w-4" />
-                      <Typography variant="small" className="font-normal text-white">
+                      <Typography variant="small" className="font-normal px-1 text-white">
                         <a onClick={() => signOut()}>Sign Out</a>
                       </Typography>
                     </MenuItem>
