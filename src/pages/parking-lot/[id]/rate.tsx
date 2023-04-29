@@ -1,99 +1,95 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
-import Navbar from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import { Rating } from "@/components/userRatings";
-import dynamic from "next/dynamic";
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
-import { getSession, useSession } from "next-auth/react";
-import Router, { useRouter } from "next/router";
-import prisma from "lib/prisma";
-import { useState } from "react";
-import axios from "axios";
-const Maps = dynamic(() => import("@/components/map"), {
+import Head from 'next/head';
+import Image from 'next/image';
+import { Inter } from '@next/font/google';
+import styles from '@/styles/Home.module.css';
+import Navbar from '@/components/navbar';
+import { Footer } from '@/components/footer';
+import { Rating } from '@/components/userRatings';
+import dynamic from 'next/dynamic';
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+import { getSession, useSession } from 'next-auth/react';
+import Router, { useRouter } from 'next/router';
+import prisma from 'lib/prisma';
+import { useState } from 'react';
+import axios from 'axios';
+const Maps = dynamic(() => import('@/components/map'), {
   ssr: false,
 });
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 interface ParkingLot {
-	id: number,
-	name: string,
-	description: string,
-	location: string,
-	image: string,
-	latitude: string,
-	longitude: string,
-	status: boolean,
-	hourlyFee: string,
-	rate: number,
-	createdAt: string,
-	updatedAt: string
+  id: number;
+  name: string;
+  description: string;
+  location: string;
+  image: string;
+  latitude: string;
+  longitude: string;
+  status: boolean;
+  hourlyFee: string;
+  rate: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface Rate {
-  id: number,
-  parkinglot_id: number,
-  user_id: string,
-  rate: number,
-  review: string,
-  createdAt: string,
-  updatedAt: string
+  id: number;
+  parkinglot_id: number;
+  user_id: string;
+  rate: number;
+  review: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface Props {
-  parkingLot: ParkingLot,
-  rate: Rate
+  parkingLot: ParkingLot;
+  rate: Rate;
 }
 
-export default function ParkingRate({parkingLot, rate}: Props) {
+export default function ParkingRate({ parkingLot, rate }: Props) {
+  const [rating, setRating] = useState('0');
+  const [review, setReview] = useState('');
 
-  const [rating, setRating] = useState("0")
-  const [review, setReview] = useState("")
-
-  const session = useSession()
-  const user_id = session.data?.user?.id
+  const session = useSession();
+  const user_id = session.data?.user?.id;
 
   async function submitReview() {
-    console.log(rating, review)
-    console.log(user_id)
-    
+    console.log(rating, review);
+    console.log(user_id);
+
     // const response  = await axios.post("/api/rating", {
     //   parkinglot_id: parkingLot.id,
     //   user_id: user_id,
     //   review: review,
     //   rate: rating
     // })
-    
-    const response = (!rate) ? createRating(): updateRating()
-    console.log(response)
-    if ((await response).status === 200) {
-      useRouter().push(`/parking-lot/${parkingLot.id}/details`)
-    }
 
-    else {
-      console.log((await response).data.error)
+    const response = !rate ? createRating() : updateRating();
+    console.log(response);
+    if ((await response).status === 200) {
+      useRouter().push(`/parking-lot/${parkingLot.id}/details`);
+    } else {
+      console.log((await response).data.error);
     }
   }
 
   async function updateRating() {
-    const response = await axios.put(`/api/rating/${rate.id}`)
-    return response
+    const response = await axios.put(`/api/rating/${rate.id}`);
+    return response;
   }
 
   async function createRating() {
-    const response = await axios.post("/api/rating", {
+    const response = await axios.post('/api/rating', {
       parkinglot_id: parkingLot.id,
       user_id: user_id,
       review: review,
-      rate: rating
-    })
+      rate: rating,
+    });
 
-    return response
-  } 
-
+    return response;
+  }
 
   return (
     <>
@@ -111,21 +107,30 @@ export default function ParkingRate({parkingLot, rate}: Props) {
             <Maps latitude={parkingLot.latitude} longitude={parkingLot.longitude} />
           </div>
           <div className="container lg:pl-10">
-            <div className=" py-5 px-5 rounded-xl bg-gray-300">
-              <div className=" lg:flex justify-center text-4xl font-bold text-black">
-                <h1>{ parkingLot.name }</h1>
+            <div className=" py-5 px-5 rounded-xl bg-blue-700 drop-shadow-xl">
+              <div className=" lg:flex justify-center text-4xl font-bold text-white">
+                <h1>{parkingLot.name}</h1>
               </div>
               <div className="flex justify-center py-5">
-                <Rating initialValue={(rate?.rate) ? rate.rate : 0} onChange={setRating} />
+                <Rating initialValue={rate?.rate ? rate.rate : 0} onChange={setRating} />
               </div>
-              <div className="flex justify-center text-black font-bold">
+              <div className="flex justify-center text-white font-bold">
                 <p>BAGAIMANA MENURUTMU KAMU?</p>
               </div>
-              <div className="flex justify-center text-black py-2">
-                <textarea name="" id="" className="w-96 h-36" value={(rate?.review) ? rate.review : ""} onChange={(e) => { e.preventDefault(); setReview(e.target.value) }}></textarea>
+              <div className="flex justify-center text-white py-2">
+                <textarea
+                  name=""
+                  id=""
+                  className="w-96 h-36"
+                  value={rate?.review ? rate.review : ''}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    setReview(e.target.value);
+                  }}
+                ></textarea>
               </div>
               <div className="flex justify-center pt-5">
-                <div className="flex items-center rounded-full text-xl bg-blue-700 py-2 px-5">
+                <div className="flex items-center rounded-full text-xl bg-yellow-500 py-2 px-5">
                   <button onClick={() => submitReview()}>BERI PENILAIAN</button>
                 </div>
               </div>
@@ -140,40 +145,40 @@ export default function ParkingRate({parkingLot, rate}: Props) {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getSession(context);
-  
-  console.log(session)
+
+  console.log(session);
   if (!session) {
     return {
       redirect: {
         destination: '/login',
         permanent: false,
-      }
-    }
-  
+      },
+    };
   }
-  const user_id = session?.user?.id
-  const parkinglot_id = parseInt(context.query.id as string)
+  const user_id = session?.user?.id;
+  const parkinglot_id = parseInt(context.query.id as string);
 
   let parkingLot = await prisma.parkingLot.findUnique({
     where: {
-      id: parkinglot_id
-    }
-  })
+      id: parkinglot_id,
+    },
+  });
 
-  parkingLot = JSON.parse(JSON.stringify(parkingLot))
+  parkingLot = JSON.parse(JSON.stringify(parkingLot));
 
   let rate = await prisma.rating.findFirst({
     where: {
       user_id: user_id,
-      parkinglot_id: parkinglot_id
-    }
-  })
+      parkinglot_id: parkinglot_id,
+    },
+  });
 
-  rate = JSON.parse(JSON.stringify(rate))
+  rate = JSON.parse(JSON.stringify(rate));
 
   return {
     props: {
-      parkingLot, rate
-    }
-  }
+      parkingLot,
+      rate,
+    },
+  };
 }

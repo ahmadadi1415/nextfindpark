@@ -135,7 +135,7 @@ export default function Navbar() {
         </div>
 
         <div className="hidden md:flex w-full md:w-auto align-middle" id="navbar-default">
-          <ul className="flex flex-col p-4 mt-4 border border-abu rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 ">
+          <ul className="flex flex-col p-4 mt-4 border border-yellow-500 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 ">
             <li>
               <Link href="/home" className="py-2 pl-3 pr-4 text-white bg-transparent rounded md:text-green md:p-0" aria-current="page">
                 Home

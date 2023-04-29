@@ -154,7 +154,7 @@ export default function Home({ bestParkingLot }: Props) {
           </div>
           <div className="py-5">
             <div className="lg:pl-10">
-              <div className=" bg-blue-800 rounded-xl">
+              <div className=" bg-blue-700 rounded-xl">
                 <div className="flex justify-center py-5">
                   <div className="flex text-black">
                     <input
@@ -179,7 +179,7 @@ export default function Home({ bestParkingLot }: Props) {
                     </button>
                   </div>
                 </div>
-                <div className="lg:flex mx-auto px-5 text-blue-800">
+                <div className="lg:flex mx-auto px-5 text-white">
                   <div className="flex">
                     <div className="w-20">
                       <img src="/lokasi.png" alt="" />
