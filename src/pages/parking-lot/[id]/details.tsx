@@ -81,7 +81,7 @@ export default function ParkingDetails({ parkingLotData, parkingLotRates, countR
         const latitude = coords.latitude;
         const longitude = coords.longitude;
 
-        const response = await axios.get(`http://router.project-osrm.org/route/v1/driving/${longitude},${latitude};${parkingLotData.longitude},${parkingLotData.latitude}?overview=false`);
+        const response = await axios.get(`https://router.project-osrm.org/route/v1/driving/${longitude},${latitude};${parkingLotData.longitude},${parkingLotData.latitude}?overview=false`);
         // console.log(response)
         const distance = response.data.routes[0].distance;
 
