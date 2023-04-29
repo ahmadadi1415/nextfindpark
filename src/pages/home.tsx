@@ -63,7 +63,7 @@ export default function Home({ bestParkingLot }: Props) {
     const longitude = coords?.longitude;
 
     const promises = parkingLots.map(async (parkingLot, index) => {
-      const response = await axios.get(`http://router.project-osrm.org/route/v1/driving/${longitude},${latitude};${parkingLot.longitude},${parkingLot.latitude}?overview=false`);
+      const response = await axios.get(`https://router.project-osrm.org/route/v1/driving/${longitude},${latitude};${parkingLot.longitude},${parkingLot.latitude}?overview=false`);
       // console.log(response)
       const distance = response.data.routes[0].distance;
 
