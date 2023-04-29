@@ -117,6 +117,7 @@ export default function ParkingDetails({ parkingLotData, parkingLotRates, countR
       <main className="min-h-screen bg-white">
         {nearParkingLot && !isParking && (
           <SimpleDialog
+          message='Apakah kamu parkir di sini?'
             onActionYes={async () => {
               const session = await getSession();
               console.log(session);
@@ -129,6 +130,7 @@ export default function ParkingDetails({ parkingLotData, parkingLotRates, countR
                 parking_start: new Date(),
               });
             }}
+            onActionNo={() => { }}
           />
         )}
 

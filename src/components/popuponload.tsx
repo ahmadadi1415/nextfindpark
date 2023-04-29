@@ -9,10 +9,12 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 
 interface PopupProps {
-  onActionYes: any
+  onActionYes: any,
+  onActionNo: any,
+  message: string
 }
 
-const SimpleDialog = ({ onActionYes }: PopupProps) => {
+const SimpleDialog = ({ onActionYes, onActionNo, message }: PopupProps) => {
   const [open, setOpen] = useState(true);
 
   const handleClose = () => {
@@ -23,6 +25,12 @@ const SimpleDialog = ({ onActionYes }: PopupProps) => {
     handleClose()
     onActionYes()
   }
+
+  const handleNo = () => {
+    handleClose()
+    onActionNo()
+  }
+
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   return (
@@ -45,11 +53,11 @@ const SimpleDialog = ({ onActionYes }: PopupProps) => {
       </DialogTitle>
       <DialogContent>
         <DialogContentText variant="h6">
-          Apakah kamu parkir disini ?
+          {message}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button color="secondary" onClick={handleClose}>
+        <Button color="secondary" onClick={handleNo}>
           Tidak
         </Button>
         <Button variant="outlined" color="primary" onClick={handleYes}>

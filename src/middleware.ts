@@ -8,7 +8,7 @@ const secret = process.env.NEXTAUTH_SECRET
 export default async function middleware(req: NextRequest) {
     const adminPath = ["/admin"]
     const operatorPath = ["/operators"]
-    const userPath = ["/home", "/parking-lot"]
+    const userPath = ["/home", "/parking-lot", "/history"]
     const autoRedirectLogin = ["/login", "/registration"]
     const { pathname } = req.nextUrl
 

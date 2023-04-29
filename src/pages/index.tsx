@@ -24,18 +24,31 @@ export default function Home() {
                   <h2 className="text-xl font-sans text-left text-black font-bold">Mempermudah anda dalam menemukan lahan parkir.</h2>
                   <p className="text-s font-sans text-left text-black">Segera daftarkan diri anda jika belum mempunyai akun</p>
                 </div>
-                <div className="flex lg:py-6 ">
-                  <Link href="/login">
-                    <button type="button" className="h-12 w-36 inline-block text-white hover:bg-yellow-600 focus:ring-4 focus:ring-blue-700 font-medium rounded-full text-m mr-2 mb-2 bg-yellow-500 focus:outline-none drop-shadow-md">
-                      Login
-                    </button>
-                  </Link>
-                  <Link href="/registration">
-                    <button type="button" className="ml-16 h-12 w-36 inline-block text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-blue-700 font-medium rounded-full text-m  mr-2 mb-2 drop-shadow-md">
-                      Daftar
-                    </button>
-                  </Link>
-                </div>
+                  {
+                    (!session.data?.user) ? (
+                    <div className="flex lg:py-6 ">
+                      <Link href="/login">
+                        <button type="button" className="h-12 w-36 inline-block text-white hover:bg-yellow-600 focus:ring-4 focus:ring-blue-700 font-medium rounded-full text-m mr-2 mb-2 bg-yellow-500 focus:outline-none drop-shadow-md">
+                          Login
+                        </button>
+                      </Link>
+                      <Link href="/registration">
+                        <button type="button" className="ml-16 h-12 w-36 inline-block text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-blue-700 font-medium rounded-full text-m  mr-2 mb-2 drop-shadow-md">
+                          Daftar
+                        </button>
+                      </Link>
+                    </div>
+                    ) : (
+                      <div className="flex lg:py-6 ">
+                      <Link href="/home">
+                        <button type="button" className="h-12 w-36 inline-block text-white hover:bg-yellow-600 focus:ring-4 focus:ring-blue-700 font-medium rounded-full text-m mr-2 mb-2 bg-yellow-500 focus:outline-none drop-shadow-md">
+                          Mulai!
+                        </button>
+                      </Link>
+                    </div>
+                    )
+                  }
+                
               </div>
             </div>
             <div className="">

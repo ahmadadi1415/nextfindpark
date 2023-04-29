@@ -180,7 +180,7 @@ export default function Navbar() {
                     <MenuItem className="flex items-center hover:bg-yellow-600">
                       <Cog6ToothIcon strokeWidth={2} className="h-4 w-4" />
                       <Typography variant="small" className="font-normal px-1 text-white">
-                        History
+                        <a onClick={() => Router.push('/history')}>History</a>
                       </Typography>
                     </MenuItem>
 
