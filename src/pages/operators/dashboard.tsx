@@ -1,9 +1,10 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import Navbar from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import { Rating } from "@/components/userRatings";
+import Head from 'next/head';
+import Image from 'next/image';
+import { Inter } from '@next/font/google';
+import Navbar from '@/components/navbar';
+import { Footer } from '@/components/footer';
+import { Rating } from '@/components/userRatings';
+import { BarRating } from '@/components/barRatings';
 
 export default function Dashboard() {
   return (
@@ -18,85 +19,41 @@ export default function Dashboard() {
       <div>
         <main className="px-10 min-h-screen bg-white ">
           <div className="px-4 ">
-            <div className="py-5 flex -mx-2 ">
-              <div className="container w-1/2 flex lg:pl-10">
-                <div className="flex flex-col items-center bg-gray-300 rounded-xl h-screen ">
-                  <h1 className="text-center px-4 py-5 text-black text-4xl font-serif font-bold">
-                    Parkiran Fakultas Ilmu Sosial
-                  </h1>
-                  <div className="flex flex-col items-center box-content bg-blue-900 rounded-xl h-52 w-52 p-4 border-4">
-                    <h1 className="font-bold text-2xl text-center py-2">
-                      KENDARAAN TERPARKIR
-                    </h1>
-                    <h1 className="font-bold text-8xl py-4 text-center">150</h1>
+            <div className="py-5 lg:flex mx-2 ">
+              <div className="container lg:w-1/2 pt-2 flex lg:pl-10">
+                <div className="flex flex-col items-center bg-blue-700 rounded-xl">
+                  <h1 className="text-center px-4 py-5 text-4xl font-serif font-bold text-white">Parkiran Fakultas Ilmu Sosial</h1>
+                  <div className="flex flex-col items-center box-content bg-white rounded-xl h-52 w-52 p-4 border-4">
+                    <h1 className="font-bold text-2xl text-center py-2 text-black">KENDARAAN TERPARKIR</h1>
+                    <h1 className="font-bold text-8xl py-4 text-center text-black">150</h1>
                   </div>
                   <div>
-                    <h1 className="text-red-500 font-bold text-4xl py-10 text-center">
-                      PENUH ?
-                    </h1>
+                    <h1 className="text-white font-bold text-4xl py-10 text-center">PENUH ?</h1>
                   </div>
                   <div className="flex gap-4">
-                    <button className="focus:bg-blue-900 focus:text-white bg-gray-200 text-purple-800 rounded-xl font-bold text-center w-24 h-12">
-                      YA
-                    </button>
-                    <button className="focus:bg-blue-900 focus:text-white bg-gray-200 text-purple-800 rounded-xl font-bold text-center w-24 h-12">
-                      TIDAK
-                    </button>
+                    <button className="focus:bg-yellow-600 focus:text-black bg-yellow-500 text-white drop-shadow-md rounded-full font-bold text-center w-24 h-12">YA</button>
+                    <button className="focus:bg-yellow-600 focus:text-black bg-yellow-500 text-white rounded-full drop-shadow-md font-bold text-center w-24 h-12">TIDAK</button>
                   </div>
-                  <div className="py-4">
+                  <div className="py-4 px-2">
                     <div className="flex justify-between items-center py-2">
-                      <label className="mr-4 inline-block text-sm font-medium leading-6 text-gray-900">
-                        Nama Parkiran
-                      </label>
-                      <input
-                        type="text"
-                        name="namaparkir"
-                        id="namaparkir"
-                        className="px-3 py-2 rounded-lg border-1"
-                        placeholder="Nama Parkiran"
-                      ></input>
+                      <label className="mr-4 inline-block text-sm font-medium leading-6 text-white">Nama Parkiran</label>
+                      <input type="text" name="namaparkir" id="namaparkir" className="px-3 py-2 rounded-lg border-1 text-black" placeholder="Nama Parkiran"></input>
                     </div>
                     <div className="flex justify-between items-center py-2">
-                      <label className="mr-4 inline-block text-sm font-medium leading-6 text-gray-900">
-                        Lokasi
-                      </label>
-                      <input
-                        type="text"
-                        name="lokasiparkiran"
-                        id="lokasiparkiran"
-                        className="px-3 py-2 rounded-lg border-1"
-                        placeholder="Lokasi Parkiran"
-                      ></input>
+                      <label className="mr-4 inline-block text-sm font-medium leading-6 text-white">Lokasi</label>
+                      <input type="text" name="lokasiparkiran" id="lokasiparkiran" className="px-3 py-2 rounded-lg border-1 text-black" placeholder="Lokasi Parkiran"></input>
                     </div>
                     <div className="flex justify-between items-center py-2">
-                      <label className="mr-4 inline-block text-sm font-medium leading-6 text-gray-900">
-                        Biaya
-                      </label>
-                      <input
-                        type="text"
-                        name="biaya"
-                        id="biaya"
-                        className="px-3 py-2 rounded-lg border-1"
-                        placeholder="Biaya"
-                      ></input>
+                      <label className="mr-4 inline-block text-sm font-medium leading-6 text-white">Biaya</label>
+                      <input type="text" name="biaya" id="biaya" className="px-3 py-2 rounded-lg border-1 text-black" placeholder="Biaya"></input>
                     </div>
                     <div className="flex justify-between items-center py-2">
-                      <label className="mr-4 inline-block text-sm font-medium leading-6 text-gray-900">
-                        Deskripsi
-                      </label>
-                      <input
-                        type="text"
-                        name="deskripsi"
-                        id="deskripsi"
-                        className="px-3 py-2 rounded-lg border-1"
-                        placeholder="Deskripsi"
-                      ></input>
+                      <label className="mr-4 inline-block text-sm font-medium leading-6 text-white">Deskripsi</label>
+                      <input type="text" name="deskripsi" id="deskripsi" className="px-3 py-2 rounded-lg border-1 text-black" placeholder="Deskripsi"></input>
                     </div>
                   </div>
-                  <div className="mt-16">
-                    <button className="bg-blue-900 rounded-xl font-bold text-center w-44 h-12">
-                      SIMPAN
-                    </button>
+                  <div className="pb-5">
+                    <button className="bg-yellow-500 hover:bg-yellow-600 rounded-full font-bold text-center w-44 drop-shadow-md h-12">SIMPAN</button>
                   </div>
                   {/* <div>
                     <button className="bg-blue-900 rounded-xl font-bold text-center w-44 h-12">
@@ -105,38 +62,21 @@ export default function Dashboard() {
                   </div> */}
                 </div>
               </div>
-              <div className="container flex lg:pl-10">
-                <div className="bg-gray-300 rounded-xl h-screen  py-2 px-16">
-                  <img
-                    src="/contohpark.png"
-                    alt="fispark"
-                    className="mx-auto py-5 rounded-xl lg:block hidden w-9/12"
-                  />
-                  <div className=" flex justify-center text-4xl font-bold text-black">
+              <div className="lg:flex lg:pl-10 pt-2">
+                <div className="bg-white drop-shadow-2xl rounded-lg px-16">
+                  <img src="/contohpark.png" alt="fispark" className="mx-auto py-5 rounded-xl lg:block hidden w-9/12" />
+                  <div className=" flex justify-center text-4xl py-5 font-bold text-black">
                     <h1>Parkiran Fakultas Ilmu Sosial</h1>
                   </div>
-                  <div className="py-4 flex flex-col items-center ">
-                    <button className="bg-blue-900 rounded-xl font-bold text-center w-64 h-14">
-                      GANTI
-                    </button>
+                  <div className="py-5 flex flex-col items-center ">
+                    <button className="bg-yellow-500 hover:bg-yellow-600 drop-shadow-md rounded-full font-bold text-center w-64 h-14">GANTI</button>
                   </div>
-                  <div className="py-2">
-                    <div className=" bg-blue-700">bar</div>
+                  <div className="py-5">
+                    <BarRating countRates={[]} />
                   </div>
-                  <div className="py-2">
-                    <div className=" bg-blue-700">bar</div>
+                  <div className="py-5">
+                    <Komentar />
                   </div>
-                  <div className="py-2">
-                    <div className=" bg-blue-700">bar</div>
-                  </div>
-                  <div className="py-2">
-                    <div className=" bg-blue-700">bar</div>
-                  </div>
-                  <div className="py-2">
-                    <div className=" bg-blue-700">bar</div>
-                  </div>
-
-                  <Komentar />
                 </div>
               </div>
             </div>
@@ -151,8 +91,8 @@ export default function Dashboard() {
 export function Komentar() {
   return (
     <>
-      <div className="pb-2">
-        <div className="flex justify-between items-center text-black">
+      <div className="py-2 rounded-lg bg-blue-700 drop-shadow-md px-2">
+        <div className="flex justify-between items-center py-2  text-white">
           <div className="w-10">
             <img src="/gambarprofile.svg" alt="" />
           </div>
@@ -160,13 +100,8 @@ export function Komentar() {
             <p>Nama Anggota</p>
           </div>
         </div>
-        <div className="text-black">
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error
-            debitis corrupti laboriosam laborum sit magnam? Quis hic voluptatem,
-            impedit, neque fuga maiores quae placeat ducimus vitae, beatae
-            dolores aperiam quos.
-          </p>
+        <div className="text-white">
+          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error debitis corrupti laboriosam laborum sit magnam? Quis hic voluptatem, impedit, neque fuga maiores quae placeat ducimus vitae, beatae dolores aperiam quos.</p>
         </div>
       </div>
     </>
