@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 select: {
                     parkinghistory: {
                         where: {
-                            parking_end: undefined
+                            parking_end: null
                         }
                     }
                 }

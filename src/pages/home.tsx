@@ -257,7 +257,7 @@ export async function getServerSideProps() {
         select: {
           parkinghistory: {
             where: {
-              parking_end: undefined
+              parking_end: null
             }
           }
         }
