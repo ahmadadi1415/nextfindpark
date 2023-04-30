@@ -49,8 +49,6 @@ interface ParkingLot {
   distance: number;
 }
 
-interface CountRates {}
-
 export default function ParkingDetails({ parkingLotData, parkingLotRates, countRates, latestRates, isParking }: Props) {
   const [coords, setCoords] = useState<{ latitude: number; longitude: number; accuracy: number }>();
   const [nearParkingLot, setNearThisParkingLot] = useState(false);
@@ -62,7 +60,7 @@ export default function ParkingDetails({ parkingLotData, parkingLotRates, countR
           async (position) => {
             const { latitude, longitude, accuracy } = position.coords;
             setCoords({ latitude, longitude, accuracy });
-            console.log(coords);
+            // console.log(coords);
           },
           (err) => {
             console.error(err.message);
@@ -91,8 +89,8 @@ export default function ParkingDetails({ parkingLotData, parkingLotRates, countR
         };
 
         // Minimum distance in meter
-        const minimumDistance = 100;
-        console.log(parkingLotData);
+        const minimumDistance = 100000;
+        // console.log(parkingLotData);
         if (distance < minimumDistance) {
           setNearThisParkingLot(true);
         }
@@ -100,6 +98,8 @@ export default function ParkingDetails({ parkingLotData, parkingLotRates, countR
     }
 
     getUserDistance();
+    // console.log(nearParkingLot)
+    // console.log(isParking)
   }, [coords, parkingLotData.distance, nearParkingLot]);
 
   // console.log(latestRates)
@@ -115,12 +115,12 @@ export default function ParkingDetails({ parkingLotData, parkingLotRates, countR
       <Navbar />
       <ToastContainer />
       <main className="min-h-screen bg-white">
-        {nearParkingLot && !isParking && (
+        {(nearParkingLot && !isParking) && (
           <SimpleDialog
           message='Apakah kamu parkir di sini?'
             onActionYes={async () => {
               const session = await getSession();
-              console.log(session);
+              // console.log(session);
               const user_id = session?.user?.id as string;
               const parkinglot_id = parkingLotData.id as number;
               // console.log(user_id, parkinglot_id)
@@ -154,11 +154,11 @@ export default function ParkingDetails({ parkingLotData, parkingLotRates, countR
                 {/* <Komentar />
                 <Komentar /> */}
               </div>
-              <div className="flex justify-between">
-                <div className="flex items-center rounded-full bg-yellow-500 hover:bg-yellow-600 py-3 px-5 drop-shadow-md">
+              <div className="flex justify-end">
+                {/* <div className="flex items-center rounded-full bg-yellow-500 hover:bg-yellow-600 py-3 px-5 drop-shadow-md">
                   <img src="/star.svg" alt="" />
                   <p className="text-xl">{parkingLotRates}</p>
-                </div>
+                </div> */}
                 <Link href={`/parking-lot/${parkingLotData.id}/rate`}>
                   <div className="flex items-center rounded-full text-xl bg-yellow-500 hover:bg-yellow-600 py-3 px-5 drop-shadow-md">BERI PENILAIAN</div>
                 </Link>
@@ -181,25 +181,17 @@ export function Komentar({ ratesData }: any) {
             <Image className="rounded-full" src={ratesData?.user.profile.photo ? ratesData.user.profile.photo : '/gambarprofile.svg'} alt="" width={50} height={50} />
           </div>
           <div className="font-bold">
-            <p>{ratesData?.user.profile.fullname ? ratesData.user.profile.fullname : ratesData.user.name}</p>
+            <p className='text-gray-700'>{ratesData?.user.profile.fullname ? ratesData.user.profile.fullname : ratesData.user.name}</p>
           </div>
           <div className="flex">
             <ReactStars count={5} size={48} color2={'#ffd700'} edit={false} value={ratesData?.rate} />
           </div>
         </div>
         <div className="text-white">
-          <p>{ratesData?.review}</p>
+          <p className='text-gray-600'>{ratesData?.review}</p>
         </div>
       </div>
     </>
-  );
-}
-
-export function Chartbar() {
-  return (
-    <div>
-      <p>tes bar</p>
-    </div>
   );
 }
 
@@ -222,7 +214,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     },
   });
 
-  const isParking = userHistory ? true : false;
+  const isParking = userHistory.length !== 0 ? true : false;
 
   if (!response) {
     return {

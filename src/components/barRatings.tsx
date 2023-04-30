@@ -13,15 +13,18 @@ export function BarRating({ countRates }: Props) {
   const rate = countRates.find((rate) => rate.rate === 5);
   // console.log(rate)
 
-  function getPercentage(numStars: number) {
-    const rate = countRates.find((rate) => rate.rate === numStars);
-
-    let percentage = 0;
+  function getRateCount(numStars: number) {
+    const rate = countRates.find((rate) => rate.rate === numStars)
     if (rate) {
-      percentage = ((rate._count.rate * numStars) / getTotalData() / 5) * 100;
+      return rate._count.rate
     }
+    else {
+      return 0
+    }
+  }
 
-    return percentage;
+  function getPercentage(numStars: number) {
+    return getRateCount(numStars) / getTotalData() * 100
   }
 
   function getTotalData() {
@@ -56,35 +59,35 @@ export function BarRating({ countRates }: Props) {
             <div className="w-80 h-5 mx-4 bg-gray-400 rounded ">
               <div className="h-5 bg-blue-700 rounded" style={{ width: `${getPercentage(5)}%` }}></div>
             </div>
-            <span className=" font-bold text-black ">{getPercentage(5)}%</span>
+            <span className=" font-bold text-black ">{getRateCount(5)}</span>
           </div>
           <div className="flex items-center mt-4">
             <span className=" font-bold text-black ">4 star</span>
             <div className="w-80 h-5 mx-4 bg-gray-400 rounded ">
               <div className="h-5 bg-blue-700 rounded" style={{ width: `${getPercentage(4)}%` }}></div>
             </div>
-            <span className=" font-bold text-black ">{getPercentage(4)}%</span>
+            <span className=" font-bold text-black ">{getRateCount(4)}</span>
           </div>
           <div className="flex items-center mt-4">
             <span className=" font-bold text-black ">3 star</span>
             <div className="w-80 h-5 mx-4 bg-gray-400 rounded ">
               <div className="h-5 bg-blue-700 rounded" style={{ width: `${getPercentage(3)}%` }}></div>
             </div>
-            <span className=" font-bold text-black ">{getPercentage(3)}%</span>
+            <span className=" font-bold text-black ">{getRateCount(3)}</span>
           </div>
           <div className="flex items-center mt-4">
             <span className=" font-bold text-black ">2 star</span>
             <div className="w-80 h-5 mx-4 bg-gray-400 rounded ">
               <div className="h-5 bg-blue-700 rounded" style={{ width: `${getPercentage(2)}%` }}></div>
             </div>
-            <span className=" font-bold text-black ">{getPercentage(2)}%</span>
+            <span className=" font-bold text-black ">{getRateCount(2)}</span>
           </div>
           <div className="flex items-center mt-4">
             <span className=" font-bold text-black ">1 star</span>
             <div className="w-80 h-5 mx-4 bg-gray-400 rounded ">
               <div className="h-5 bg-blue-700 rounded" style={{ width: `${getPercentage(1)}%` }}></div>
             </div>
-            <span className="font-bold text-black ">{getPercentage(1)}%</span>
+            <span className="font-bold text-black ">{getRateCount(1)}</span>
           </div>
         </div>
         <div className="">

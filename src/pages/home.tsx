@@ -46,6 +46,9 @@ interface ParkingLot {
   rate: number;
   createdAt: string;
   updatedAt: string;
+  _count: {
+    parkinghistory: number
+  }
 
   distance: number;
 }
@@ -63,14 +66,23 @@ export default function Home({ bestParkingLot }: Props) {
     const longitude = coords?.longitude;
 
     const promises = parkingLots.map(async (parkingLot, index) => {
-      const response = await axios.get(`https://router.project-osrm.org/route/v1/driving/${longitude},${latitude};${parkingLot.longitude},${parkingLot.latitude}?overview=false`);
-      // console.log(response)
-      const distance = response.data.routes[0].distance;
+      try {
+        const response = await axios.get(`https://router.project-osrm.org/route/v1/driving/${longitude},${latitude};${parkingLot.longitude},${parkingLot.latitude}?overview=false`);
+        // console.log(response)
+        const distance = response.data.routes[0].distance;
 
-      parkingLots[index] = {
-        ...parkingLot,
-        distance: distance,
-      };
+          parkingLots[index] = {
+            ...parkingLot,
+            distance: distance,
+          };
+      } catch (error: any) {
+        console.log(error.response.data)
+        
+        parkingLots[index] = {
+          ...parkingLot,
+          distance: NaN,
+        };
+      }
     });
     return Promise.all(promises);
   }
@@ -94,14 +106,24 @@ export default function Home({ bestParkingLot }: Props) {
       const { latitude, longitude } = coords;
 
       const promises = parkingLots.map(async (parkingLot, index) => {
-        const response = await axios.get(`https://router.project-osrm.org/route/v1/driving/${longitude},${latitude};${parkingLot.longitude},${parkingLot.latitude}?overview=false`);
-        // console.log(response)
-        const distance = await response.data.routes[0].distance;
+        try {          
+          const response = await axios.get(`https://router.project-osrm.org/route/v1/driving/${longitude},${latitude};${parkingLot.longitude},${parkingLot.latitude}?overview=false`);
+          // console.log(response)
 
-        parkingLots[index] = {
-          ...parkingLot,
-          distance: distance,
-        };
+          if (response.status === 200) {
+            const distance = await response.data.routes[0].distance;
+            parkingLots[index] = {
+              ...parkingLot,
+              distance: distance,
+            };
+          }
+        } catch (error) {
+          parkingLots[index] = {
+            ...parkingLot,
+            distance: NaN
+          }
+        }
+
       });
 
       await Promise.all(promises).then(() => {
@@ -204,7 +226,7 @@ export default function Home({ bestParkingLot }: Props) {
                 </div>
                 <div className="lg:grid lg:grid-cols-2 lg:pt-5 pt-1">
                   {searchRes?.map((parkingLot: ParkingLot) => [
-                    <div className="pr-5 pb-5">
+                    <div className="px-5 pb-5">
                       <Findcard key={parkingLot.id} userDistance={parkingLot.distance} parkingLot={parkingLot}></Findcard>
                     </div>,
                   ])}
@@ -230,7 +252,18 @@ export async function getServerSideProps() {
     orderBy: {
       rate: 'desc',
     },
-    take: 2,
+    include: {
+      _count: {
+        select: {
+          parkinghistory: {
+            where: {
+              parking_end: null
+            }
+          }
+        }
+      }
+    },
+    take: 2
   });
 
   bestParkingLot = JSON.parse(JSON.stringify(bestParkingLot));

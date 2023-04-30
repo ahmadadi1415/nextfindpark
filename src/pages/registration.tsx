@@ -46,7 +46,7 @@ export default function Registration() {
       <div>
         <main className="p-36 flex items-center justify-between flex-col-2 min-h-screen bg-white">
           <Formik
-            initialValues={{ username: '', fullname: '', email: '', password: '', confirmation: '' }}
+            initialValues={{ fullname: '', email: '', password: '', confirmation: '' }}
             validateOnChange={false}
             validateOnBlur={false}
             validate={(values) => {
@@ -56,9 +56,9 @@ export default function Registration() {
               } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
                 errors.email = 'Invalid Email Address';
               }
-              if (!values.username) {
-                errors.username = 'Required';
-              }
+              // if (!values.username) {
+              //   errors.username = 'Required';
+              // }
               if (values.password.length < 8) {
                 errors.password = 'Password at least has 8 characters';
               } else if (values.confirmation !== values.password) {
@@ -85,13 +85,13 @@ export default function Registration() {
                       </div>
                     )}
                   </Field>
-                  <Field name="username">
+                  {/* <Field name="username">
                     {() => (
                       <div className="pb-5">
                         <input type="text" name="username" className="rounded-lg w-96 text-black" value={props.values.username} onChange={(e) => props.handleChange(e)} placeholder="Username" />
                       </div>
                     )}
-                  </Field>
+                  </Field> */}
                   <Field name="email">
                     {() => (
                       <div className="pb-5">

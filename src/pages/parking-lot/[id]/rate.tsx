@@ -49,8 +49,8 @@ interface Props {
 }
 
 export default function ParkingRate({ parkingLot, rate }: Props) {
-  const [rating, setRating] = useState('0');
-  const [review, setReview] = useState('');
+  const [rating, setRating] = useState(rate.rate);
+  const [review, setReview] = useState(rate.review);
 
   const session = useSession();
   const user_id = session.data?.user?.id;
@@ -66,17 +66,24 @@ export default function ParkingRate({ parkingLot, rate }: Props) {
     //   rate: rating
     // })
 
-    const response = !rate ? createRating() : updateRating();
+    const response = !rate ? await createRating() : await updateRating();
+    const status = response.status
     console.log(response);
-    if ((await response).status === 200) {
-      useRouter().push(`/parking-lot/${parkingLot.id}/details`);
+    if (status === 200) {
+      Router.push(`/parking-lot/${parkingLot.id}/details`)
+      // useRouter().push(`/parking-lot/${parkingLot.id}/details`);
     } else {
-      console.log((await response).data.error);
+      console.log(response.data.error);
     }
   }
 
   async function updateRating() {
-    const response = await axios.put(`/api/rating/${rate.id}`);
+    const response = await axios.put(`/api/rating/${rate.id}`, {
+      parkinglot_id: parkingLot.id,
+      user_id: user_id,
+      review: review,
+      rate: rating,
+    });
     return response;
   }
 
@@ -112,17 +119,17 @@ export default function ParkingRate({ parkingLot, rate }: Props) {
                 <h1>{parkingLot.name}</h1>
               </div>
               <div className="flex justify-center py-5">
-                <Rating initialValue={rate?.rate ? rate.rate : 0} onChange={setRating} />
+                <Rating initialValue={rate?.rate && rate.rate} onChange={setRating} />
               </div>
               <div className="flex justify-center text-black font-bold">
                 <p>BAGAIMANA MENURUTMU KAMU?</p>
               </div>
               <div className="flex justify-center text-black py-2">
                 <textarea
-                  name=""
-                  id=""
-                  className="w-96 h-36"
-                  value={rate?.review ? rate.review : ''}
+                  name="review"
+                  id="review"
+                  className="w-96 h-36 text-black"
+                  value={review}
                   onChange={(e) => {
                     e.preventDefault();
                     setReview(e.target.value);

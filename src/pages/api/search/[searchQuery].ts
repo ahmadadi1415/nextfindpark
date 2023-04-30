@@ -18,8 +18,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     }
                 },
             ]
+        },
+        include: {
+            _count: {
+                select: {
+                    parkinghistory: {
+                        where: {
+                            parking_end: null
+                        }
+                    }
+                }
+            }
         }
     })
+    
 
+
+    console.log(response)
     res.status(200).json(response)
 } 

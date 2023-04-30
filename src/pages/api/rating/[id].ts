@@ -8,14 +8,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Update User Review
     if (req.method === "PUT") {
-        const { rate_id, parkinglot_id, user_id, rate, review, images } = req.body
+        const { parkinglot_id, user_id, rate, review, images } = req.body
+        console.log(req.body)
         
         const rating = await prisma.rating.update({
             where: {
-                id: rate_id
+                id: parseInt(id as string)
             },
             data: {
-                rate: parseFloat(rate),
+                rate: parseInt(rate),
                 review: review,
                 parkinglot_id: parkinglot_id,
                 user_id: user_id,
@@ -46,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 id: parseInt(parkinglot_id as string)
             },
             data: {
-                rate: newRate
+                rate: parseFloat(newRate.toPrecision(2))
             }
         })
 

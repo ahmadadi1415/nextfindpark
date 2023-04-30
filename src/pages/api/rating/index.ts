@@ -52,7 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 id: parseInt(parkinglot_id as string)
             },
             data: {
-                rate: newRate
+                rate: parseFloat(newRate.toPrecision(2))
             }
         })
 

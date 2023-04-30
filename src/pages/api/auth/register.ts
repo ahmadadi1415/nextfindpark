@@ -13,7 +13,7 @@ const validateEmail = (email: string): boolean => {
     return regEx.test(email);
 }
 
-const validateForm = async (username: string, fullname: string, email: string, password: string) => {
+const validateForm = async (fullname: string, email: string, password: string) => {
     // if (!username) {
     //     return { error: "Required" }
     // }
@@ -50,9 +50,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         return res.status(400).json({ error: "Only support POST method" })
     }
 
-    const { username, fullname, email, password } = req.body;
+    const { fullname, email, password } = req.body;
 
-    const errorMessage = await validateForm(username, fullname, email, password)
+    const errorMessage = await validateForm(fullname, email, password)
     if (errorMessage) {
         return res.status(400).json(errorMessage as ResponseData)
     }
