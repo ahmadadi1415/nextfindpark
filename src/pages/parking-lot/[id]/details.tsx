@@ -89,7 +89,7 @@ export default function ParkingDetails({ parkingLotData, parkingLotRates, countR
         };
 
         // Minimum distance in meter
-        const minimumDistance = 100000;
+        const minimumDistance = 100;
         // console.log(parkingLotData);
         if (distance < minimumDistance) {
           setNearThisParkingLot(true);
