@@ -113,6 +113,9 @@ export default NextAuth({
         session.user.role = token.role;
         session.user.id = token.uid as string;
 
+        if (session.user.image === null || session.user.image === undefined)
+        {
+          
         // Get photo profile from profile table
         const profile = await prisma.profile.findUnique({
           where: {
@@ -122,14 +125,16 @@ export default NextAuth({
             photo: true,
           },
         });
+        
 
         // Get the url of photo profile 
-        if (!session.user.image) {
+        if (profile?.photo !== null) {
           let photoUrl = null;
           try {
             await cloudinary.api
               .resource(profile?.photo as string)
               .then((result) => {
+                console.log(result)
                 photoUrl = JSON.parse(JSON.stringify(result)).secure_url;
               });
           } catch (error) {
@@ -137,11 +142,13 @@ export default NextAuth({
           }
 
           session.user.image = photoUrl;
+          console.log(photoUrl)
           return session
         }
+        
 
         // If the photo doesnt exist in profile table, get from user table
-        if (!profile?.photo) {
+        if (profile?.photo === null) {
           const image = await prisma.user.findUnique({
             where: {
               id: token.uid as string
@@ -153,8 +160,9 @@ export default NextAuth({
           session.user.image = image?.image
           return session
         }
+        }
 
-        return session
+
       }
       return session;
     },
