@@ -1,9 +1,22 @@
-import { useState } from 'react';
-import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/react';
-import { Menu, MenuHandler, MenuList, MenuItem, Avatar, Typography } from '@material-tailwind/react';
-import { Cog6ToothIcon, PowerIcon, InboxArrowDownIcon, UserCircleIcon, LifebuoyIcon } from '@heroicons/react/24/outline';
-import Router from 'next/router';
+import { useState } from "react";
+import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
+import {
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Avatar,
+  Typography,
+} from "@material-tailwind/react";
+import {
+  Cog6ToothIcon,
+  PowerIcon,
+  InboxArrowDownIcon,
+  UserCircleIcon,
+  LifebuoyIcon,
+} from "@heroicons/react/24/outline";
+import Router from "next/router";
 
 function NavLink({ to, children }: any) {
   return (
@@ -15,9 +28,13 @@ function NavLink({ to, children }: any) {
 function MobileNav({ open, setOpen }: any) {
   const session = useSession();
   return (
-    <div className={`absolute top-0 left-0 w-screen bg-ungugelap transform ${open ? '-translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out filter drop-shadow-md `}>
+    <div
+      className={`absolute top-0 left-0 w-screen bg-ungugelap transform ${
+        open ? "-translate-x-0" : "-translate-x-full"
+      } transition-transform duration-300 ease-in-out filter drop-shadow-md `}
+    >
       <div className="flex items-center justify-center filter drop-shadow-md border-2 bg-blue-700  h-20">
-        {' '}
+        {" "}
         {/*logo container*/}
         <a className="text-xl font-semibold text-white " href="/">
           FindPark
@@ -121,7 +138,7 @@ export default function Navbar() {
   const session = useSession();
   return (
     <nav className="bg-blue-700 border-gray-200  flex filter  px-4 py-4 h-20 items-center">
-      {' '}
+      {" "}
       <MobileNav open={open} setOpen={setOpen} />
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <Link href="/" className="flex items-center">
@@ -130,7 +147,9 @@ export default function Navbar() {
             className="h-6 mr-3 sm:h-9"
             alt="FindPark Logo"
           /> */}
-          <span className="self-center text-xl font-bold whitespace-nowrap text-ungugelap">FindPark</span>
+          <span className="self-center text-xl font-bold whitespace-nowrap text-ungugelap">
+            FindPark
+          </span>
         </Link>
       </div>
       <div className="w-9/12 flex justify-end items-center">
@@ -141,25 +160,50 @@ export default function Navbar() {
           }}
         >
           {/* hamburger button */}
-          <span className={`h-1 w-full bg-white rounded-lg transform transition duration-300 ease-in-out ${open ? 'rotate-45 translate-y-3.5' : ''}`} />
-          <span className={`h-1 w-full bg-white rounded-lg transition-all duration-300 ease-in-out ${open ? 'w-0' : 'w-full'}`} />
-          <span className={`h-1 w-full bg-white rounded-lg transform transition duration-300 ease-in-out ${open ? '-rotate-45 -translate-y-3.5' : ''}`} />
+          <span
+            className={`h-1 w-full bg-white rounded-lg transform transition duration-300 ease-in-out ${
+              open ? "rotate-45 translate-y-3.5" : ""
+            }`}
+          />
+          <span
+            className={`h-1 w-full bg-white rounded-lg transition-all duration-300 ease-in-out ${
+              open ? "w-0" : "w-full"
+            }`}
+          />
+          <span
+            className={`h-1 w-full bg-white rounded-lg transform transition duration-300 ease-in-out ${
+              open ? "-rotate-45 -translate-y-3.5" : ""
+            }`}
+          />
         </div>
 
-        <div className="hidden md:flex w-full md:w-auto align-middle" id="navbar-default">
+        <div
+          className="hidden md:flex w-full md:w-auto align-middle"
+          id="navbar-default"
+        >
           <ul className="flex flex-col p-4 mt-4 border border-yellow-500 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 ">
             <li>
-              <Link href="/home" className="py-2 pl-3 pr-4 text-white bg-transparent rounded md:text-green md:p-0" aria-current="page">
+              <Link
+                href="/home"
+                className="py-2 pl-3 pr-4 text-white bg-transparent rounded md:text-green md:p-0"
+                aria-current="page"
+              >
                 Home
               </Link>
             </li>
             <li>
-              <Link href="/about-us" className=" py-2 pl-3 pr-4 text-white bg-transparent hover:bg-abu md:hover:bg-transparent md:border-0 md:p-0">
+              <Link
+                href="/about-us"
+                className=" py-2 pl-3 pr-4 text-white bg-transparent hover:bg-abu md:hover:bg-transparent md:border-0 md:p-0"
+              >
                 About Us
               </Link>
             </li>
             <li>
-              <Link href="#" className=" py-2 pl-3 pr-4 text-white bg-transparent rounded hover:bg-abu md:hover:bg-transparent md:border-0 md:p-0">
+              <Link
+                href="/faq"
+                className=" py-2 pl-3 pr-4 text-white bg-transparent rounded hover:bg-abu md:hover:bg-transparent md:border-0 md:p-0"
+              >
                 FAQ
               </Link>
             </li>
@@ -168,25 +212,43 @@ export default function Navbar() {
               <li>
                 <Menu>
                   <MenuHandler>
-                    <Avatar variant="circular" alt="person" className="cursor-pointer rounded-full w-8 h-8" src={(session.data.user.image as string) ? (session.data.user.image as string) : '/gambarprofile.svg'} />
+                    <Avatar
+                      variant="circular"
+                      alt="person"
+                      className="cursor-pointer rounded-full w-8 h-8"
+                      src={
+                        (session.data.user.image as string)
+                          ? (session.data.user.image as string)
+                          : "/gambarprofile.svg"
+                      }
+                    />
                   </MenuHandler>
                   <MenuList className="bg-yellow-500 w-28 rounded-xl">
                     <MenuItem className="flex items-center hover:bg-yellow-600">
                       <UserCircleIcon strokeWidth={2} className="h-4 w-4" />
-                      <Typography variant="small" className="font-normal px-1 text-white">
-                        <a onClick={() => Router.push('/profile')}>Profile</a>
+                      <Typography
+                        variant="small"
+                        className="font-normal px-1 text-white"
+                      >
+                        <a onClick={() => Router.push("/profile")}>Profile</a>
                       </Typography>
                     </MenuItem>
                     <MenuItem className="flex items-center hover:bg-yellow-600">
                       <Cog6ToothIcon strokeWidth={2} className="h-4 w-4" />
-                      <Typography variant="small" className="font-normal px-1 text-white">
-                        <a onClick={() => Router.push('/history')}>History</a>
+                      <Typography
+                        variant="small"
+                        className="font-normal px-1 text-white"
+                      >
+                        <a onClick={() => Router.push("/history")}>History</a>
                       </Typography>
                     </MenuItem>
 
                     <MenuItem className="flex items-center hover:bg-yellow-600">
                       <PowerIcon strokeWidth={2} className="h-4 w-4" />
-                      <Typography variant="small" className="font-normal px-1 text-white">
+                      <Typography
+                        variant="small"
+                        className="font-normal px-1 text-white"
+                      >
                         <a onClick={() => signOut()}>Sign Out</a>
                       </Typography>
                     </MenuItem>
