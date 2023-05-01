@@ -5,12 +5,13 @@ import { Footer } from '@/components/footer';
 import { Field, Form, Formik, FormikValues } from 'formik';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import prisma from 'lib/prisma';
-import { getSession, useSession } from 'next-auth/react';
+import { getSession, signOut, useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { resizeImage } from '@/utils/image-resizer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Router from 'next/router';
 
 interface Props {
   userProfile: {
@@ -19,14 +20,16 @@ interface Props {
     photo_url: string;
     user_id: string;
   };
+  loginType: string
 }
 
-export default function Profile({ userProfile }: Props) {
+export default function Profile({ userProfile, loginType }: Props) {
   const [localImg, setLocalImg] = useState();
   const [image, setImage] = useState([]);
   const hiddenImageInput: any = useRef(null);
 
   const session = useSession();
+  console.log(session)
 
   useEffect(() => {
     console.log(localImg);
@@ -54,6 +57,7 @@ export default function Profile({ userProfile }: Props) {
       .then((r) => {
         console.log(r);
         toast.success('Foto profil tersimpan!');
+        Router.reload()
       })
       .catch((error) => {
         toast.error('Foto profil gagal tersimpan!');
@@ -91,6 +95,9 @@ export default function Profile({ userProfile }: Props) {
   // Delete user account
   async function deleteAccount() {
     const response = await axios.delete(`/api/users/${userProfile.user_id}`);
+    if (response.status === 200) {
+      await signOut()
+    }
   }
 
   // Front End User Profile
@@ -185,7 +192,7 @@ export default function Profile({ userProfile }: Props) {
                         </div>
                       )}
                     </Field>
-                    <Field>
+                    {/* <Field>
                       {() => (
                         <div className="py-5">
                           <input type="text" className="w-96 rounded-xl" placeholder="Program Studi" />
@@ -198,7 +205,7 @@ export default function Profile({ userProfile }: Props) {
                           <input type="text" className="w-96 rounded-xl" placeholder="Angkatan" />
                         </div>
                       )}
-                    </Field>
+                    </Field> */}
                     <div className="py-5">
                       <button type="submit" className="bg-yellow-500 hover:bg-yellow-600 text-white px-10 py-3 font-bold rounded-full">
                         PERBARUI
@@ -210,72 +217,77 @@ export default function Profile({ userProfile }: Props) {
             </div>
           </div>
           <div className="container bg-blue-700 rounded-lg text-white">
-            <Formik
-              initialValues={{
-                oldPassword: '',
-                newPassword: '',
-                confirmation: '',
-              }}
-              validateOnBlur={false}
-              validateOnChange={true}
-              validate={(values) => {
-                const errors: any = {};
-                if (values.newPassword && values.newPassword.length < 8) {
-                  errors.newPassword = 'Password is too short';
-                  console.log(errors);
-                }
+            {
+              (loginType === "email") && (
+                <Formik
+                  initialValues={{
+                    oldPassword: '',
+                    newPassword: '',
+                    confirmation: '',
+                  }}
+                  validateOnBlur={false}
+                  validateOnChange={true}
+                  validate={(values) => {
+                    const errors: any = {};
+                    if (values.newPassword && values.newPassword.length < 8) {
+                      errors.newPassword = 'Password is too short';
+                      console.log(errors);
+                    }
 
-                if (values.confirmation && values.newPassword && values.newPassword !== values.confirmation) {
-                  errors.confirmation = 'Your confirmation password is not the same as before';
-                  console.log(errors);
-                }
-              }}
-              onSubmit={(values, actions) => {
-                console.log('Change Password');
-                updatePassword(values);
-              }}
-            >
-              {(props) => (
-                <Form>
-                  <div className="flex justify-center text-4xl font-bold py-5">
-                    <h3>GANTI PASSWORD</h3>
-                  </div>
-                  <Field name="oldPassword">
-                    {() => (
-                      <div className="flex justify-center">
-                        <input type="password" name="oldPassword" className="w-96 rounded-xl" value={props.values.oldPassword} onChange={props.handleChange} placeholder="Kata Sandi Lama" />
+                    if (values.confirmation && values.newPassword && values.newPassword !== values.confirmation) {
+                      errors.confirmation = 'Your confirmation password is not the same as before';
+                      console.log(errors);
+                    }
+                  }}
+                  onSubmit={(values, actions) => {
+                    console.log('Change Password');
+                    updatePassword(values);
+                  }}
+                >
+                  {(props) => (
+                    <Form>
+                      <div className="flex justify-center text-4xl font-bold py-5">
+                        <h3>GANTI PASSWORD</h3>
                       </div>
-                    )}
-                  </Field>
-                  <Field name="newPassword">
-                    {() => (
-                      <div className="flex justify-center py-5">
-                        <input type="password" name="newPassword" className="w-96 rounded-xl" value={props.values.newPassword} onChange={props.handleChange} placeholder="Kata Sandi Baru" />
-                      </div>
-                    )}
-                  </Field>
-                  <Field name="confirmation">
-                    {() => (
-                      <div className="flex justify-center">
-                        <input type="password" name="confirmation" className="w-96 rounded-xl" value={props.values.confirmation} onChange={props.handleChange} placeholder="Konfirmasi Kata Sandi Baru" />
-                      </div>
-                    )}
-                  </Field>
+                      <Field name="oldPassword">
+                        {() => (
+                          <div className="flex justify-center">
+                            <input type="password" name="oldPassword" className="w-96 rounded-xl" value={props.values.oldPassword} onChange={props.handleChange} placeholder="Kata Sandi Lama" />
+                          </div>
+                        )}
+                      </Field>
+                      <Field name="newPassword">
+                        {() => (
+                          <div className="flex justify-center py-5">
+                            <input type="password" name="newPassword" className="w-96 rounded-xl" value={props.values.newPassword} onChange={props.handleChange} placeholder="Kata Sandi Baru" />
+                          </div>
+                        )}
+                      </Field>
+                      <Field name="confirmation">
+                        {() => (
+                          <div className="flex justify-center">
+                            <input type="password" name="confirmation" className="w-96 rounded-xl" value={props.values.confirmation} onChange={props.handleChange} placeholder="Konfirmasi Kata Sandi Baru" />
+                          </div>
+                        )}
+                      </Field>
 
-                  <div className="flex justify-center py-5 font-bold text-white">
-                    <button type="submit" className="px-10 py-3 rounded-full bg-yellow-500 hover:bg-yellow-600">
-                      GANTI
-                    </button>
-                  </div>
-                </Form>
-              )}
-            </Formik>
+                      <div className="flex justify-center py-5 font-bold text-white">
+                        <button type="submit" className="px-10 py-3 rounded-full bg-yellow-500 hover:bg-yellow-600">
+                          GANTI
+                        </button>
+                      </div>
+                    </Form>
+                  )}
+                </Formik>
 
+              )
+            }
+            
             <div className="flex justify-center font-bold text-4xl">
-              <h3>HAPUS AKUN</h3>
+              <h3 className='py-5'>HAPUS AKUN</h3>
             </div>
             <div className="flex justify-center py-5 font-bold text-white">
-              <button onClick={() => {}} className="px-10 py-3 rounded-full bg-yellow-500 hover:bg-yellow-600">
+              <button onClick={() => { deleteAccount() }} className="px-10 py-3 rounded-full bg-yellow-500 hover:bg-yellow-600">
                 HAPUS
               </button>
             </div>
@@ -297,6 +309,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   }
+
+  const oauthLogin = await prisma.account.findFirst({
+    where: {
+      userId: userId,
+      type: "oauth"
+    }
+  })
+
+  const loginType = (!oauthLogin) ? "email" : "oauth"
 
   const userProfile = await prisma.profile.findUnique({
     where: {
@@ -322,6 +343,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         ...userProfile,
         photo_url,
       },
+      loginType
     },
   };
 }
