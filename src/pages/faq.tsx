@@ -2,7 +2,7 @@ import Head from "next/head";
 import { Footer } from "@/components/footer";
 import Navbar from "@/components/navbar";
 import { Disclosure } from "@headlessui/react";
-export default function Aboutus() {
+export default function faq() {
   return (
     <>
       <Navbar />
