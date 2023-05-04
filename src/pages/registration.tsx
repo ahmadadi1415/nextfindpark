@@ -18,7 +18,6 @@ export default function Registration() {
     const { pathname } = router;
     if (pathname === "/registration") {
       router.push("/verification");
-    }
   };
 
   const registerNewUser = async (values: FormikValues, actions: any) => {
@@ -35,6 +34,9 @@ export default function Registration() {
         toast.success(
           "Pendaftaran berhasil! Cek email anda untuk verifikasi email!"
         );
+        actions.resetForm({
+          values,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -266,4 +268,5 @@ export default function Registration() {
       <Footer />
     </>
   );
+}
 }
