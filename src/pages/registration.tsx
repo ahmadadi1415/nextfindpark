@@ -8,7 +8,7 @@ import { loginUser } from "./login";
 import React from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-export default function Registration(props){
+export default function Registration(){
 
   const registerNewUser = async (values: FormikValues, actions: any) => {
     const res = await axios

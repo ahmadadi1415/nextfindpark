@@ -15,7 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 const inter = Inter({ subsets: ["latin"] });
-const Login: NextPage = ({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Login: NextPage = ({ providers }: any) => {
   const [showPassword, setShowPassword] = useState(false);
 
   // Create a Component ProvidersButtons
