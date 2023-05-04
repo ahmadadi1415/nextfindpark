@@ -12,8 +12,7 @@ import { use, useState } from "react";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useSession } from "next-auth/react";
-import { getSession } from "next-auth/react";
+
 
 const inter = Inter({ subsets: ["latin"] });
 const Login: NextPage = ({ providers }: any) => {
@@ -182,6 +181,12 @@ const Login: NextPage = ({ providers }: any) => {
                       <button className="py-3" type="submit">
                         Login
                       </button>
+                    </div>
+                    <div className="text-left mt-2">
+                      <p className="text-gray-500 dark:text-gray-400">
+                        Belum punya akun? Daftar
+                        <a href="/registration" className="font-medium text-blue-600 dark:text-blue-500 hover:no-underline"> disini</a>
+                         </p>
                     </div>
                   </div>
                 </Form>

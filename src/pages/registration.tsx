@@ -2,23 +2,13 @@ import Head from "next/head";
 import Image from "next/image";
 import Navbar from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import Router from "next/router";
 import { Field, Form, Formik, FormikValues } from "formik";
 import axios from "axios";
 import { loginUser } from "./login";
-import { use, useState } from "react";
 import React from "react";
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-export default function Registration() {
-  const redirectToVerification = () => {
-    const router = Router;
-    const { pathname } = router;
-    if (pathname === "/registration") {
-      router.push("/verification");
-  };
+export default function Registration(props){
 
   const registerNewUser = async (values: FormikValues, actions: any) => {
     const res = await axios
@@ -34,16 +24,13 @@ export default function Registration() {
         toast.success(
           "Pendaftaran berhasil! Cek email anda untuk verifikasi email!"
         );
-        actions.resetForm({
-          values,
-        });
+        actions.resetForm();
       })
       .catch((error) => {
         console.log(error);
         toast.error(error.response.data.error);
       });
   };
-
   return (
     <>
       <Navbar />
@@ -90,6 +77,7 @@ export default function Registration() {
           onSubmit={(values: any, actions: any) => {
             console.log("onSubmit");
             registerNewUser(values, actions);
+            
           }}
         >
           {(props) => (
@@ -250,6 +238,12 @@ export default function Registration() {
                   Daftar
                 </button>
               </div>
+              <div className="text-left mt-2">
+                      <p className="text-gray-500 dark:text-gray-400">
+                        Sudah punya akun? Login
+                        <a href="/login" className="font-medium text-blue-600 dark:text-blue-500 hover:no-underline"> disini</a>
+                         </p>
+                    </div>
             </Form>
           )}
         </Formik>
@@ -268,5 +262,4 @@ export default function Registration() {
       <Footer />
     </>
   );
-}
 }
