@@ -12,6 +12,8 @@ import { use, useState } from "react";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 const Login: NextPage = ({ providers }: any) => {
@@ -217,7 +219,7 @@ export async function getServerSideProps() {
   };
 }
 
-const redirectToHome = () => {
+const redirectToHome = async() => {
   const router = Router;
   const { pathname } = router;
   if (pathname === "/login") {
@@ -231,7 +233,7 @@ export const loginUser = async (values: FormikValues, actions: any) => {
   // If email is not verified, redirect to verification page
   // Else login using Credentials
 
-  const loginInfo: any = await axios.post(
+  const loginInfo = await axios.post(
     "/api/auth/check-login",
     JSON.stringify(values),
     {
@@ -268,7 +270,7 @@ export const loginUser = async (values: FormikValues, actions: any) => {
   } else {
     // If the email is verified, sign in using credentials
     console.log("verified");
-    const res: any = await signIn("credentials", {
+    const res = await signIn("credentials", {
       email: values.email,
       password: values.password,
       redirect: false,
@@ -276,6 +278,6 @@ export const loginUser = async (values: FormikValues, actions: any) => {
     });
 
     console.log(res);
-    res.error ? toast.error(res.error) : redirectToHome();
+    res?.error ? toast.error(res.error) : redirectToHome();
   }
 };
