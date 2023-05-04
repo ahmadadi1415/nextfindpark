@@ -28,7 +28,7 @@ const Login: NextPage = ({ providers }: any) => {
               key={provider.name}
               onClick={() => {
                 signIn(provider.id, {
-                  callbackUrl: "/",
+                  callbackUrl: "/redirect",
                 });
               }}
             >
@@ -221,7 +221,7 @@ const redirectToHome = () => {
   const router = Router;
   const { pathname } = router;
   if (pathname === "/login") {
-    router.push("/");
+    router.push("/redirect");
   }
 };
 
