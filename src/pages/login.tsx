@@ -28,13 +28,10 @@ const Login: NextPage = ({ providers }: any) => {
           provider.name !== "Email" && (
             <button
               key={provider.name}
-              onClick={async() => {
-                const res = await signIn(provider.id, {
-                  redirect: false,
-                  callbackUrl: "/home",
-                })
-
-                res?.error ? toast.error(res.error) : redirectToHome()
+              onClick={() => {
+                signIn(provider.id, {
+                  callbackUrl: "/redirect",
+                });
               }}
             >
               <p className="text-black">Sign In with {provider.name}</p>
@@ -225,21 +222,8 @@ export async function getServerSideProps() {
 const redirectToHome = async() => {
   const router = Router;
   const { pathname } = router;
-  const session = await getSession()
-  const role = session?.user?.role
-  if (pathname === "/login" && role) {
-
-    if (role === "operator") {
-      return router.push("/operators/dashboard")
-    }
-
-    else if (role === "admin") {
-      return router.push("/admin/add-park")
-    }
-
-    else if (role === "user") {
-      router.push("/home");
-    }
+  if (pathname === "/login") {
+    router.push("/redirect");
   }
 };
 
