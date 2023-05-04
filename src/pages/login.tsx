@@ -1,23 +1,21 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import Navbar from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import { ErrorMessage, Field, Form, Formik, FormikValues } from "formik";
-import { NextPage, InferGetServerSidePropsType } from "next";
-import axios from "axios";
-import { getProviders, signIn } from "next-auth/react";
-import Router, { useRouter } from "next/router";
-import { use, useState } from "react";
-import Link from "next/link";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useSession } from "next-auth/react";
-import { getSession } from "next-auth/react";
-const inter = Inter({ subsets: ["latin"] });
-const Login: NextPage = ({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const [showPassword, setShowPassword] = useState(false);
+import Head from 'next/head';
+import Image from 'next/image';
+import { Inter } from '@next/font/google';
+import Navbar from '@/components/navbar';
+import { Footer } from '@/components/footer';
+import { Field, Form, Formik, FormikValues } from 'formik';
+import { NextPage } from 'next';
+import axios from 'axios';
+import { getProviders, signIn, useSession } from 'next-auth/react';
+import Router, { useRouter } from 'next/router';
+import { use, useState } from 'react';
+import Link from 'next/link';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+const inter = Inter({ subsets: ['latin'] });
+const Login: NextPage = ({ providers }: any) => {
+  const [showPassword, setShowPassword] = useState(false);
 
   // Create a Component ProvidersButtons
   const ProviderButtons = ({ providers }: any) => (
@@ -28,13 +26,10 @@ const Login: NextPage = ({ providers }: InferGetServerSidePropsType<typeof getSe
           provider.name !== 'Email' && (
             <button
               key={provider.name}
-              onClick={async() => {
-                const res = await signIn(provider.id, {
-                  redirect: false,
-                  callbackUrl: "/home",
-                })
-
-                res?.error ? toast.error(res.error) : redirectToHome()
+              onClick={() => {
+                signIn(provider.id, {
+                  callbackUrl: 'http://localhost:3000',
+                });
               }}
             >
               <p className="text-black px-1">Sign In with {provider.name}</p>
@@ -75,69 +70,15 @@ const Login: NextPage = ({ providers }: InferGetServerSidePropsType<typeof getSe
                     </div>
                     <Field name="email">
                       {() => (
-                        <div className="pb-2">
-                        <input
-                          type="email"
-                          name="email"
-                          className="rounded-lg w-96 text-black"
-                          value={props.values.email}
-                          onChange={props.handleChange}
-                          onBlur={props.handleBlur}
-                          placeholder="Email"
-                        />
-                        {props.touched.email && props.errors.email && (
-                          <div className="mt-3 inline-flex w-1/2 items-center rounded-lg bg-red-100 py-1 px-2 text-base text-red-700">
-                            <span className="mr-2">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="currentColor"
-                                className="h-6 w-6"
-                              >
-                                <path
-                                  fill-rule="evenodd"
-                                  d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                                  clip-rule="evenodd"
-                                />
-                              </svg>
-                            </span>
-                            {props.errors.email}
-                          </div>
-                        )}
+                        <div className="pb-5">
+                          <input type="email" name="email" className="rounded-lg w-96 text-black" value={props.values.email} onChange={props.handleChange} placeholder="Email" />
                         </div>
                       )}
                     </Field>
                     <Field name="password">
                       {() => (
-                        <div className="pb-2">
-                        <input
-                          type={showPassword ? "text" : "password"}
-                          name="password"
-                          className="rounded-lg w-96 text-black"
-                          value={props.values.password}
-                          onChange={props.handleChange}
-                          onBlur={props.handleBlur}
-                          placeholder="Password"
-                        />
-                        {props.touched.password && props.errors.password && (
-                          <div className="mt-3 inline-flex w-1/2 items-center rounded-lg bg-red-100 py-1 px-2 text-base text-red-700">
-                            <span className="mr-2">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="currentColor"
-                                className="h-6 w-6"
-                              >
-                                <path
-                                  fill-rule="evenodd"
-                                  d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                                  clip-rule="evenodd"
-                                />
-                              </svg>
-                            </span>
-                            {props.errors.password}
-                          </div>
-                        )}
+                        <div className="pb-3">
+                          <input type={showPassword ? 'text' : 'password'} name="password" className="rounded-lg w-96 text-black" value={props.values.password} onChange={props.handleChange} placeholder="Password" />
                         </div>
                       )}
                     </Field>
@@ -194,24 +135,11 @@ export async function getServerSideProps() {
   };
 }
 
-const redirectToHome = async() => {
+const redirectToHome = () => {
   const router = Router;
   const { pathname } = router;
-  const session = await getSession()
-  const role = session?.user?.role
-  if (pathname === "/login" && role) {
-
-    if (role === "operator") {
-      return router.push("/operators/dashboard")
-    }
-
-    else if (role === "admin") {
-      return router.push("/admin/add-park")
-    }
-
-    else if (role === "user") {
-      router.push("/home");
-    }
+  if (pathname === '/login') {
+    router.push('/');
   }
 };
 
@@ -221,16 +149,12 @@ export const loginUser = async (values: FormikValues, actions: any) => {
   // If email is not verified, redirect to verification page
   // Else login using Credentials
 
-  const loginInfo = await axios.post(
-    "/api/auth/check-login",
-    JSON.stringify(values),
-    {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const loginInfo: any = await axios.post('/api/auth/check-login', JSON.stringify(values), {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
 
   console.log(loginInfo);
   if (loginInfo.data.emailVerified === null) {
@@ -244,12 +168,13 @@ export const loginUser = async (values: FormikValues, actions: any) => {
         redirect: false,
         callbackUrl: `${window.location.origin}`,
       });
-      res.error
-      ? toast.error(res.error)
-      : toast.info("Harap cek email verifikasi anda");
+      toast.info('Please check your email');
+      <ToastContainer />;
+      res.error ? console.log(res) : Router.push('/');
     } else {
-      toast.info("Harap cek email verifikasi anda");
-      console.log("Please check your email");
+      toast.info('Please check your email');
+      <ToastContainer />;
+      console.log('Please check your email');
     }
   } else {
     // If the email is verified, sign in using credentials
@@ -263,6 +188,6 @@ export const loginUser = async (values: FormikValues, actions: any) => {
     toast.info('Please check your email');
     <ToastContainer />;
     console.log(res);
-    res?.error ? toast.error(res.error) : redirectToHome();
+    res.error ? console.log(res.error) : redirectToHome();
   }
 };
