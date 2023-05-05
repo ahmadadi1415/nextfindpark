@@ -119,7 +119,7 @@ export default function ParkingRate({ parkingLot, rate }: Props) {
                 <h1>{parkingLot.name}</h1>
               </div>
               <div className="flex justify-center py-5">
-                <Rating initialValue={rate?.rate && rate.rate} onChange={setRating} />
+                <Rating initialValue={(rate?.rate) ? rate.rate: 0} onChange={setRating} />
               </div>
               <div className="flex justify-center text-black font-bold">
                 <p>BAGAIMANA MENURUTMU KAMU?</p>
