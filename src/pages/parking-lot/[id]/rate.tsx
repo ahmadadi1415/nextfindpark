@@ -49,8 +49,8 @@ interface Props {
 }
 
 export default function ParkingRate({ parkingLot, rate }: Props) {
-  const [rating, setRating] = useState((rate.rate) ? rate.rate : 0);
-  const [review, setReview] = useState((rate.review) ? rate.review: "");
+  const [rating, setRating] = useState((!rate) ? 0: rate.rate);
+  const [review, setReview] = useState((!rate) ? "" : rate.review);
 
   const session = useSession();
   const user_id = session.data?.user?.id;
@@ -119,7 +119,7 @@ export default function ParkingRate({ parkingLot, rate }: Props) {
                 <h1>{parkingLot.name}</h1>
               </div>
               <div className="flex justify-center py-5">
-                <Rating initialValue={(rate?.rate) ? rate.rate: 0} onChange={setRating} />
+                <Rating initialValue={(!rate) ? 0 : rate.rate} onChange={setRating} />
               </div>
               <div className="flex justify-center text-black font-bold">
                 <p>BAGAIMANA MENURUTMU KAMU?</p>
@@ -162,6 +162,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   }
+
   const user_id = session?.user?.id;
   const parkinglot_id = parseInt(context.query.id as string);
 
