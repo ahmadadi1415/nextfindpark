@@ -47,8 +47,8 @@ interface ParkingLot {
   createdAt: string;
   updatedAt: string;
   _count: {
-    parkinghistory: number
-  }
+    parkinghistory: number;
+  };
 
   distance: number;
 }
@@ -71,13 +71,13 @@ export default function Home({ bestParkingLot }: Props) {
         // console.log(response)
         const distance = response.data.routes[0].distance;
 
-          parkingLots[index] = {
-            ...parkingLot,
-            distance: distance,
-          };
+        parkingLots[index] = {
+          ...parkingLot,
+          distance: distance,
+        };
       } catch (error: any) {
-        console.log(error.response.data)
-        
+        console.log(error.response.data);
+
         parkingLots[index] = {
           ...parkingLot,
           distance: NaN,
@@ -106,7 +106,7 @@ export default function Home({ bestParkingLot }: Props) {
       const { latitude, longitude } = coords;
 
       const promises = parkingLots.map(async (parkingLot, index) => {
-        try {          
+        try {
           const response = await axios.get(`https://router.project-osrm.org/route/v1/driving/${longitude},${latitude};${parkingLot.longitude},${parkingLot.latitude}?overview=false`);
           // console.log(response)
 
@@ -120,10 +120,9 @@ export default function Home({ bestParkingLot }: Props) {
         } catch (error) {
           parkingLots[index] = {
             ...parkingLot,
-            distance: NaN
-          }
+            distance: NaN,
+          };
         }
-
       });
 
       await Promise.all(promises).then(() => {
@@ -215,14 +214,7 @@ export default function Home({ bestParkingLot }: Props) {
                       <p>{location}</p>
                     </div>
                   </div>
-                  <div className="flex justify-between text-white py-5 lg:pl-20">
-                    <div className="text-xl">
-                      <button className="flex items-center justify-center bg-yellow-500 lg:w-48  w-36 py-3 rounded-full">TERDEKAT</button>
-                    </div>
-                    <div className="text-xl lg:pl-10">
-                      <button className="flex items-center justify-center bg-yellow-500 lg:w-48 w-36 lg-28 py-3 rounded-full">TIDAK RAMAI</button>
-                    </div>
-                  </div>
+                  <div className="flex justify-between text-white py-5 lg:pl-20"></div>
                 </div>
                 <div className="lg:grid lg:grid-cols-2 lg:pt-5 pt-1">
                   {searchRes?.map((parkingLot: ParkingLot) => [
@@ -257,13 +249,13 @@ export async function getServerSideProps() {
         select: {
           parkinghistory: {
             where: {
-              parking_end: null
-            }
-          }
-        }
-      }
+              parking_end: null,
+            },
+          },
+        },
+      },
     },
-    take: 2
+    take: 2,
   });
 
   bestParkingLot = JSON.parse(JSON.stringify(bestParkingLot));
