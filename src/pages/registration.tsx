@@ -1,47 +1,33 @@
-import Head from "next/head";
-import Image from "next/image";
-import Navbar from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import Router from "next/router";
-import { Field, Form, Formik, FormikValues } from "formik";
-import axios from "axios";
-import { loginUser } from "./login";
-import { use, useState } from "react";
-import React from "react";
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
+import Head from 'next/head';
+import Image from 'next/image';
+import Navbar from '@/components/navbar';
+import { Footer } from '@/components/footer';
+import { Field, Form, Formik, FormikValues } from 'formik';
+import axios from 'axios';
+import { loginUser } from './login';
+import React from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function Registration() {
-  const redirectToVerification = () => {
-    const router = Router;
-    const { pathname } = router;
-    if (pathname === "/registration") {
-      router.push("/verification");
-    }
-  };
-
   const registerNewUser = async (values: FormikValues, actions: any) => {
     const res = await axios
-      .post("/api/auth/register", JSON.stringify(values), {
+      .post('/api/auth/register', JSON.stringify(values), {
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
       })
       .then(async () => {
         // Login user after registering
         await loginUser(values, actions);
-        toast.success(
-          "Pendaftaran berhasil! Cek email anda untuk verifikasi email!"
-        );
+        toast.success('Pendaftaran berhasil! Cek email anda untuk verifikasi email!');
+        actions.resetForm();
       })
       .catch((error) => {
         console.log(error);
         toast.error(error.response.data.error);
       });
   };
-
   return (
     <>
       <Navbar />
@@ -52,74 +38,57 @@ export default function Registration() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ToastContainer />
-      <main className="p-36 flex items-center justify-between flex-col-2 min-h-screen bg-white">
+      <main className="lg:p-36 lg:flex items-center justify-between flex-col-2 min-h-screen bg-white">
         <Formik
           initialValues={{
-            username: "",
-            fullname: "",
-            email: "",
-            password: "",
-            confirmationPassword: "",
+            username: '',
+            fullname: '',
+            email: '',
+            password: '',
+            confirmationPassword: '',
           }}
           validateOnChange={true}
           validateOnBlur={true}
           validate={(values) => {
             const errors: any = {};
             if (!values.fullname) {
-              errors.fullname = "Required";
+              errors.fullname = 'Required';
             }
             if (!values.email) {
-              errors.email = "Required";
-            } else if (
-              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-            ) {
-              errors.email = "Invalid Email Address";
+              errors.email = 'Required';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+              errors.email = 'Invalid Email Address';
             }
             if (values.password.length < 8) {
-              errors.password = "Password at least has 8 characters";
+              errors.password = 'Password at least has 8 characters';
             }
             if (values.password && values.confirmationPassword) {
               if (values.password !== values.confirmationPassword) {
-                errors.confirmationPassword = "Password not matched";
+                errors.confirmationPassword = 'Password not matched';
               }
             }
             return errors;
           }}
           onSubmit={(values: any, actions: any) => {
-            console.log("onSubmit");
+            console.log('onSubmit');
             registerNewUser(values, actions);
           }}
         >
           {(props) => (
             <Form>
-              <div>
+              <div className="py-2 px-2">
                 <div>
-                  <p className="text-5xl text-amber-900 pb-5 font-bold">
-                    Belum punya akun?
-                  </p>
+                  <p className="text-5xl text-black pb-5 font-bold">Belum punya akun?</p>
                   <p className="text-xl text-black pb-7">Isi form dibawah</p>
                 </div>
                 <Field name="fullname">
                   {() => (
                     <div className="pb-5">
-                      <input
-                        type="text"
-                        name="fullname"
-                        className="rounded-lg w-96 text-black"
-                        value={props.values.fullname}
-                        onChange={(e) => props.handleChange(e)}
-                        onBlur={(e) => props.handleBlur(e)}
-                        placeholder="Nama Lengkap"
-                      />
+                      <input type="text" name="fullname" className="rounded-lg w-96 text-black" value={props.values.fullname} onChange={(e) => props.handleChange(e)} onBlur={(e) => props.handleBlur(e)} placeholder="Nama Lengkap" />
                       {props.touched.fullname && props.errors.fullname && (
-                        <div className="mt-3 inline-flex w-1/2 items-center rounded-lg bg-red-100 py-1 px-2 text-base text-red-700">
+                        <div className="mt-3 flex w-96 items-center rounded-lg bg-red-100 py-1 px-2 text-base text-red-700">
                           <span className="mr-2">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              fill="currentColor"
-                              className="h-6 w-6"
-                            >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
                               <path
                                 fill-rule="evenodd"
                                 d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
@@ -137,24 +106,11 @@ export default function Registration() {
                 <Field name="email">
                   {() => (
                     <div className="pb-5">
-                      <input
-                        type="email"
-                        name="email"
-                        className="rounded-lg w-96 text-black"
-                        value={props.values.email}
-                        onChange={(e) => props.handleChange(e)}
-                        onBlur={(e) => props.handleBlur(e)}
-                        placeholder="Email"
-                      />
+                      <input type="email" name="email" className="rounded-lg w-96 text-black" value={props.values.email} onChange={(e) => props.handleChange(e)} onBlur={(e) => props.handleBlur(e)} placeholder="Email" />
                       {props.touched.email && props.errors.email && (
-                        <div className="mt-3 inline-flex w-1/2 items-center rounded-lg bg-red-100 py-1 px-2 text-base text-red-700">
+                        <div className="mt-3 flex w-96 items-center rounded-lg bg-red-100 py-1 px-2 text-base text-red-700">
                           <span className="mr-2">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              fill="currentColor"
-                              className="h-6 w-6"
-                            >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
                               <path
                                 fill-rule="evenodd"
                                 d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
@@ -172,24 +128,11 @@ export default function Registration() {
                 <Field name="password">
                   {() => (
                     <div className="pb-5">
-                      <input
-                        type="password"
-                        name="password"
-                        className="rounded-lg w-96 text-black"
-                        value={props.values.password}
-                        onChange={(e) => props.handleChange(e)}
-                        onBlur={(e) => props.handleBlur(e)}
-                        placeholder="Sandi"
-                      />
+                      <input type="password" name="password" className="rounded-lg w-96 text-black" value={props.values.password} onChange={(e) => props.handleChange(e)} onBlur={(e) => props.handleBlur(e)} placeholder="Sandi" />
                       {props.touched.password && props.errors.password && (
-                        <div className="mt-3 inline-flex w-1/2 items-center rounded-lg bg-red-100 py-1 px-2 text-base text-red-700">
+                        <div className="mt-3 flex w-96 items-center rounded-lg bg-red-100 py-1 px-2 text-base text-red-700">
                           <span className="mr-2">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              fill="currentColor"
-                              className="h-6 w-6"
-                            >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
                               <path
                                 fill-rule="evenodd"
                                 d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
@@ -216,37 +159,37 @@ export default function Registration() {
                         onBlur={(e) => props.handleBlur(e)}
                         placeholder="Konfirmasi sandi"
                       />
-                      {props.touched.confirmationPassword &&
-                        props.errors.confirmationPassword && (
-                          <div className="mt-3 inline-flex w-1/2 items-center rounded-lg bg-red-100 py-1 px-2 text-base text-red-700">
-                            <span className="mr-2">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="currentColor"
-                                className="h-6 w-6"
-                              >
-                                <path
-                                  fill-rule="evenodd"
-                                  d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                                  clip-rule="evenodd"
-                                />
-                              </svg>
-                            </span>
-                            {props.errors.confirmationPassword}
-                          </div>
-                        )}
+                      {props.touched.confirmationPassword && props.errors.confirmationPassword && (
+                        <div className="mt-3 inline-flex w-1/2 items-center rounded-lg bg-red-100 py-1 px-2 text-base text-red-700">
+                          <span className="mr-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
+                              <path
+                                fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                          {props.errors.confirmationPassword}
+                        </div>
+                      )}
                     </div>
                   )}
                 </Field>
               </div>
-              <div className="">
-                <button
-                  className="bg-purple-800 rounded-lg font-bold text-center w-44 h-12"
-                  type="submit"
-                >
+              <div className="px-2">
+                <button className="bg-yellow-500 hover:bg-yellow-600 rounded-full font-bold text-center w-44 h-12" type="submit">
                   Daftar
                 </button>
+              </div>
+              <div className="text-left mt-2 px-2">
+                <p className="text-black">
+                  Sudah punya akun? Login
+                  <a href="/login" className="font-bold text-yellow-500 hover:underline">
+                    {' '}
+                    disini
+                  </a>
+                </p>
               </div>
             </Form>
           )}

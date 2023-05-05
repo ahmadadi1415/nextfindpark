@@ -15,30 +15,30 @@ import Router from 'next/router';
 
 interface Props {
   parkinglot: {
-    id: number,
-    name: string,
-    description: string,
-    location: string,
-    image: string,
-    latitude: string,
-    longitude: string,
-    status: boolean,
-    hourlyFee: string,
-    rate: number,
-    createdAt: string
-    updatedAt: string
+    id: number;
+    name: string;
+    description: string;
+    location: string;
+    image: string;
+    latitude: string;
+    longitude: string;
+    status: boolean;
+    hourlyFee: string;
+    rate: number;
+    createdAt: string;
+    updatedAt: string;
     _count: {
-      parkinghistory: number
-    }
-  }
+      parkinghistory: number;
+    };
+  };
 }
 
-export default function Dashboard({parkinglot}:Props) {
-  const [parkingLotName, setParkingLotName] = useState(parkinglot.name)
-  const [parkingLotDesc, setParkingLotDesc] = useState(parkinglot.description)
-  const [parkingLotFee, setParkingLotFee] = useState(parkinglot.hourlyFee)
-  const [parkingLotLoc, setParkingLotLoc] = useState(parkinglot.location)
-  const [parkingLotStatus, setParkingLotStatus] = useState(parkinglot.status)
+export default function Dashboard({ parkinglot }: Props) {
+  const [parkingLotName, setParkingLotName] = useState(parkinglot.name);
+  const [parkingLotDesc, setParkingLotDesc] = useState(parkinglot.description);
+  const [parkingLotFee, setParkingLotFee] = useState(parkinglot.hourlyFee);
+  const [parkingLotLoc, setParkingLotLoc] = useState(parkinglot.location);
+  const [parkingLotStatus, setParkingLotStatus] = useState(parkinglot.status);
 
   async function updateParkingLot() {
     const response = await axios.put(`/api/parkinglots/${parkinglot.id}`, {
@@ -46,11 +46,11 @@ export default function Dashboard({parkinglot}:Props) {
       description: parkingLotDesc,
       status: parkingLotStatus,
       hourlyFee: parkingLotFee,
-      location: parkingLotLoc
-    })
+      location: parkingLotLoc,
+    });
 
     if (response.status === 200) {
-      Router.reload()
+      Router.reload();
     }
   }
 
@@ -68,7 +68,7 @@ export default function Dashboard({parkinglot}:Props) {
           <div className="px-4 ">
             <div className="py-5 lg:flex mx-2 ">
               <div className="container lg:w-1/2 pt-2 flex lg:pl-10">
-                <div className="flex flex-col items-center bg-blue-700 rounded-xl">
+                <div className="flex flex-col items-center bg-blue-700 py-5 rounded-xl">
                   <div className="flex flex-col items-center box-content bg-white rounded-xl h-52 w-52 p-4 border-4">
                     <h1 className="font-bold text-2xl text-center py-2 text-black">KENDARAAN TERPARKIR</h1>
                     <h1 className="font-bold text-8xl py-4 text-center text-black">{parkinglot._count.parkinghistory}</h1>
@@ -76,34 +76,64 @@ export default function Dashboard({parkinglot}:Props) {
                   <div>
                     <h1 className="text-white font-bold text-4xl py-10 text-center">PENUH ?</h1>
                   </div>
-                  <div className="flex gap-4">                    
-                    <button onClick={() => setParkingLotStatus(false)} className="focus:bg-yellow-600 focus:text-black bg-yellow-500 text-white rounded-full drop-shadow-md font-bold text-center w-24 h-12">TIDAK</button>
-                    <input onClick={() => setParkingLotStatus(!parkingLotStatus)} defaultChecked={parkingLotStatus} checked={parkingLotStatus} type="checkbox" id="hs-basic-usage"
-                      className="relative w-[3.25rem] h-7 bg-gray-100 checked:bg-none checked:bg-blue-600 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 border border-transparent ring-1 ring-transparent focus:border-blue-600 focus:ring-blue-600 ring-offset-white focus:outline-none appearance-none dark:bg-gray-700 dark:checked:bg-blue-600 dark:focus:ring-offset-gray-800 before:inline-block before:w-6 before:h-6 before:bg-white checked:before:bg-blue-200 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-400 dark:checked:before:bg-blue-200" />
-                    <button onClick={() => setParkingLotStatus(true)} className="focus:bg-yellow-600 focus:text-black bg-yellow-500 text-white drop-shadow-md rounded-full font-bold text-center w-24 h-12">YA</button>
+                  <div className="flex gap-4">
+                    <button onClick={() => setParkingLotStatus(false)} className="focus:bg-yellow-600 focus:text-black bg-yellow-500 text-white rounded-full drop-shadow-md font-bold text-center w-24 h-12">
+                      TIDAK
+                    </button>
+                    <input
+                      onClick={() => setParkingLotStatus(!parkingLotStatus)}
+                      defaultChecked={parkingLotStatus}
+                      checked={parkingLotStatus}
+                      type="checkbox"
+                      id="hs-basic-usage"
+                      className="relative w-[3.25rem] h-7 bg-gray-100 checked:bg-none checked:bg-blue-600 rounded-full cursor-pointer transition-colors ease-in-out duration-200 border border-transparent ring-1 ring-transparent focus:border-blue-600 focus:ring-blue-600 ring-offset-white focus:outline-none appearance-none dark:bg-gray-700 dark:checked:bg-blue-600 dark:focus:ring-offset-gray-800 before:inline-block before:w-6 before:h-6 before:bg-white checked:before:bg-blue-200 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-400 dark:checked:before:bg-blue-200"
+                    />
+                    <button onClick={() => setParkingLotStatus(true)} className="focus:bg-yellow-600 focus:text-black bg-yellow-500 text-white drop-shadow-md rounded-full font-bold text-center w-24 h-12">
+                      YA
+                    </button>
                   </div>
                   <div className="py-4 px-2">
                     <div className="flex justify-between items-center py-2">
                       <label className="mr-4 inline-block text-sm font-medium leading-6 text-white">Nama Parkiran</label>
-                      <input type="text" name="namaparkir" id="namaparkir" value={parkingLotName} onChange={(e) => setParkingLotName(e.currentTarget.value)} className="px-3 py-2 rounded-lg border-1 text-black" placeholder="Nama Parkiran"></input>
+                      <input
+                        type="text"
+                        name="namaparkir"
+                        id="namaparkir"
+                        value={parkingLotName}
+                        onChange={(e) => setParkingLotName(e.currentTarget.value)}
+                        className="px-3 py-2 rounded-lg border-1 w-56 text-black"
+                        placeholder="Nama Parkiran"
+                      ></input>
                     </div>
                     <div className="flex justify-between items-center py-2">
                       <label className="mr-4 inline-block text-sm font-medium leading-6 text-white">Lokasi</label>
-                      <textarea name="lokasiparkiran" id="lokasiparkiran" value={parkingLotLoc} onChange={(e) => setParkingLotLoc(e.currentTarget.value)} className="px-3 py-2 rounded-lg border-1 text-black" placeholder="Lokasi Parkiran"></textarea>
+                      <textarea
+                        name="lokasiparkiran"
+                        id="lokasiparkiran"
+                        value={parkingLotLoc}
+                        onChange={(e) => setParkingLotLoc(e.currentTarget.value)}
+                        className="px-3 py-2 rounded-lg border-1 w-56 text-black"
+                        placeholder="Lokasi Parkiran"
+                      ></textarea>
                     </div>
                     <div className="flex justify-between items-center py-2">
                       <label className="mr-4 inline-block text-sm font-medium leading-6 text-white">Biaya</label>
-                      <input type="text" name="biaya" id="biaya" value={parkingLotFee} onChange={(e) => setParkingLotFee(e.currentTarget.value)} className="px-3 py-2 rounded-lg border-1 text-black" placeholder="Biaya"></input>
+                      <input type="text" name="biaya" id="biaya" value={parkingLotFee} onChange={(e) => setParkingLotFee(e.currentTarget.value)} className="px-3 py-2 rounded-lg border-1 w-56 text-black" placeholder="Biaya"></input>
                     </div>
                     <div className="flex justify-between items-center py-2">
                       <label className="mr-4 inline-block text-sm font-medium leading-6 text-white">Deskripsi</label>
-                      <textarea  name="deskripsi" id="deskripsi" value={parkingLotDesc} onChange={(e) => setParkingLotDesc(e.currentTarget.value)} className="px-3 py-2 rounded-lg border-1 text-black" placeholder="Deskripsi"></textarea>
+                      <textarea name="deskripsi" id="deskripsi" value={parkingLotDesc} onChange={(e) => setParkingLotDesc(e.currentTarget.value)} className="px-3 py-2 rounded-lg border-1 w-56 text-black" placeholder="Deskripsi"></textarea>
                     </div>
                   </div>
                   <div className="pb-5">
-                    <button onClick={() => {
-                      updateParkingLot()
-                    }} className="bg-yellow-500 hover:bg-yellow-600 rounded-full font-bold text-center w-44 drop-shadow-md h-12">SIMPAN</button>
+                    <button
+                      onClick={() => {
+                        updateParkingLot();
+                      }}
+                      className="bg-yellow-500 hover:bg-yellow-600 rounded-full font-bold text-center w-44 drop-shadow-md h-12"
+                    >
+                      SIMPAN
+                    </button>
                   </div>
                   {/* <div>
                     <button className="bg-blue-900 rounded-xl font-bold text-center w-44 h-12">
@@ -113,8 +143,8 @@ export default function Dashboard({parkinglot}:Props) {
                 </div>
               </div>
               <div className="lg:flex lg:pl-10 pt-2">
-                <div className="bg-white drop-shadow-2xl rounded-lg px-16">
-                  <img src={parkinglot.image} alt="fispark" className="mx-auto py-5 rounded-xl lg:block hidden w-9/12" />
+                <div className="bg-white drop-shadow-2xl rounded-lg lg:px-16">
+                  <img src={parkinglot.image} alt="fispark" className="mx-auto py-5 rounded-xl lg:block w-9/12" />
                   <div className=" flex justify-center text-4xl py-5 font-bold text-black">
                     <h1>{parkinglot.name}</h1>
                   </div>
@@ -159,30 +189,30 @@ export function Komentar() {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const session = await getSession(context)
-  const user_id = session?.user?.id
+  const session = await getSession(context);
+  const user_id = session?.user?.id;
   let parkinglot = await prisma.parkingLot.findFirst({
     where: {
       operator: {
         every: {
-          id: user_id
-        }
-      }
+          id: user_id,
+        },
+      },
     },
     include: {
       _count: {
         select: {
           parkinghistory: {
             where: {
-              parking_end: null
-            }
-          }
-        }
-      }
-    }
-  })
+              parking_end: null,
+            },
+          },
+        },
+      },
+    },
+  });
 
-  const image = parkinglot?.image
+  const image = parkinglot?.image;
   try {
     const cldImage: any = await cloudinary.api.resource(image as string).then((result) => {
       console.log(result);
@@ -194,13 +224,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     console.log(error);
   }
 
-  parkinglot = JSON.parse(JSON.stringify(parkinglot))
+  parkinglot = JSON.parse(JSON.stringify(parkinglot));
 
-  console.log(parkinglot)
+  console.log(parkinglot);
 
   return {
     props: {
-      parkinglot
-    }
-  }
+      parkinglot,
+    },
+  };
 }
