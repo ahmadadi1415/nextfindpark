@@ -52,7 +52,7 @@ export default function Aboutus() {
             <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:grap-8 md:gap-6 gap-4 mt-10">
               <div className="relative group">
                 <img
-                  src="/adii.jpg"
+                  src="/adi.jpg"
                   alt="adipict"
                   className="shadow-xl rounded-xl lg:block hidden w-full"
                 />
@@ -79,7 +79,7 @@ export default function Aboutus() {
               </div>
               <div className="relative group">
                 <img
-                  src="/zayy.png"
+                  src="/zay.jpg"
                   alt="zayyanpict"
                   className="shadow-xl rounded-xl lg:block hidden w-full"
                 />
