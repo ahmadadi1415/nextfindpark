@@ -79,7 +79,7 @@ export default function Aboutus() {
               </div>
               <div className="relative group">
                 <img
-                  src="/zay.jpg"
+                  src="/zayy.jpg"
                   alt="zayyanpict"
                   className="shadow-xl rounded-xl lg:block hidden w-full"
                 />
