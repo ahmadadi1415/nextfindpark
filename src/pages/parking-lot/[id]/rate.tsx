@@ -49,15 +49,15 @@ interface Props {
 }
 
 export default function ParkingRate({ parkingLot, rate }: Props) {
-  const [rating, setRating] = useState(rate.rate);
-  const [review, setReview] = useState(rate.review);
+  const [rating, setRating] = useState((rate.rate) ? rate.rate : 0);
+  const [review, setReview] = useState((rate.review) ? rate.review: "");
 
   const session = useSession();
   const user_id = session.data?.user?.id;
 
   async function submitReview() {
-    console.log(rating, review);
-    console.log(user_id);
+    // console.log(rating, review);
+    // console.log(user_id);
 
     // const response  = await axios.post("/api/rating", {
     //   parkinglot_id: parkingLot.id,
@@ -153,7 +153,7 @@ export default function ParkingRate({ parkingLot, rate }: Props) {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getSession(context);
 
-  console.log(session);
+  // console.log(session);
   if (!session) {
     return {
       redirect: {
